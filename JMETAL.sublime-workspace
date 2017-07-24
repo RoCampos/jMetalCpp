@@ -1,0 +1,344 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 347.0,
+		"last_filter": "insta",
+		"selected_items":
+		[
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 485.0
+	},
+	"console":
+	{
+		"height": 167.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = 'df21e130d211cfc94d9b0905775a7c0f' + '1e3d39e33b79698005270310898eea76'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/Users/romeritocampos/HD/workspace/cpp/jMetalCpp"
+	],
+	"file_history":
+	[
+		"/Users/romeritocampos/Documents/workspace/Doutorado/projeto/Doutorado.sublime-project",
+		"/Users/romeritocampos/Documents/workspace/Doutorado/texto/qualificacao/Thesis.sublime-project",
+		"/Users/romeritocampos/Documents/workspace/Doutorado/texto/qualificacao/Thesis.sublime-workspace",
+		"/Users/romeritocampos/Documents/workspace/Doutorado/projeto/network/network.h",
+		"/Users/romeritocampos/Documents/workspace/Doutorado/projeto/multi/models.h",
+		"/Users/romeritocampos/Documents/workspace/Doutorado/projeto/multi/parallel.cpp",
+		"/Users/romeritocampos/Documents/workspace/Doutorado/projeto/multi/individual.h",
+		"/Users/romeritocampos/Documents/workspace/Doutorado/projeto/multi/multiobjective.h",
+		"/Users/romeritocampos/Documents/workspace/Doutorado/projeto/multi/mathmodel.cpp",
+		"/Users/romeritocampos/Documents/workspace/Doutorado/projeto/multi/CMakeLists.txt",
+		"/Users/romeritocampos/Documents/workspace/Doutorado/projeto/stalgorithm/sttree_local_search.cpp",
+		"/Users/romeritocampos/Documents/workspace/Doutorado/projeto/stalgorithm/ChenReplaceVisitor.cpp",
+		"/Users/romeritocampos/Documents/workspace/Doutorado/projeto/stalgorithm/localsearch.cpp",
+		"/Users/romeritocampos/Documents/workspace/Doutorado/projeto/stalgorithm/localsearch.h",
+		"/Users/romeritocampos/Documents/workspace/Doutorado/projeto/network/edgecontainer.h",
+		"/Users/romeritocampos/Documents/workspace/Doutorado/projeto/include/edgecontainer.cpp",
+		"/Users/romeritocampos/Documents/workspace/Doutorado/projeto/network/edgecontainer.cpp",
+		"/Users/romeritocampos/Documents/workspace/Doutorado/projeto/CMakeLists.txt",
+		"/Users/romeritocampos/Documents/workspace/Doutorado/projeto/multi/operator.h",
+		"/Users/romeritocampos/Documents/workspace/Doutorado/projeto/network/algorithm.h",
+		"/Users/romeritocampos/Documents/workspace/Doutorado/projeto/stalgorithm/mpp_visitor.h",
+		"/Users/romeritocampos/Documents/workspace/Doutorado/projeto/include/mpp_visitor.h",
+		"/Users/romeritocampos/Documents/workspace/Doutorado/projeto/stalgorithm/kmb.cpp",
+		"/Users/romeritocampos/Documents/workspace/Doutorado/projeto/include/kmb.h",
+		"/Users/romeritocampos/Documents/workspace/Doutorado/projeto/stalgorithm/kmb.h",
+		"/Users/romeritocampos/Documents/workspace/Doutorado/projeto/include/steiner_tree_factory.h",
+		"/Users/romeritocampos/Documents/workspace/Doutorado/projeto/stalgorithm/steiner_tree_factory.cpp",
+		"/Users/romeritocampos/Documents/workspace/cpptest/main.cpp",
+		"/Users/romeritocampos/Library/Mobile Documents/com~apple~CloudDocs/teste.cpp",
+		"/untitled"
+	],
+	"find":
+	{
+		"height": 29.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"aco",
+			"init",
+			"info",
+			")\n",
+			"}\")\n",
+			"GUROBI_CXX_LIBRARY",
+			"GUROBI_LIBRARIES",
+			"GUROBI_INCLUDE_DIRS",
+			"}\n",
+			"\")\n",
+			"}\n",
+			"}\t\t\t\t\t\t",
+			"}\n",
+			"} \t\t\t\t",
+			"}\")",
+			"++\")",
+			"all",
+			"tr1",
+			"c++0x",
+			"add_definitions",
+			"open"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 29.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "JMETAL.sublime-project",
+	"replace":
+	{
+		"height": 54.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"probl",
+				"multi/problem_info.h"
+			],
+			[
+				"spea",
+				"multi/spea2.h"
+			],
+			[
+				"multiobjec",
+				"multi/multiobjective.h"
+			],
+			[
+				"network",
+				"network/network.h"
+			],
+			[
+				"multi",
+				"multi/mainmulti.cpp"
+			],
+			[
+				"sttre_lo",
+				"stalgorithm/sttree_local_search.cpp"
+			],
+			[
+				"localse",
+				"stalgorithm/localsearch.cpp"
+			],
+			[
+				"local",
+				"stalgorithm/localsearch.h"
+			],
+			[
+				"chenrpla",
+				"stalgorithm/ChenReplaceVisitor.cpp"
+			],
+			[
+				"edge",
+				"network/edgecontainer.cpp"
+			],
+			[
+				"edgecontain",
+				"include/edgecontainer.cpp"
+			],
+			[
+				"models.",
+				"multi/models.h"
+			],
+			[
+				"mathmo",
+				"multi/mathmodel.cpp"
+			],
+			[
+				"multi/cmake",
+				"multi/CMakeLists.txt"
+			],
+			[
+				"cmake",
+				"CMakeLists.txt"
+			],
+			[
+				"algorithm",
+				"network/algorithm.h"
+			],
+			[
+				"opera",
+				"multi/operator.h"
+			],
+			[
+				"indivi",
+				"multi/individual.h"
+			],
+			[
+				"paralle",
+				"multi/parallel.cpp"
+			],
+			[
+				".git",
+				".gitignore"
+			],
+			[
+				"svo",
+				"mmstp-hop/svobheuristic.h"
+			],
+			[
+				"mpp",
+				"stalgorithm/mpp_visitor.h"
+			],
+			[
+				"sttre__",
+				"stalgorithm/sttree_local_search.h"
+			],
+			[
+				"km",
+				"stalgorithm/kmb.h"
+			],
+			[
+				"kmb",
+				"include/kmb.h"
+			],
+			[
+				"mpp_",
+				"include/mpp_visitor.h"
+			],
+			[
+				"steiner_tree",
+				"stalgorithm/steiner_tree_factory.cpp"
+			],
+			[
+				"steiner_tree_fact",
+				"stalgorithm/steiner_tree_factory.cpp"
+			],
+			[
+				"mmx",
+				"mmmstp/mmx.cpp"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 190.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

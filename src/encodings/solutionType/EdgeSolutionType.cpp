@@ -8,4 +8,6 @@ EdgeSolutionType::EdgeSolutionType (Problem* problem)
 Variable ** EdgeSolutionType::createVariables ()
 {
 
+
+	return (NULL);
 }

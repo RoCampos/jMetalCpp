@@ -2,7 +2,30 @@
 	"folders":
 	[
 		{
-			"path": "."
+			"path": "/Users/romeritocampos/HD/workspace/cpp/jMetalCpp",
+			"file_exclude_patterns": [
+				"*.cmake",
+				"*.o",
+				"*~",
+				"*.txt",
+				".gitignore",
+				"*cmake*",
+				"*.log",
+				"*.out",
+				"*.deb",
+				"*.html",
+				"*.js",
+				"*.map",
+				"*.tex",
+				"*.md5"
+			],
+			"folders_exclude_patterns" : [
+				"build",			
+				"data",
+				"bin",
+				
+			]
 		}
+		
 	]
 }

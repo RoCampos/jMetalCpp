@@ -59,6 +59,8 @@
 #include <ZDT5.h>
 #include <ZDT6.h>
 
+#include <mmrp.h>
+
 class ProblemFactory {
 
 public:

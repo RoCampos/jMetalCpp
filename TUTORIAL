@@ -1,0 +1,12 @@
+
+ - definir o problema
+ - definir o tipo de solução (lista de arestas)
+ - modificar o problema
+ 	- adicionar as variáveis e inicializações gerais
+ 	- adicionar os cabecalhos :solutiontype, solution
+
+ - evaluate in Problem recebe uma solution, 
+  mas para avaliar devo adicionar um método getSolutionType
+
+ - operator são adicionados no algoritmo_main
+ - SolutionSet - usado para iniciar o conjunto de soluções 	

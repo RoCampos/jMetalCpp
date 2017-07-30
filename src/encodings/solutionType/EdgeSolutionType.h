@@ -5,14 +5,14 @@
 #include <Problem.h>
 #include <SolutionType.h>
 
+#include <individual.h>
+
 //TODO includes my representation
 
 class EdgeSolutionType : public SolutionType
 {
 public:
 	EdgeSolutionType(Problem* problem);
-	~EdgeSolutionType();
-
 	Variable ** createVariables ();
 	
 };

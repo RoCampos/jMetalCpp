@@ -5,19 +5,21 @@
 
 */
 
-#ifndef _MMRP_
-#define _MMRP_
+#ifndef _MMRP__
+#define _MMRP__
 
 #include <Problem.h>
 #include <Solution.h>
 #include <EdgeSolutionType.h>
+#include <network.h>
 
 class MMRP : public Problem
 {
 
 public:
 	
-	MMRP(std::string solutionType);
+	MMRP(std::string);
+	MMRP(std::string solutionType, std::string instance);
 	~MMRP();
 	void evaluate (Solution *solution);
 	

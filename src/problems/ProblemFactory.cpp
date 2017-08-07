@@ -491,7 +491,7 @@ Problem * ProblemFactory::getProblem(char * name, int argc, char ** argv) {
     if (argc==1) {
       //type of solution and instance given
       //argc[0] - is the instance given
-      return new MMRP ("EdgeSolutionType", argv[0]);
+      return new MMRP ("EdgeSolutionType", argv[0], argv[1]);
     }
   } else {
     cerr << "ProblemFactory::getProblem: Problem '" << name

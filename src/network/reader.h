@@ -69,6 +69,8 @@ public:
 	* @return std::vector<std::shared_ptr<rca::Group> >
 	*/
 	std::vector<std::shared_ptr<Group>> readerGroup ();
+
+	void readerGroup (std::vector<Group*> &);
 	
 
 	/**

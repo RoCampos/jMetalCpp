@@ -7,7 +7,7 @@
 
 #include "network.h"
 #include "path.h"
-#include "algorithm.h"
+#include "myalgorithm.h"
 #include "link.h"
 
 

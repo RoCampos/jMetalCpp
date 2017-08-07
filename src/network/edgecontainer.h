@@ -2,7 +2,7 @@
 
 #include "network.h"
 #include "group.h"
-#include "algorithm.h"
+#include "myalgorithm.h"
 #include "steinertree.h"
 
 #include <boost/heap/fibonacci_heap.hpp>

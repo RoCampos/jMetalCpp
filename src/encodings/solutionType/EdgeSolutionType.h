@@ -17,6 +17,8 @@ public:
 	EdgeSolutionType(Problem* problem);
 	Variable ** createVariables ();
 
+	Individual & get_representation () {return individual;}
+
 private:
 
 	Individual individual;

@@ -48,4 +48,10 @@ MMRP::~MMRP()
 void MMRP::evaluate (Solution * solution) 
 {
 
+	EdgeSolutionType * tmp = (EdgeSolutionType*) solution->getType ();
+	
+	solution->setObjective (0,tmp->get_representation().objectives.at (0));
+	solution->setObjective (1,tmp->get_representation().objectives.at (1));
+	solution->setObjective (2,tmp->get_representation().objectives.at (2));
+
 }

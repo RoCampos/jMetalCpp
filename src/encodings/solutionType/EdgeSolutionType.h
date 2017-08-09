@@ -18,6 +18,7 @@ public:
 	Variable ** createVariables ();
 
 	Individual & get_representation () {return individual;}
+	void set_representation (Individual&); 
 
 private:
 

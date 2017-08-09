@@ -4,6 +4,13 @@
 EdgeSolutionType::EdgeSolutionType (Problem* problem)
 : SolutionType (problem) {}
 
+void EdgeSolutionType::set_representation (Individual& individual_)
+{
+
+	this->individual = std::move(individual_);
+
+}
+
 Variable ** EdgeSolutionType::createVariables ()
 {
 

@@ -70,7 +70,7 @@ void evaluate (Individual & ind,
 	std::sort (residual.begin(), residual.end());
 	ind.edges = std::move (residual);
 
-	ind.objectives[0] = Z;
+	ind.objectives[0] = Z * (-1);
 	ind.objectives[1] = COST;
 	ind.objectives[2] = HOP;
 }

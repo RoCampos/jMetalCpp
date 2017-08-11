@@ -2,8 +2,20 @@
 #define INDIVIDUAL_H
 
 #include <iostream>
-#include "path.h"
-#include "link.h"
+
+#include <path.h>
+#include <link.h>
+#include <group.h>
+#include <network.h>
+#include <steiner.h>
+#include <steiner_tree_factory.h>
+#include <steiner_tree_observer.h>
+#include <sttree_local_search.h>
+#include <localsearch.h>
+
+
+typedef rca::EdgeContainer<rca::Comparator, rca::HCell> Container;
+typedef rca::sttalgo::SteinerTreeObserver<Container, steiner> Observer;
 
 struct DTree {
 	std::vector<rca::Path> paths;
@@ -96,6 +108,10 @@ void crossover_by_hop (
 	Individual & ind2, 
 	Individual & novo,
 	int NODES);
+
+void mutation (Individual & ind, 
+	rca::Network * network, 
+	std::vector<rca::Group> & mgroups);
 
 // ------------------------------------- implementations
 

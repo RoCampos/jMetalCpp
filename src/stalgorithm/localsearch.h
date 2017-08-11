@@ -12,7 +12,7 @@
 #include "steiner.h"
 #include "link.h"
 #include "group.h"
-#include "algorithm.h" //get_shortest_path
+#include <myalgorithm.h> //get_shortest_path
 
 enum EdgeType{
 	IN = 0,

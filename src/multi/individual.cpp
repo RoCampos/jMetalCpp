@@ -264,3 +264,93 @@ void crossover_by_edge (
 	}
 
 }
+
+void mutation (Individual & ind, 
+	rca::Network * network, 
+	std::vector<rca::Group> & mgroups)
+{
+
+	int SIZE = ind.cromossoma.size ();
+	int NODES= network->getNumberNodes ();
+
+	Container cg;
+	cg.init_congestion_matrix (NODES);
+	cg.init_handle_matrix (NODES);
+
+	std::vector<steiner> trees;
+
+	Observer observer;
+	observer.set_container (cg);
+	observer.set_network (*network);
+
+	int overcost = 0;
+
+	for (int i = 0; i < SIZE; ++i)
+	{
+		rca::Group g = mgroups.at (i);		
+		std::vector<int> const& members = g.getMembers ();
+		int source = g.getSource ();
+		int tk = g.getTrequest ();
+		
+		steiner st (NODES, source,  members);
+		observer.set_steiner_tree (st, NODES);
+
+		DTree & tree = ind.cromossoma.at (i);
+		for (size_t k = 0; k < tree.paths.size (); ++k)
+		{
+			rca::Path & path = tree.paths.at (k);
+			for (size_t p = 0; p < path.size ()-1; ++p)
+			{
+				int cost = 
+					network->getCost (
+						path.at (p), path.at (p+1));
+				int band =
+					network->getBand (
+						path.at (p), path.at (p+1));
+				rca::Link l (path.at (p), path.at (p+1), cost);
+
+				observer.add_edge (l.getX(), l.getY(), cost, tk, band);
+			}
+		}	
+		overcost += observer.get_steiner_tree ().get_cost ();
+		trees.push_back (observer.get_steiner_tree ());
+	}
+
+	//performing cycle local search
+	rca::sttalgo::CycleLocalSearch cls(
+		*network,
+		mgroups,
+		cg);	
+	int z = cg.top ();
+	
+	int ocost = overcost;	
+	do {
+		ocost = overcost;
+		cls.apply (trees, overcost, z);	 	
+	} while (overcost < ocost);
+
+	for (size_t i = 0; i < trees.size (); ++i)
+	{
+		rca::Group g = mgroups.at (i);
+		std::vector<int> const& members = g.getMembers ();
+		int source = g.getSource ();
+
+		DTree & curr_tree = ind.cromossoma.at (i);
+		curr_tree.paths.clear ();
+
+		for (size_t m = 0; m < members.size (); ++m)
+		{
+			std::vector<int> path = 
+				trees.at (i).get_path (members.at (m), source);
+
+			rca::Path p (path);
+			curr_tree.paths.push_back (std::move(p));
+		}
+	}
+
+	// evaluate (ind,
+	// 	*network,
+	// 	mgroups);
+
+
+}

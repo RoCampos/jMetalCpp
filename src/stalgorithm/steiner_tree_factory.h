@@ -4,16 +4,16 @@
 #include <iostream>
 #include <stack>
 
-#include "sttree.h"
-#include "steiner.h"
-#include "network.h"
-#include "group.h"
-#include "link.h"
-#include "path.h"
-#include "edgecontainer.h"
-#include "steiner_tree_observer.h"
+#include <sttree.h>
+#include <steiner.h>
+#include <network.h>
+#include <group.h>
+#include <link.h>
+#include <path.h>
+#include <edgecontainer.h>
+#include <steiner_tree_observer.h>
 
-#include "algorithm.h"
+#include <myalgorithm.h>
 
 namespace rca {
 	

@@ -4,17 +4,15 @@
 EdgeSolutionType::EdgeSolutionType (Problem* problem)
 : SolutionType (problem) {}
 
-void EdgeSolutionType::set_representation (Individual& individual_)
-{
-
-	this->individual = std::move(individual_);
-
-}
-
 Variable ** EdgeSolutionType::createVariables ()
 {
 
-	std::cout << problem_->getName ()<< std::endl;
+
+	return (NULL);
+}
+
+Individual EdgeSolutionType::get_representation ()
+{
 
 	//cast to problem network
 	MMRP * mmrp = (MMRP *) problem_;
@@ -25,7 +23,7 @@ Variable ** EdgeSolutionType::createVariables ()
 	int GSIZE = mmrp->numberGroups ();
 
 	//starting MRRP individual representation
-	this->individual = Individual (GSIZE, 3);
+	Individual individual = Individual (GSIZE, 3);
 	 for (size_t i=0; i < GSIZE; i++) {
 		int tk = mmrp->get_group(i)->getTrequest ();
 		int src = mmrp->get_group(i)->getSource ();
@@ -47,7 +45,7 @@ Variable ** EdgeSolutionType::createVariables ()
 		}
 
 		reorganize (src, pos, i, dtree, mmrp->get_groups(), *mmrp->get_network());
-		this->individual.add_tree (i, dtree);			
+		individual.add_tree (i, dtree);			
 	}
 	
 	bool widest = true;
@@ -60,9 +58,10 @@ Variable ** EdgeSolutionType::createVariables ()
 
 	}
 
-	evaluate (this->individual, 
+	evaluate (individual, 
 		*mmrp->get_network(), 
 		mmrp->get_groups());
 
-	return (NULL);
+	return individual;
+
 }

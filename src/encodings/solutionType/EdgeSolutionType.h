@@ -16,13 +16,10 @@ class EdgeSolutionType : public SolutionType
 public:
 	EdgeSolutionType(Problem* problem);
 	Variable ** createVariables ();
-
-	Individual & get_representation () {return individual;}
-	void set_representation (Individual&); 
+	Individual get_representation ();
 
 private:
 
-	Individual individual;
 	WidestPathTree stp1;
 	ShortestPathTree stp2;
 	BestFirstSearch stp3;

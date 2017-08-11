@@ -88,6 +88,7 @@ Solution::Solution (Problem *problem) {
   crowdingDistance_ = 0.0;
   distanceToSolutionSet_ = std::numeric_limits<double>::max();
   variable_ = type_->createVariables();
+  individual_ = type_->get_representation ();
   rank_ = 0;
 } // Solution
 
@@ -493,6 +494,17 @@ Problem * Solution::getProblem() {
   return problem_ ;
 } // getAggregativeValue
 
+
+Individual & Solution::get_representation ()
+{
+
+  return this->individual_;
+}
+
+void Solution::set_representation (Individual & ref)
+{
+  this->individual_ = ref;
+}
 
 /**
  * Returns the number of bits of the chromosome in case of using a binary

@@ -59,3 +59,5 @@ Variable ** SolutionType::copyVariables(Variable **vars) {
 
   return variables;
 } // copyVariables
+
+Individual SolutionType::get_representation () {}

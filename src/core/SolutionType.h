@@ -27,6 +27,7 @@
 #include <Variable.h>
 #include <stddef.h>
 #include <string>
+#include <individual.h>
 
 class Problem;
 
@@ -47,6 +48,8 @@ public:
   virtual ~SolutionType();
   virtual Variable **createVariables() = 0;
   Variable **copyVariables(Variable **vars);
+
+  virtual Individual get_representation ();
 
 }; // SolutionType
 

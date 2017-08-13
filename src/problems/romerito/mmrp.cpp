@@ -42,7 +42,6 @@ MMRP::~MMRP()
 		delete mgroups_[i];
 	}
 
-
 }
 
 void MMRP::evaluate (Solution * solution) 

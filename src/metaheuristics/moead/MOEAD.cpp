@@ -100,11 +100,11 @@ SolutionSet * MOEAD::execute() {
       
       // STEP 2.2. Reproduction
       Solution * child;
-      Solution ** parents = new Solution*[3];
+      Solution ** parents = new Solution*[2];
       
       parents[0] = population_->get(p[0]);
       parents[1] = population_->get(p[1]);
-      parents[2] = population_->get(n);
+      // parents[2] = population_->get(n);
       
       // Apply DE crossover
       void ** object = new void*[2];
@@ -114,12 +114,16 @@ SolutionSet * MOEAD::execute() {
       delete[] object;
       delete[] parents;
       
+
+      child->get_representation ().str ();
       // Apply mutation
       mutation_->execute(child);
-      
       // Evaluation
       problem_->evaluate(child);
-      
+      child->get_representation ().str ();
+      cout << endl;
+
+
       evaluations_++;
       
       // STEP 2.3. Repair. Not necessary

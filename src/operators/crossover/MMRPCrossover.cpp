@@ -10,8 +10,6 @@ MMRPCrossover::MMRPCrossover(map<string, void *> parameters)
 
 void * MMRPCrossover::execute (void* object) {
 
-	std::cout << __FUNCTION__ << std::endl;
-
 	void ** parameters = (void **) object;
 
 	Solution * current = (Solution *) parameters[0];
@@ -39,6 +37,7 @@ void * MMRPCrossover::execute (void* object) {
 
 	child->set_representation (novo);
 	child->setType (current->getProblem()->getSolutionType());
+	child->setProblem (current->getProblem());
 
 	return child;
 

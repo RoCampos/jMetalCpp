@@ -12,7 +12,7 @@
 
 
 # This is the main compiler
-CC := g++
+CC := g++-7
 # CC := clang --analyze # and comment out the linker last line for sanity
 
 # Source files extension
@@ -55,20 +55,22 @@ OBJECTS := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(LIB_SOURCES:.$(SRCEXT)=.o))
 #BINARIES := $(patsubst $(MAIN_DIRS)/%,$(BUILDDIR)/%,$(SOURCES:.$(SRCEXT)=.o))
 
 # Flags
-CFLAGS := -O3 -std=c++11 # -g # -Wall
+# CFLAGS := -O3 -std=c++11 
+CFLAGS := -std=c++11 -fopenmp -fPIC -O0 -g3 -ggdb
 
 # Include flags when compiling
 INC := $(patsubst %,-I %/.,$(HEADER_DIRS))
-
 
 # Library name
 LIBNAME := libjmetal.a
 
 # Library path
+#RLIB := $(shell find rlib -type f -name *.a)
 LIB := $(LIBDIR)/$(LIBNAME)
-
+#FLIB := $(LIB) $(RLIB)
 
 # Dependencies needed when generating executables	
+# MAIN_DEPS := $(LIB) $(RLIB)
 MAIN_DEPS := $(LIB)
 
 # Libraries needed when generating executables
@@ -86,7 +88,8 @@ $(BINDIR)/% : $(patsubst $(BINDIR)%, $(SRCDIR)%.cpp, $(BINDIR)/%) $(LIB)
 	@echo "Compiling $(patsubst $(BINDIR)%, $(SRCDIR)%.cpp, $@)"
 	@mkdir -p $(BINDIR)
 	@mkdir -p $(dir $@)
-	@echo "$(CC) $(CFLAGS) $(patsubst $(BINDIR)%, $(SRCDIR)%.cpp, $@) $(MAIN_DEPS) -o $@ $(INC) $(MAIN_LIBS)"; $(CC) $(CFLAGS) $(patsubst $(BINDIR)%, $(SRCDIR)%.cpp, $@) $(MAIN_DEPS) -o $@ $(INC) $(MAIN_LIBS)
+	@echo "$(CC) $(CFLAGS) $(patsubst $(BINDIR)%, $(SRCDIR)%.cpp, $@) $(MAIN_DEPS) -o $@ $(INC) $(RINC) $(MAIN_LIBS)"; $(CC) $(CFLAGS) $(patsubst $(BINDIR)%, $(SRCDIR)%.cpp, $@) $(MAIN_DEPS) -o $@ $(INC) $(MAIN_LIBS)
+
 
 # Library rule
 library : $(LIB)

@@ -88,6 +88,7 @@ Solution::Solution (Problem *problem) {
   crowdingDistance_ = 0.0;
   distanceToSolutionSet_ = std::numeric_limits<double>::max();
   variable_ = type_->createVariables();
+  individual_ = type_->get_representation ();
   rank_ = 0;
 } // Solution
 
@@ -143,6 +144,7 @@ Solution::Solution (Solution *solution) {
   marked_ = solution->isMarked();
   rank_ = solution->getRank();
   location_ = solution->getLocation();
+  individual_ = solution->get_representation ();
     
   // create the variables
   //old fashion of copying variables
@@ -493,6 +495,21 @@ Problem * Solution::getProblem() {
   return problem_ ;
 } // getAggregativeValue
 
+
+void Solution::setProblem (Problem * problem) {
+  problem_ = problem;
+}
+
+Individual & Solution::get_representation ()
+{
+
+  return this->individual_;
+}
+
+void Solution::set_representation (Individual & ref)
+{
+  this->individual_ = ref;
+}
 
 /**
  * Returns the number of bits of the chromosome in case of using a binary

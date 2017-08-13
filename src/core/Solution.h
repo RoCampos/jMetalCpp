@@ -30,14 +30,15 @@
 #include <stddef.h>
 #include <Problem.h>
 #include <Variable.h>
+#include <individual.h>
 #include <SolutionType.h>
-
 
 //using namespace std;
 //
 class Problem ;
 class Variable ;
 class SolutionType ;
+
 
 /**
  * @class Solution
@@ -61,6 +62,8 @@ private:
   double kDistance_;
   double crowdingDistance_;
   double distanceToSolutionSet_;
+
+  Individual individual_;
     
 public:
   Solution ();
@@ -102,7 +105,11 @@ public:
   SolutionType *getType();
   double getAggregativeValue();
   Problem * getProblem() ;
+  void setProblem (Problem * problem);
   //int getNumberOfBits();
+
+  Individual & get_representation ();
+  void set_representation (Individual &);
 
 };
 

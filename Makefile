@@ -55,7 +55,8 @@ OBJECTS := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(LIB_SOURCES:.$(SRCEXT)=.o))
 #BINARIES := $(patsubst $(MAIN_DIRS)/%,$(BUILDDIR)/%,$(SOURCES:.$(SRCEXT)=.o))
 
 # Flags
-CFLAGS := -O3 -std=c++11 # -g # -Wall
+# CFLAGS := -O3 -std=c++11 
+CFLAGS := -std=c++11 -fopenmp -fPIC -O0 -g3 -ggdb
 
 # Include flags when compiling
 INC := $(patsubst %,-I %/.,$(HEADER_DIRS))

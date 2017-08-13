@@ -105,6 +105,7 @@ public:
   SolutionType *getType();
   double getAggregativeValue();
   Problem * getProblem() ;
+  void setProblem (Problem * problem);
   //int getNumberOfBits();
 
   Individual & get_representation ();

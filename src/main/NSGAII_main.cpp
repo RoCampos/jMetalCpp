@@ -80,7 +80,7 @@ int main(int argc, char ** argv) {
   	algorithm->setInputParameter("maxEvaluations",&maxEvaluations);
 
 	// Mutation and Crossover for Real codification
-  	std::string name = "NSGA2";
+  	std::string name = "TWO";
 	map<string, void *> parameters;
 	parameters["algorithm"] = &name;
   	crossover = new MMRPCrossover(parameters);

@@ -14,9 +14,9 @@ void * MMRPCrossover::execute (void* object) {
 
 	std::string algo = *(std::string*) this->parameters_["algorithm"];
 
-	if (algo.compare ("NSGA2") == 0) {
+	if (algo.compare ("TWO") == 0) {
 		return this->nsga (object);
-	} else if (algo.compare ("MOEAD") == 0) {
+	} else if (algo.compare ("ONE") == 0) {
 		Solution * child = (Solution *)this->moead (object);
 		return child;
 	} else {

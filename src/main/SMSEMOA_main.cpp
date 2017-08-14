@@ -21,8 +21,8 @@
 
 #include <Problem.h>
 #include <Solution.h>
-#include <SBXCrossover.h>
-#include <PolynomialMutation.h>
+#include <MMRPCrossover.h>
+#include <MMRPMutation.h>
 #include <RandomSelection.h>
 #include <iostream>
 #include <SMSEMOA.h>
@@ -59,7 +59,7 @@ int main(int argc, char ** argv) {
 
   // Algorithm parameters
   int populationSize = 100;
-  int maxEvaluations = 25000;
+  int maxEvaluations = 25;
   double offset = 100;
 
   algorithm->setInputParameter("populationSize",&populationSize);
@@ -67,20 +67,15 @@ int main(int argc, char ** argv) {
   algorithm->setInputParameter("offset",&offset);
 
   // Mutation
-  map<string, void *> parameters;
-  double crossoverProbability = 0.9;
-  double crossoverDistributionIndex = 20.0;
-  parameters["probability"] =  &crossoverProbability;
-  parameters["distributionIndex"] = &crossoverDistributionIndex;
-  crossover = new SBXCrossover(parameters);
+  map<string, void *> parameters; 
+  std::string name = "TWO";
+  parameters["algorithm"] = &name;
+  crossover = new MMRPCrossover(parameters);
 
   //Crossover
   parameters.clear();
-  double mutationProbability = 1.0/problem->getNumberOfVariables();
-  double mutationDistributionIndex = 20.0;
-  parameters["probability"] = &mutationProbability;
-  parameters["distributionIndex"] = &mutationDistributionIndex;
-  mutation = new PolynomialMutation(parameters);
+  
+  mutation = new MMRPMutation(parameters);
 
   // Selection Operator
   parameters.clear();

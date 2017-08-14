@@ -80,7 +80,7 @@ int main(int argc, char ** argv) {
   algorithm->setInputParameter("dataDirectory", &dataDirectoryValue);
 
   
-  std::string name = "MOEAD";
+  std::string name = "ONE";
   parameters["algorithm"] = &name;
   crossover = new MMRPCrossover (parameters);
   

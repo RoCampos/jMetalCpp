@@ -24,7 +24,7 @@
 #include <Operator.h>
 //#include <QualityIndicator.h>
 #include <GDE3.h>
-#include <DifferentialEvolutionCrossover.h>
+#include <MMRPCrossover.h>
 #include <DifferentialEvolutionSelection.h>
 #include <ProblemFactory.h>
 #include <iostream>
@@ -56,16 +56,14 @@ int main(int argc, char ** argv) {
 
   // Algorithm parameters
   int populationSizeValue = 100;
-  int maxIterationsValue = 250;
+  int maxIterationsValue = 25;
   algorithm->setInputParameter("populationSize",&populationSizeValue);
   algorithm->setInputParameter("maxIterations",&maxIterationsValue);
 
   // Crossover operator
-  double crParameter = 0.5;
-  double fParameter  = 0.5;
-  parameters["CR"] =  &crParameter;
-  parameters["F"] = &fParameter;
-  crossover = new DifferentialEvolutionCrossover(parameters);
+  std::string name = "ONE";
+  parameters["algorithm"] = &name;
+  crossover = new MMRPCrossover(parameters);
 
   // Selection operator
   parameters.clear();

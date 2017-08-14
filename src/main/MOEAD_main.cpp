@@ -79,19 +79,13 @@ int main(int argc, char ** argv) {
           "../../data/Weight";
   algorithm->setInputParameter("dataDirectory", &dataDirectoryValue);
 
-  // Crossover operator
-  double crParameter = 1.0;
-  double fParameter = 0.5;
-  parameters["CR"] = &crParameter;
-  parameters["F"] = &fParameter;
+  
+  std::string name = "ONE";
+  parameters["algorithm"] = &name;
   crossover = new MMRPCrossover (parameters);
   
   // Mutation operator
   parameters.clear();
-  // double probabilityParameter = 1.0/(problem->getNumberOfVariables());
-  // double distributionIndexParameter = 20.0;
-  // parameters["probability"] =  &probabilityParameter;
-  // parameters["distributionIndex"] = &distributionIndexParameter;
   mutation = new MMRPMutation(parameters);
 
   // Add the operators to the algorithm

@@ -114,15 +114,10 @@ SolutionSet * MOEAD::execute() {
       delete[] object;
       delete[] parents;
       
-
-      child->get_representation ().str ();
       // Apply mutation
       mutation_->execute(child);
       // Evaluation
       problem_->evaluate(child);
-      child->get_representation ().str ();
-      cout << endl;
-
 
       evaluations_++;
       

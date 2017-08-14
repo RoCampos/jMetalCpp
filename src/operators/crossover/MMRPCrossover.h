@@ -13,6 +13,12 @@ class MMRPCrossover : public Crossover
 public:
 	MMRPCrossover(map<string, void *> parameters);
 	void *execute (void *);
+
+	
+private:
+
+	void * moead (void *);
+	void * nsga (void *);
 	
 };
 

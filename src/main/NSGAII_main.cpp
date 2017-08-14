@@ -29,6 +29,8 @@
 #include <ProblemFactory.h>
 #include <string.h>
 #include <time.h>
+#include <MMRPCrossover.h>
+#include <MMRPMutation.h>
 
 
 /**
@@ -71,27 +73,20 @@ int main(int argc, char ** argv) {
 
 	algorithm = new NSGAII(problem);
 
-  // Algorithm parameters
-  int populationSize = 100;
-  int maxEvaluations = 25000;
-  algorithm->setInputParameter("populationSize",&populationSize);
-  algorithm->setInputParameter("maxEvaluations",&maxEvaluations);
+  	// Algorithm parameters
+ 	int populationSize = 100;
+ 	int maxEvaluations = 150;
+ 	algorithm->setInputParameter("populationSize",&populationSize);
+  	algorithm->setInputParameter("maxEvaluations",&maxEvaluations);
 
 	// Mutation and Crossover for Real codification
+  	std::string name = "NSGA2";
 	map<string, void *> parameters;
-
-  double crossoverProbability = 0.9;
-  double crossoverDistributionIndex = 20.0;
-  parameters["probability"] =  &crossoverProbability;
-  parameters["distributionIndex"] = &crossoverDistributionIndex;
-  crossover = new SBXCrossover(parameters);
+	parameters["algorithm"] = &name;
+  	crossover = new MMRPCrossover(parameters);
 
 	parameters.clear();
-  double mutationProbability = 1.0/problem->getNumberOfVariables();
-  double mutationDistributionIndex = 20.0;
-  parameters["probability"] = &mutationProbability;
-  parameters["distributionIndex"] = &mutationDistributionIndex;
-  mutation = new PolynomialMutation(parameters);
+ 	mutation = new MMRPMutation(parameters);
 
 	// Selection Operator
 	parameters.clear();

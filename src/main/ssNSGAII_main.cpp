@@ -21,8 +21,8 @@
 
 #include <Problem.h>
 #include <Solution.h>
-#include <SBXCrossover.h>
-#include <PolynomialMutation.h>
+#include <MMRPCrossover.h>
+#include <MMRPMutation.h>
 #include <BinaryTournament2.h>
 #include <iostream>
 #include <ssNSGAII.h>
@@ -68,25 +68,19 @@ int main(int argc, char ** argv) {
 
   // Algorithm parameters
   int populationSize = 100;
-  int maxEvaluations = 25000;
+  int maxEvaluations = 150;
   algorithm->setInputParameter("populationSize",&populationSize);
   algorithm->setInputParameter("maxEvaluations",&maxEvaluations);
 
+  std::string name = "TWO";
+
 	// Mutation and Crossover for Real codification
 	map<string, void *> parameters;
-
-  double crossoverProbability = 0.9;
-  double crossoverDistributionIndex = 20.0;
-  parameters["probability"] =  &crossoverProbability;
-  parameters["distributionIndex"] = &crossoverDistributionIndex;
-  crossover = new SBXCrossover(parameters);
+  parameters["algorithm"] = &name;
+  crossover = new MMRPCrossover(parameters);
 
 	parameters.clear();
-  double mutationProbability = 1.0/problem->getNumberOfVariables();
-  double mutationDistributionIndex = 20.0;
-  parameters["probability"] = &mutationProbability;
-  parameters["distributionIndex"] = &mutationDistributionIndex;
-  mutation = new PolynomialMutation(parameters);
+  mutation = new MMRPMutation(parameters);
 
 	// Selection Operator
 	parameters.clear();

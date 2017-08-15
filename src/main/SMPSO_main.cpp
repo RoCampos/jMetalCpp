@@ -25,7 +25,7 @@
 //#include <QualityIndicator.h>
 #include <ProblemFactory.h>
 #include <SMPSO.h>
-#include <PolynomialMutation.h>
+#include <MMRPMutation.h>
 #include <iostream>
 #include <time.h>
 
@@ -73,7 +73,7 @@ int main(int argc, char ** argv) {
   double distributionIndexParameter = 20.0;
   parameters["probability"] =  &probabilityParameter;
   parameters["distributionIndex"] = &distributionIndexParameter;
-  mutation = new PolynomialMutation(parameters);
+  mutation = new MMRPMutation(parameters);
 
   // Add the operators to the algorithm
   algorithm->addOperator("mutation",mutation);

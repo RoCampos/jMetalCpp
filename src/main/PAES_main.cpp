@@ -22,8 +22,8 @@
 #include <Algorithm.h>
 #include <Operator.h>
 #include <Solution.h>
-#include <RealSolutionType.h>
-#include <PolynomialMutation.h>
+#include <EdgeSolutionType.h>
+#include <MMRPMutation.h>
 #include <ProblemFactory.h>
 #include <iostream>
 #include <paes.h>
@@ -54,7 +54,7 @@ int main(int argc, char ** argv) {
   int *archiveSizePtr = &archiveSizeValue;
   int biSectionsValue = 5;
   int *biSectionsPtr = &biSectionsValue;
-  int maxEvaluationsValue = 25000;
+  int maxEvaluationsValue = 250;
   int *maxEvaluationsPtr = &maxEvaluationsValue;
   
   algorithm->setInputParameter("archiveSize",archiveSizePtr);
@@ -64,13 +64,7 @@ int main(int argc, char ** argv) {
   // Mutation (Real variables)
   map<string, void *> parameters; // Operator parameters
   parameters.clear();
-  double probabilityValue1 = 1.0/problem->getNumberOfVariables();
-  double *probabilityPtr1 = &probabilityValue1;
-  double distributionIndexValue1 = 20.0;
-  double *distributionIndexPtr1 = &distributionIndexValue1;
-  parameters["probability"] =  probabilityPtr1 ;
-  parameters["distributionIndex"] = distributionIndexPtr1 ;
-  mutation = new PolynomialMutation(parameters);
+  mutation = new MMRPMutation(parameters);
   
   // Mutation (BinaryReal variables)
   //mutation = MutationFactory.getMutationOperator("BitFlipMutation");

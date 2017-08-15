@@ -25,7 +25,8 @@
 #include <ProblemFactory.h>
 #include <MOEAD.h>
 #include <PolynomialMutation.h>
-#include <DifferentialEvolutionCrossover.h>
+#include <MMRPCrossover.h>
+#include <MMRPMutation.h>
 #include <iostream>
 #include <time.h>
 
@@ -65,7 +66,7 @@ int main(int argc, char ** argv) {
 
   // Algorithm parameters
   int populationSizeValue = 300;
-  int maxEvaluationsValue = 150000;
+  int maxEvaluationsValue = 150;
   algorithm->setInputParameter("populationSize",&populationSizeValue);
   algorithm->setInputParameter("maxEvaluations",&maxEvaluationsValue);
   
@@ -78,20 +79,14 @@ int main(int argc, char ** argv) {
           "../../data/Weight";
   algorithm->setInputParameter("dataDirectory", &dataDirectoryValue);
 
-  // Crossover operator
-  double crParameter = 1.0;
-  double fParameter = 0.5;
-  parameters["CR"] = &crParameter;
-  parameters["F"] = &fParameter;
-  crossover = new DifferentialEvolutionCrossover(parameters);
+  
+  std::string name = "ONE";
+  parameters["algorithm"] = &name;
+  crossover = new MMRPCrossover (parameters);
   
   // Mutation operator
   parameters.clear();
-  double probabilityParameter = 1.0/(problem->getNumberOfVariables());
-  double distributionIndexParameter = 20.0;
-  parameters["probability"] =  &probabilityParameter;
-  parameters["distributionIndex"] = &distributionIndexParameter;
-  mutation = new PolynomialMutation(parameters);
+  mutation = new MMRPMutation(parameters);
 
   // Add the operators to the algorithm
   algorithm->addOperator("crossover",crossover);

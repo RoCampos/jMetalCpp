@@ -487,8 +487,13 @@ Problem * ProblemFactory::getProblem(char * name, int argc, char ** argv) {
       exit(-1);
     }
 
+  } else if (strcmp (name, "MMRP") == 0) {
+    if (argc==1) {
+      //type of solution and instance given
+      //argc[0] - is the instance given
+      return new MMRP ("EdgeSolutionType", argv[0], argv[1]);
+    }
   } else {
-
     cerr << "ProblemFactory::getProblem: Problem '" << name
         << "' does not exist. Please, check the problem names "
         << "in jmetalcpp/problems" << endl;

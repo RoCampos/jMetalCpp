@@ -74,8 +74,8 @@ int main(int argc, char ** argv) {
 	algorithm = new NSGAII(problem);
 
   	// Algorithm parameters
- 	int populationSize = 100;
- 	int maxEvaluations = 150;
+ 	int populationSize = atoi(argv[3]);
+ 	int maxEvaluations = atoi(argv[4]);
  	algorithm->setInputParameter("populationSize",&populationSize);
   	algorithm->setInputParameter("maxEvaluations",&maxEvaluations);
 

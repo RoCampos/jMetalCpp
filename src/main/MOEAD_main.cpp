@@ -53,6 +53,8 @@ int main(int argc, char ** argv) {
 
   //TODO: QualityIndicator * indicators; // Object to get quality indicators
 
+  
+
   if (argc>=2) {
     problem = ProblemFactory::getProblem(argc, argv);
     cout << "Selected problem: " << problem->getName() << endl;
@@ -64,9 +66,9 @@ int main(int argc, char ** argv) {
 
   algorithm = new MOEAD(problem);
 
-  // Algorithm parameters
-  int populationSizeValue = 300;
-  int maxEvaluationsValue = 150;
+  int populationSizeValue = atoi (argv[3]);
+  int maxEvaluationsValue = atoi (argv[4]);
+
   algorithm->setInputParameter("populationSize",&populationSizeValue);
   algorithm->setInputParameter("maxEvaluations",&maxEvaluationsValue);
   

@@ -50,11 +50,11 @@ int main(int argc, char ** argv) {
   algorithm = new paes(problem);
   
   // Algorithm parameters
-  int archiveSizeValue = 100;
+  int archiveSizeValue = atoi(argv[3]);
   int *archiveSizePtr = &archiveSizeValue;
-  int biSectionsValue = 5;
+  int biSectionsValue = atoi(argv[4]);
   int *biSectionsPtr = &biSectionsValue;
-  int maxEvaluationsValue = 250;
+  int maxEvaluationsValue = atoi(argv[5]);
   int *maxEvaluationsPtr = &maxEvaluationsValue;
   
   algorithm->setInputParameter("archiveSize",archiveSizePtr);

@@ -4,7 +4,9 @@ MMRPCrossover::MMRPCrossover(map<string, void *> parameters)
 : Crossover (parameters)
 {
 
-
+	generator_ = 
+		rca::myrandom<std::mt19937, std::uniform_real_distribution<double>, double> 
+		(time(NULL), 0.0, 1.0);
 
 }
 
@@ -45,8 +47,18 @@ void * MMRPCrossover::moead (void * object)
 	novo.objectives = std::vector<double> (3, 0);
 	novo.cost = std::vector<int> (CSIZE);
 
-	//Applying crossover on the solution
-	crossover_by_hop (ind1, ind2, novo, 30);
+
+	double cross = this->generator_.rand ();
+
+	if (cross < 0.25) {
+		crossover_by_hop (ind1, ind2, novo, 30);	
+	} else if (cross >= 0.25 && cross < 0.5) {
+		crossover_by_tree (ind1, ind2, novo); 
+	} else if (cross >= 0.5 && cross < 0.75) {
+		crossover_by_path (ind1, ind2, novo, 30);
+	} else {
+		crossover_by_tcost (ind1, ind2, novo);
+	}
 
 	evaluate (novo, 
 		*mmrp->get_network(), 
@@ -89,9 +101,29 @@ void* MMRPCrossover::nsga (void * object)
 	novo2.objectives = std::vector<double> (3, 0);
 	novo2.cost = std::vector<int> (CSIZE);
 
+	int op = this->get_crossover ();
 
-	crossover_by_hop (ind1, ind2, novo1, NODES);
-	crossover_by_tree (ind1, ind2, novo2);
+	if (op == 1) {
+		crossover_by_hop (ind1, ind2, novo1, 30);	
+	} else if (op == 2) {
+		crossover_by_tree (ind1, ind2, novo1); 
+	} else if (op == 3) {
+		crossover_by_path (ind1, ind2, novo1, 30);
+	} else {
+		crossover_by_tcost (ind1, ind2, novo1);
+	}
+
+	op = this->get_crossover ();
+
+	if (op == 1) {
+		crossover_by_hop (ind1, ind2, novo2, 30);	
+	} else if (op == 2) {
+		crossover_by_tree (ind1, ind2, novo2); 
+	} else if (op == 3) {
+		crossover_by_path (ind1, ind2, novo2, 30);
+	} else {
+		crossover_by_tcost (ind1, ind2, novo2);
+	}
 
 	evaluate (novo1, 
 		*mmrp->get_network(), 
@@ -106,4 +138,21 @@ void* MMRPCrossover::nsga (void * object)
 
 
 	return childs;
+}
+
+int MMRPCrossover::get_crossover ()
+{
+
+	double cross = this->generator_.rand ();
+
+	if (cross < 0.25) {
+		return (1);
+	} else if (cross >= 0.25 && cross < 0.5) {
+		return (2);
+	} else if (cross >= 0.5 && cross < 0.75) {
+		return (3);
+	} else {
+		return (4);
+	}
+
 }

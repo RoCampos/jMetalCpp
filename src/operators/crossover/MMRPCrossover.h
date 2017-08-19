@@ -6,7 +6,7 @@
 #include <Solution.h>
 #include <individual.h>
 #include <EdgeSolutionType.h>
-
+#include <myrandom.h>
 
 class MMRPCrossover : public Crossover
 {
@@ -19,6 +19,10 @@ private:
 
 	void * moead (void *);
 	void * nsga (void *);
+
+	rca::myrandom<std::mt19937, std::uniform_real_distribution<double>, double> generator_;
+
+	int get_crossover ();
 	
 };
 

@@ -55,8 +55,8 @@ int main(int argc, char ** argv) {
   algorithm = new GDE3(problem);
 
   // Algorithm parameters
-  int populationSizeValue = 100;
-  int maxIterationsValue = 25;
+  int populationSizeValue = atoi(argv[3]);
+  int maxIterationsValue = atoi(argv[4]);
   algorithm->setInputParameter("populationSize",&populationSizeValue);
   algorithm->setInputParameter("maxIterations",&maxIterationsValue);
 

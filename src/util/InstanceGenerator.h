@@ -10,7 +10,7 @@
 #include <vector>
 #include <numeric>
 
-#include "myrandom.h"
+#include <myrandom.h>
 
 
 #define PERCENTUAL 0

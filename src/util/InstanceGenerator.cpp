@@ -1,4 +1,4 @@
-#include "InstanceGenerator.h"
+#include <InstanceGenerator.h>
 
 void InstanceGenerator::generator ()
 {

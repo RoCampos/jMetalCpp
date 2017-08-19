@@ -24,6 +24,9 @@ TABLE OF CONTENTS
 0. Updates
 =======================================================================================
 
+Version 1.7.2(No official)
+  - ready to test.
+
 Version 1.7.1(Not Official)
   - MMRP problem has been added
   - NSGA2, ssNSGA2, GDE3, PAES, SMS-EMOA and MOEAD support MMRPOperators.

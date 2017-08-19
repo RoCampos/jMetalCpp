@@ -162,6 +162,8 @@ void MOEAD::initUniformWeight() {
     
     // Open the file
     std::ifstream in(dataFileName.c_str());
+
+    cout << dataFileName.c_str () << endl;
     if( !in ) {
       cout << "initUniformWeight: failed when reading from file: : " <<
           dataFileName << endl;

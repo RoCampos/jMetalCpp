@@ -58,9 +58,9 @@ int main(int argc, char ** argv) {
   algorithm = new SMSEMOA(problem);
 
   // Algorithm parameters
-  int populationSize = 100;
-  int maxEvaluations = 25;
-  double offset = 100;
+  int populationSize = atoi(argv[3]);
+  int maxEvaluations = atoi(argv[4]);
+  double offset = atoi(argv[5]);
 
   algorithm->setInputParameter("populationSize",&populationSize);
   algorithm->setInputParameter("maxEvaluations",&maxEvaluations);

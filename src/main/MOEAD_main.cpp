@@ -51,7 +51,7 @@ int main(int argc, char ** argv) {
 
   map<string, void *> parameters; // Operator parameters
 
-  //TODO: QualityIndicator * indicators; // Object to get quality indicators
+  //TODO: QualityIndicator * indicators; // Object to get quality indicator
 
   if (argc>=2) {
     problem = ProblemFactory::getProblem(argc, argv);
@@ -64,9 +64,9 @@ int main(int argc, char ** argv) {
 
   algorithm = new MOEAD(problem);
 
-  // Algorithm parameters
-  int populationSizeValue = 300;
-  int maxEvaluationsValue = 150;
+  int populationSizeValue = atoi (argv[3]);
+  int maxEvaluationsValue = atoi (argv[4]);
+
   algorithm->setInputParameter("populationSize",&populationSizeValue);
   algorithm->setInputParameter("maxEvaluations",&maxEvaluationsValue);
   
@@ -81,7 +81,12 @@ int main(int argc, char ** argv) {
 
   
   std::string name = "ONE";
+  double c1 = 0.25;
   parameters["algorithm"] = &name;
+  parameters["crossover1"] = &c1;
+  parameters["crossover2"] = &c1;
+  parameters["crossover3"] = &c1;
+  parameters["crossover4"] = &c1;
   crossover = new MMRPCrossover (parameters);
   
   // Mutation operator

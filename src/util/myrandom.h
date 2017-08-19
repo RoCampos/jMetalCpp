@@ -1,3 +1,6 @@
+#ifndef MY_RANDOM__
+#define MY_RANDOM__
+
 #include <iostream>
 #include <random>
 #include <chrono>
@@ -25,18 +28,14 @@ struct myrandom {
 	* Construtor padrão.
 	*
 	*/
-	myrandom(){}
+	myrandom();
 	
 	/**
 	* Construtor de cópia.
 	*
 	* @param myrandom<Engine, Dist, TypeValue>
 	*/
-	myrandom(const myrandom<Engine, Dist, TypeValue> & ref) {
-		
-		engine = ref.engine;
-		distribution = ref.distribution;
-	}
+	myrandom(const myrandom<Engine, Dist, TypeValue> & ref);
 	
 	/**
 	* Construtor que recebe uma semente e os limites
@@ -46,14 +45,7 @@ struct myrandom {
 	* @param TypeValue limite inferior do intervalo
 	* @param TypeValue limite superior do intervalo
 	*/
-	myrandom (long seed, TypeValue a, TypeValue b) {
-		
-		//initializing the engine
-		engine = Engine (seed);
-		
-		//initializing the distribution object
-		distribution = Dist (a, b);
-	}
+	myrandom (long seed, TypeValue a, TypeValue b);
 	
 	/**
 	* Construtor que recebe uma engine e os limites
@@ -63,10 +55,7 @@ struct myrandom {
 	* @param TypeValue limite inferior
 	* @param TypeValue limite superior
 	*/
-	myrandom (const Engine & e, TypeValue a, TypeValue b) {
-		engine = e;
-		distribution = Dist (a, b);
-	}
+	myrandom (const Engine & e, TypeValue a, TypeValue b);
 	
 	/**
 	* Método para redefinir o intervalo de geração de números
@@ -75,28 +64,21 @@ struct myrandom {
 	* @param TypeValue limite inferior novo
 	* @param TypeValue limite superior novo
 	*/
-	void reset_interval (TypeValue a, TypeValue b) {
-		distribution = Dist (a,b);
-	}
+	void reset_interval (TypeValue a, TypeValue b);
 	
 	/**
 	* Método para obter novo valor do gerador.
 	*
 	* @return TypeValue novo valor aleatório gerado
 	*/
-	TypeValue rand () {
-		TypeValue w = distribution(engine);
-		return w;
-	}
+	TypeValue rand ();
 	
 	/**
 	* Método que acessa engine utilizada para gerar números.
 	*
 	* @return Engine engine utilizada para gerar números
 	*/
-	const Engine& get_engine () const{
-		return engine;
-	}
+	const Engine& get_engine () const;
 	
 };
 
@@ -129,5 +111,4 @@ struct myseed {
 	
 }
 
-template class rca::myrandom<std::mt19937, std::uniform_int_distribution<int>, int>;
-template class rca::myrandom<std::mt19937, std::uniform_real_distribution<double>, double>;
+#endif

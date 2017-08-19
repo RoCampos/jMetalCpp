@@ -24,41 +24,6 @@
 #include <Problem.h>
 #include <stdio.h>
 #include <string.h>
-
-#include <CEC2005Problem.h>
-#include <DTLZ1.h>
-#include <DTLZ2.h>
-#include <DTLZ3.h>
-#include <DTLZ4.h>
-#include <DTLZ5.h>
-#include <DTLZ6.h>
-#include <DTLZ7.h>
-#include <Fonseca.h>
-#include <Griewank.h>
-#include <Kursawe.h>
-#include <LZ09_F1.h>
-#include <LZ09_F2.h>
-#include <LZ09_F3.h>
-#include <LZ09_F4.h>
-#include <LZ09_F5.h>
-#include <LZ09_F6.h>
-#include <LZ09_F7.h>
-#include <LZ09_F8.h>
-#include <LZ09_F9.h>
-#include <OneMax.h>
-#include <Rastrigin.h>
-#include <Rosenbrock.h>
-#include <Schaffer.h>
-#include <Sphere.h>
-#include <Srinivas.h>
-#include <Tanaka.h>
-#include <ZDT1.h>
-#include <ZDT2.h>
-#include <ZDT3.h>
-#include <ZDT4.h>
-#include <ZDT5.h>
-#include <ZDT6.h>
-
 #include <mmrp.h>
 
 class ProblemFactory {

@@ -258,7 +258,8 @@ void SolutionSet::printObjectivesToFile(string file, bool append){
     for (int i = 0; i < solutionsList_.size(); i++) {
       int nObj = solutionsList_[i]->getNumberOfObjectives();
       for (int obj = 0; obj < nObj; obj++) {
-        out << solutionsList_[i]->getObjective(obj) << " ";
+        if (obj == 1)
+          out << -1*solutionsList_[i]->getObjective(obj) << " ";
       }
       out << endl;
     }

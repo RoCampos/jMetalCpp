@@ -12,8 +12,6 @@ MMRPCrossover::MMRPCrossover(map<string, void *> parameters)
 
 void * MMRPCrossover::execute (void* object) {
 
-	cout << *(std::string*) this->parameters_["algorithm"] << endl;
-
 	std::string algo = *(std::string*) this->parameters_["algorithm"];
 
 	if (algo.compare ("TWO") == 0) {

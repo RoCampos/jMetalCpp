@@ -55,10 +55,10 @@ int main(int argc, char ** argv) {
 
   if (argc>=2) {
     problem = ProblemFactory::getProblem(argc, argv);
-    cout << "Selected problem: " << problem->getName() << endl;
+    // cout << "Selected problem: " << problem->getName() << endl;
   } else {
-    cout << "No problem selected." << endl;
-    cout << "Default problem will be used: Kursawe" << endl;
+    // cout << "No problem selected." << endl;
+    // cout << "Default problem will be used: Kursawe" << endl;
     problem = ProblemFactory::getProblem(const_cast<char *>("Kursawe"));
   }
 
@@ -108,10 +108,10 @@ int main(int argc, char ** argv) {
   secs = secs / CLOCKS_PER_SEC;
 
   // Result messages
-  cout << "Total execution time: " << secs << "s" << endl;
-  cout << "Variables values have been written to file VAR" << endl;
-  population->printVariablesToFile("VAR");
-  cout << "Objectives values have been written to file FUN" << endl;
+  // cout << "Total execution time: " << secs << "s" << endl;
+  // cout << "Variables values have been written to file VAR" << endl;
+  // population->printVariablesToFile("VAR");
+  // cout << "Objectives values have been written to file FUN" << endl;
   population->printObjectivesToFile("FUN");
 
   delete mutation;

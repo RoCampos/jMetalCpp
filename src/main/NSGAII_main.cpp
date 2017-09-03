@@ -49,33 +49,52 @@
  *                  5th International Conference, EMO 2009, pp: 183-197.
  *                  April 2009)
  */
+
+
+void help () {
+
+	cout << "Usage:" << endl;
+	cout << "\tNSGA2_main <ProblemName> <Instance> <populationSize> <maxEvaluations>\n";
+	cout << "\nOptions:" << endl;
+	cout << "\tProblemName	MMRP(Multisource Multicast Routing Problem)\n";
+	cout << "\tInstance	Brite instance of MMRP\n";
+	cout << "\tPopulationSize	number of individuals of the populations.\n";
+	cout << "\tMaxEvaluations	number of iterations of the algorithms. Need to be > 10.\n";
+	cout << "\nExamples:" << endl;
+	cout << "\tNSGAII_main MMRP b30_1.brite 10 1000" << endl;
+
+	exit (0);
+}
+
 int main(int argc, char ** argv) {
 
 	clock_t t_ini, t_fin;
   
-  Problem   * problem   ; // The problem to solve
-  Algorithm * algorithm ; // The algorithm to use
-  Operator  * crossover ; // Crossover operator
-  Operator  * mutation  ; // Mutation operator
-  Operator  * selection ; // Selection operator
+  	Problem   * problem   ; // The problem to solve
+	Algorithm * algorithm ; // The algorithm to use
+	Operator  * crossover ; // Crossover operator
+	Operator  * mutation  ; // Mutation operator
+	Operator  * selection ; // Selection operator
 
-  if (argc>=2) {
-    problem = ProblemFactory::getProblem(argc, argv);
-    // cout << "Selected problem: " << problem->getName() << endl;
-  } else {
-    // cout << "No problem selected." << endl;
-    // cout << "Default problem will be used: Fonseca" << endl;
-    problem = ProblemFactory::getProblem(const_cast<char *>("Fonseca"));
-  }
+	if (argc>=2) {
+		problem = ProblemFactory::getProblem(argc, argv);
+		// cout << "Selected problem: " << problem->getName() << endl;
+	} else {
+		// cout << "No problem selected." << endl;
+		// cout << "Default problem will be used: Fonseca" << endl;
+		help ();
+	}
   
-//  QualityIndicator * indicators ; // Object to get quality indicators
-//	indicators = NULL ;
+ 	QualityIndicator * indicators ; // Object to get quality indicators
+	indicators = NULL ;
 
 	algorithm = new NSGAII(problem);
 
   	// Algorithm parameters
- 	int populationSize = atoi(argv[3]);
- 	int maxEvaluations = atoi(argv[4]);
+ 	int populationSize = atoi(argv[1]);
+ 	int maxEvaluations = atoi(argv[2]);
+	std::string frontarchive = argv[3];
+
  	algorithm->setInputParameter("populationSize",&populationSize);
   	algorithm->setInputParameter("maxEvaluations",&maxEvaluations);
 
@@ -97,8 +116,11 @@ int main(int argc, char ** argv) {
 	algorithm->addOperator("mutation",mutation);
 	algorithm->addOperator("selection",selection);
 
+
+	//creating the qualityindicador
+	indicators = new QualityIndicator(problem, frontarchive);
 	// Add the indicator object to the algorithm
-//	algorithm->setInputParameter("indicators", indicators) ;
+	algorithm->setInputParameter("indicators", indicators) ;
 
 	// Execute the Algorithm
 	t_ini = clock();
@@ -113,6 +135,7 @@ int main(int argc, char ** argv) {
 	// population->printVariablesToFile("VAR");
 	// cout << "Objectives values have been written to file FUN" << endl;
 	population->printObjectivesToFile("FUN");
+	cout << indicators->getHypervolume(population) << endl;
   
 //  if (indicators != NULL) {
 //    cout << "Quality indicators" << endl;

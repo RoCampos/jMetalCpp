@@ -23,7 +23,7 @@ class MMRP : public Problem
 public:
 	
 	MMRP(std::string);
-	MMRP(std::string solutionType, std::string instance, std::string conf);
+	MMRP(std::string solutionType, std::string instance);
 	~MMRP();
 	void evaluate (Solution *solution);
 

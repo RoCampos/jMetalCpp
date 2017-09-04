@@ -116,7 +116,6 @@ SolutionSet * paes::execute() {
         }
       }
 
-
     } while (evaluations < maxEvaluations);
 
     //Return the  population of non-dominated solution

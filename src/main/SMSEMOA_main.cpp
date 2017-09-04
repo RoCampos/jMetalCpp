@@ -29,8 +29,13 @@
 #include <ProblemFactory.h>
 #include <string.h>
 #include <time.h>
+#include <QualityIndicator.h>
 
 
+
+void help () {
+
+}
 
 int main(int argc, char ** argv) {
 
@@ -48,19 +53,20 @@ int main(int argc, char ** argv) {
   } else {
     // cout << "No problem selected." << endl;
     // cout << "Default problem will be used: Fonseca" << endl;
-    problem = ProblemFactory::getProblem(const_cast<char *>("Fonseca"));
+    help ();
   }
 
   //TODO: Quality Indicators
-  //QualityIndicator indicators ; // Object to get quality indicators
-  //indicators = null ;
+  QualityIndicator * indicators ; // Object to get quality indicators
+  indicators = NULL ;
 
   algorithm = new SMSEMOA(problem);
 
   // Algorithm parameters
-  int populationSize = atoi(argv[3]);
-  int maxEvaluations = atoi(argv[4]);
-  double offset = atoi(argv[5]);
+  int populationSize = atoi(argv[1]);
+  int maxEvaluations = atoi(argv[2]);
+  double offset = atoi(argv[3]);
+  std::string frontarchive = argv[4];
 
   algorithm->setInputParameter("populationSize",&populationSize);
   algorithm->setInputParameter("maxEvaluations",&maxEvaluations);
@@ -86,8 +92,10 @@ int main(int argc, char ** argv) {
   algorithm->addOperator("mutation",mutation);
   algorithm->addOperator("selection",selection);
 
+  //creating the qualityindicador
+	indicators = new QualityIndicator(problem, frontarchive);
   // Add the indicator object to the algorithm
-  //algorithm->setInputParameter("indicators", indicators) ;
+  algorithm->setInputParameter("indicators", indicators) ;
 
 	// Execute the Algorithm
 	t_ini = clock();
@@ -103,7 +111,8 @@ int main(int argc, char ** argv) {
 	// cout << "Variables values have been written to file VAR" << endl;
 	// population->printVariablesToFile("VAR");
 	// cout << "Objectives values have been written to file FUN" << endl;
-	population->printObjectivesToFile("FUN");
+  population->printObjectivesToFile("FUN");
+  cout << indicators->getHypervolume(population) << endl;
 
 	delete mutation;
 	delete crossover;

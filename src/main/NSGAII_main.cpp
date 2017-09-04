@@ -54,14 +54,15 @@
 void help () {
 
 	cout << "Usage:" << endl;
-	cout << "\tNSGA2_main <ProblemName> <Instance> <populationSize> <maxEvaluations>\n";
+	cout << "\tNSGA2_main <ProblemName> <Instance> <populationSize> <maxEvaluations> <frontfile>\n";
 	cout << "\nOptions:" << endl;
 	cout << "\tProblemName	MMRP(Multisource Multicast Routing Problem)\n";
 	cout << "\tInstance	Brite instance of MMRP\n";
 	cout << "\tPopulationSize	number of individuals of the populations.\n";
 	cout << "\tMaxEvaluations	number of iterations of the algorithms. Need to be > 10.\n";
+	cout << "\tFrontFile	archive with the real pareto front\n";
 	cout << "\nExamples:" << endl;
-	cout << "\tNSGAII_main MMRP b30_1.brite 10 1000" << endl;
+	cout << "\tNSGAII_main MMRP b30_1.brite 10 1000 frontfile.txt" << endl;
 
 	exit (0);
 }

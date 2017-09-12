@@ -28,6 +28,22 @@
 #include <iostream>
 #include <paes.h>
 #include <time.h>
+#include <QualityIndicator.h>
+
+void help () {
+
+  cout << "Usage:" << endl;
+	cout << "\tNSGA2_main <ProblemName> <Instance> <populationSize> <maxEvaluations> <frontfile>\n";
+	cout << "\nOptions:" << endl;
+	cout << "\tProblemName	MMRP(Multisource Multicast Routing Problem)\n";
+	cout << "\tInstance	Brite instance of MMRP\n";
+	cout << "\tPopulationSize	number of individuals of the populations.\n";
+	cout << "\tMaxEvaluations	number of iterations of the algorithms. Need to be > 10.\n";
+	cout << "\tFrontFile	archive with the real pareto front\n";
+	cout << "\nExamples:" << endl;
+	cout << "\tNSGAII_main MMRP b30_1.brite 10 1000 frontfile.txt" << endl;
+
+}
 
 int main(int argc, char ** argv) {
   
@@ -38,24 +54,25 @@ int main(int argc, char ** argv) {
   
   if (argc>=2) {
     problem = ProblemFactory::getProblem(argc, argv);
-    cout << "Selected problem: " << problem->getName() << endl;
+    // cout << "Selected problem: " << problem->getName() << endl;
   } else {
-    cout << "No problem selected." << endl;
-    cout << "Default problem will be used: Fonseca" << endl;
-    problem = ProblemFactory::getProblem(const_cast<char *>("Fonseca"));
+    // cout << "No problem selected." << endl;
+    // cout << "Default problem will be used: Fonseca" << endl;
+   help ();
   }
   
-  //QualityIndicator indicators ; // Object to get quality indicators
+  QualityIndicator * indicators;
   
   algorithm = new paes(problem);
   
   // Algorithm parameters
-  int archiveSizeValue = atoi(argv[3]);
+  int archiveSizeValue = atoi(argv[1]);
   int *archiveSizePtr = &archiveSizeValue;
-  int biSectionsValue = atoi(argv[4]);
+  int biSectionsValue = atoi(argv[2]);
   int *biSectionsPtr = &biSectionsValue;
-  int maxEvaluationsValue = atoi(argv[5]);
+  int maxEvaluationsValue = atoi(argv[3]);
   int *maxEvaluationsPtr = &maxEvaluationsValue;
+  std::string frontarchive = argv[4];
   
   algorithm->setInputParameter("archiveSize",archiveSizePtr);
   algorithm->setInputParameter("biSections",biSectionsPtr);
@@ -65,17 +82,13 @@ int main(int argc, char ** argv) {
   map<string, void *> parameters; // Operator parameters
   parameters.clear();
   mutation = new MMRPMutation(parameters);
-  
-  // Mutation (BinaryReal variables)
-  //mutation = MutationFactory.getMutationOperator("BitFlipMutation");
-  //mutation.setParameter("probability",0.1);
   algorithm->addOperator("mutation",mutation);
   
-  // Checking parameters
-  //cout << "PolynomialMutation:" << endl;
-  //cout << *(double *) algorithm->getOperator("mutation")->getParameter("probability") << endl;
-  //cout << *(double *) algorithm->getOperator("mutation")->getParameter("distributionIndex") << endl;
-  
+  //creating the qualityindicador
+	indicators = new QualityIndicator(problem, frontarchive);
+	// Add the indicator object to the algorithm
+	algorithm->setInputParameter("indicators", indicators) ;
+
   t_ini = clock();
   SolutionSet * population = algorithm->execute();
   t_fin = clock();
@@ -83,11 +96,12 @@ int main(int argc, char ** argv) {
   secs = secs / CLOCKS_PER_SEC;
   
   // Result messages
-  cout << "Total execution time: " << secs << "s" << endl;
-  cout << "Variables values have been writen to file VAR" << endl;
-  population->printVariablesToFile("VAR");
-  cout << "Objectives values have been writen to file FUN" << endl;
+  // cout << "Total execution time: " << secs << "s" << endl;
+  // cout << "Variables values have been writen to file VAR" << endl;
+  // population->printVariablesToFile("VAR");
+  // cout << "Objectives values have been writen to file FUN" << endl;
   population->printObjectivesToFile("FUN");
+  cout << indicators->getHypervolume(population) << endl;
   
 //  if (indicators != NULL) {
 //    cout << "Quality indicators" << endl;

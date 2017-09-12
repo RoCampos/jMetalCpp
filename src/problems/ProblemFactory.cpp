@@ -67,7 +67,7 @@ Problem * ProblemFactory::getProblem(char * name, int argc, char ** argv) {
       //type of solution and instance given
       //argc[0] - is the instance given
       //argc[1] - should be a conf file to handle objective values (max,min)
-      return new MMRP ("EdgeSolutionType", argv[0], argv[1]);
+      return new MMRP ("EdgeSolutionType", argv[0]);
     }
   }
 

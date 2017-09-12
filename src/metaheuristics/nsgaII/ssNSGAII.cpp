@@ -53,6 +53,7 @@ SolutionSet * ssNSGAII::execute() {
   SolutionSet * population;
   SolutionSet * offspringPopulation;
   SolutionSet * unionSolution;
+  QualityIndicator * indicators; // QualityIndicator object
 
   Operator * mutationOperator;
   Operator * crossoverOperator;
@@ -63,7 +64,7 @@ SolutionSet * ssNSGAII::execute() {
   //Read the parameters
   populationSize = *(int *) getInputParameter("populationSize");
   maxEvaluations = *(int *) getInputParameter("maxEvaluations");
-  // TODO: indicators = (QualityIndicator) getInputParameter("indicators");
+  indicators = (QualityIndicator *) getInputParameter("indicators");
 
   //Initialize the variables
   population = new SolutionSet(populationSize);

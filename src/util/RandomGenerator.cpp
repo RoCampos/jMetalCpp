@@ -34,9 +34,9 @@ using  namespace std;
 RandomGenerator::RandomGenerator() {
   srand(time(NULL));
   //srand(0);
-  //cout << (unsigned)time(0) << endl;
+  // cout << (unsigned)time(0) << endl;
   seed_ = ((double) rand() / (double) (RAND_MAX ));
-  //cout << "Seed value is: " << seed_ << endl;
+  // cout << "Seed value is: " << seed_ << endl;
     
   // seed_ = RAND_MAX;
   // cout << "Seed value is: " << seed_ << endl;

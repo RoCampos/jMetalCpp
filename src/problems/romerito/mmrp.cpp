@@ -8,7 +8,7 @@ MMRP::MMRP(std::string)
 	//default constructor
 }
 
-MMRP::MMRP (std::string solutionType, std::string instance, std::string conf)
+MMRP::MMRP (std::string solutionType, std::string instance)
 {
 	//solution type do not reprensent the variables
 	numberOfVariables_ = 0;

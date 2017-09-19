@@ -102,11 +102,11 @@ void* MMRPCrossover::nsga (void * object)
 	int op = this->get_crossover ();
 
 	if (op == 1) {
-		crossover_by_hop (ind1, ind2, novo1, 30);	
+		crossover_by_hop (ind1, ind2, novo1, NODES);	
 	} else if (op == 2) {
 		crossover_by_tree (ind1, ind2, novo1); 
 	} else if (op == 3) {
-		crossover_by_path (ind1, ind2, novo1, 30);
+		crossover_by_path (ind1, ind2, novo1, NODES);
 	} else {
 		crossover_by_tcost (ind1, ind2, novo1);
 	}
@@ -114,11 +114,11 @@ void* MMRPCrossover::nsga (void * object)
 	op = this->get_crossover ();
 
 	if (op == 1) {
-		crossover_by_hop (ind1, ind2, novo2, 30);	
+		crossover_by_hop (ind1, ind2, novo2, NODES);	
 	} else if (op == 2) {
 		crossover_by_tree (ind1, ind2, novo2); 
 	} else if (op == 3) {
-		crossover_by_path (ind1, ind2, novo2, 30);
+		crossover_by_path (ind1, ind2, novo2, NODES);
 	} else {
 		crossover_by_tcost (ind1, ind2, novo2);
 	}

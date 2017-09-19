@@ -14,8 +14,8 @@
 #include <Solution.h>
 #include <EdgeSolutionType.h>
 #include <network.h>
-#include <Group.h>
-#include <Reader.h>
+#include <group.h>
+#include <reader.h>
 
 class MMRP : public Problem
 {

@@ -240,7 +240,7 @@ void MOEAD::initPopulation() {
     Solution * newSolution = new Solution(problem_);
 
     problem_->evaluate(newSolution);
-    evaluations_++;
+    // evaluations_++;
     population_->add(newSolution);
   } // for
 } // initPopulation

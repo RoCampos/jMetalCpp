@@ -123,6 +123,15 @@ int main(int argc, char ** argv) {
 	// Add the indicator object to the algorithm
 	algorithm->setInputParameter("indicators", indicators) ;
 
+	// MMRP * p = (MMRP*) problem;
+	// Network * n = p->get_network ();
+	// for (auto v : n->get_neighboors (0)) {
+	// 	cout << v << endl;
+	// }
+
+	// exit (1);
+
+
 	// Execute the Algorithm
 	t_ini = clock();
 	SolutionSet * population = algorithm->execute();

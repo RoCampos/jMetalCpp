@@ -82,7 +82,7 @@ int main(int argc, char ** argv) {
   // of CS & EE, University of Essex, 02/2009.
   // http://dces.essex.ac.uk/staff/qzhang/MOEAcompetition/CEC09final/code/ZhangMOEADcode/moead0305.rar
   string dataDirectoryValue =
-          "../../data/Weight";
+          "./data/Weight";
   algorithm->setInputParameter("dataDirectory", &dataDirectoryValue);
 
   

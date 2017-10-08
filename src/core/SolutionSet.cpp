@@ -233,7 +233,12 @@ void SolutionSet::printObjectivesToFile(string file){
   cout.setf(ios::fixed);
   for (int i = 0; i < solutionsList_.size(); i++) {
     int nObj = solutionsList_[i]->getNumberOfObjectives();
+
+    if (solutionsList_[i]->getObjective(0) > 0) {
+        continue;
+    }
     for (int obj = 0; obj < nObj; obj++) {
+
       out << solutionsList_[i]->getObjective(obj) << " ";
       //cout << setprecision(15) << solutionsList_[i]->getObjective(obj) << " ";
     }

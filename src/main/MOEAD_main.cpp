@@ -72,6 +72,7 @@ int main(int argc, char ** argv) {
   int populationSizeValue = atoi (argv[1]);
   int maxEvaluationsValue = atoi (argv[2]);
   std::string frontarchive = argv[3];
+  std::string nadir = argv[4];
 
   algorithm->setInputParameter("populationSize",&populationSizeValue);
   algorithm->setInputParameter("maxEvaluations",&maxEvaluationsValue);
@@ -82,7 +83,7 @@ int main(int argc, char ** argv) {
   // of CS & EE, University of Essex, 02/2009.
   // http://dces.essex.ac.uk/staff/qzhang/MOEAcompetition/CEC09final/code/ZhangMOEADcode/moead0305.rar
   string dataDirectoryValue =
-          "../../data/Weight";
+          "./data/Weight";
   algorithm->setInputParameter("dataDirectory", &dataDirectoryValue);
 
   
@@ -120,7 +121,19 @@ int main(int argc, char ** argv) {
   // population->printVariablesToFile("VAR");
   // cout << "Objectives values have been written to file FUN" << endl;
   population->printObjectivesToFile("FUN");
-  cout << indicators->getHypervolume(population) << endl;
+  // cout << indicators->getHypervolume(population) << endl;
+  std::ifstream nadirf;
+  nadirf.open (nadir.c_str ());
+  int Z, C, H;
+  nadirf >> Z;
+  nadirf >> C;
+  nadirf >> H;
+  nadirf.close ();
+  std::stringstream ss;
+  ss << "./hv FUN -r ";
+  ss << '"' << Z << " " << C << " " << H <<'"';
+  system (ss.str ().c_str());
+
 
   delete mutation;
   delete crossover;

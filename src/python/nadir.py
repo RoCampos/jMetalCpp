@@ -9,7 +9,7 @@ def nadir (pareto):
 	C = max(pareto, key=lambda item:item[1])[1]
 	H = max(pareto, key=lambda item:item[2])[2]
 
-	C = int (C * 1.30)
+	C = int (C * 1.5)
 	H = int (H * 1.5)
 
 	return (Z, C, H)

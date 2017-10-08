@@ -165,15 +165,17 @@ int main(int argc, char ** argv) {
 //  } // if
 
 	std::ifstream nadirf;
-	cout << nadir << endl;
 	nadirf.open (nadir.c_str ());
 	int Z, C, H;
 	nadirf >> Z;
 	nadirf >> C;
 	nadirf >> H;
 	nadirf.close ();
-	cout << Z << C << H << endl;
-	system ("./hv FUN -r \"1 20000 15\"");
+	std::stringstream ss;
+	ss << "./hv FUN -r ";
+	ss << '"' << Z << " " << C << " " << H <<'"';
+	system (ss.str ().c_str());
+	
 
   delete selection;
   delete mutation;

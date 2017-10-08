@@ -85,6 +85,8 @@ int main(int argc, char ** argv) {
   int populationSize = atoi(argv[1]);
   int maxEvaluations = atoi(argv[2]);
   std::string frontarchive = argv[3];
+  std::string nadir = argv[4];
+
   algorithm->setInputParameter("populationSize",&populationSize);
   algorithm->setInputParameter("maxEvaluations",&maxEvaluations);
 
@@ -126,7 +128,19 @@ int main(int argc, char ** argv) {
 	// population->printVariablesToFile("VAR");
 	// cout << "Objectives values have been written to file FUN" << endl;
   population->printObjectivesToFile("FUN");
-  cout << indicators->getHypervolume(population) << endl;
+  // cout << indicators->getHypervolume(population) << endl;
+
+  std::ifstream nadirf;
+  nadirf.open (nadir.c_str ());
+  int Z, C, H;
+  nadirf >> Z;
+  nadirf >> C;
+  nadirf >> H;
+  nadirf.close ();
+  std::stringstream ss;
+  ss << "./hv FUN -r ";
+  ss << '"' << Z << " " << C << " " << H <<'"';
+  system (ss.str ().c_str());
 
   delete selection;
   delete mutation;

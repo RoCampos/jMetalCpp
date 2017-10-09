@@ -46,7 +46,7 @@ SolutionSet * NSGAII::execute() {
   int maxEvaluations;
   int evaluations;
 
-//  QualityIndicator * indicators; // QualityIndicator object
+  QualityIndicator * indicators; // QualityIndicator object
   int requiredEvaluations; // Use in the example of use of the
                            // indicators object (see below)
 
@@ -63,7 +63,8 @@ SolutionSet * NSGAII::execute() {
   //Read the parameters
   populationSize = *(int *) getInputParameter("populationSize");
   maxEvaluations = *(int *) getInputParameter("maxEvaluations");
-//  indicators = (QualityIndicator *) getInputParameter("indicators");
+
+  indicators = (QualityIndicator *) getInputParameter("indicators");
 
   //Initialize the variables
   population = new SolutionSet(populationSize);
@@ -82,7 +83,7 @@ SolutionSet * NSGAII::execute() {
     newSolution = new Solution(problem_);
     problem_->evaluate(newSolution);
     problem_->evaluateConstraints(newSolution);
-    evaluations++;
+    // evaluations++;
     population->add(newSolution);
   } //for
   

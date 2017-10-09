@@ -1,6 +1,9 @@
 # Ignore the build and lib dirs
 build/
 lib/
+front/
+nadir/
+.vscode/
 
 # Ignore any executables
 bin/
@@ -18,3 +21,6 @@ nbproject/
 *.xcworkspacedata
 *.xcuserstate
 *.xcsettings
+FUN
+VAR
+hv

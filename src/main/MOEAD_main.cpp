@@ -29,6 +29,7 @@
 #include <MMRPMutation.h>
 #include <iostream>
 #include <time.h>
+#include <QualityIndicator.h>
 
 /**
  * This class executes the algorithm described in:
@@ -37,6 +38,10 @@
  *   and NSGA-II". IEEE Trans on Evolutionary Computation, vol. 12,  no 2,  
  *   pp 284-302, April/2009.  
  */
+
+void help () {
+
+}
 
 int main(int argc, char ** argv) {
 
@@ -47,7 +52,7 @@ int main(int argc, char ** argv) {
   Operator  * crossover; // Crossover operator
   Operator  * mutation;  // Mutation operator
   
-  //QualityIndicator * indicators ; // Object to get quality indicators
+  QualityIndicator * indicators ; // Object to get quality indicators
 
   map<string, void *> parameters; // Operator parameters
 
@@ -55,17 +60,19 @@ int main(int argc, char ** argv) {
 
   if (argc>=2) {
     problem = ProblemFactory::getProblem(argc, argv);
-    cout << "Selected problem: " << problem->getName() << endl;
+    // cout << "Selected problem: " << problem->getName() << endl;
   } else {
-    cout << "No problem selected." << endl;
-    cout << "Default problem will be used: Kursawe" << endl;
-    problem = ProblemFactory::getProblem(const_cast<char *>("Kursawe"));
+    // cout << "No problem selected." << endl;
+    // cout << "Default problem will be used: Kursawe" << endl;
+    help ();
   }
 
   algorithm = new MOEAD(problem);
 
-  int populationSizeValue = atoi (argv[3]);
-  int maxEvaluationsValue = atoi (argv[4]);
+  int populationSizeValue = atoi (argv[1]);
+  int maxEvaluationsValue = atoi (argv[2]);
+  std::string frontarchive = argv[3];
+  std::string nadir = argv[4];
 
   algorithm->setInputParameter("populationSize",&populationSizeValue);
   algorithm->setInputParameter("maxEvaluations",&maxEvaluationsValue);
@@ -76,7 +83,7 @@ int main(int argc, char ** argv) {
   // of CS & EE, University of Essex, 02/2009.
   // http://dces.essex.ac.uk/staff/qzhang/MOEAcompetition/CEC09final/code/ZhangMOEADcode/moead0305.rar
   string dataDirectoryValue =
-          "../../data/Weight";
+          "./data/Weight";
   algorithm->setInputParameter("dataDirectory", &dataDirectoryValue);
 
   
@@ -97,8 +104,9 @@ int main(int argc, char ** argv) {
   algorithm->addOperator("crossover",crossover);
   algorithm->addOperator("mutation",mutation);
 
+  indicators = new QualityIndicator(problem, frontarchive);
   // Add the indicator object to the algorithm
-  //algorithm->setInputParameter("indicators", indicators) ;
+  algorithm->setInputParameter("indicators", indicators) ;
 
   // Execute the Algorithm
   t_ini = clock();
@@ -108,11 +116,24 @@ int main(int argc, char ** argv) {
   secs = secs / CLOCKS_PER_SEC;
 
   // Result messages
-  cout << "Total execution time: " << secs << "s" << endl;
-  cout << "Variables values have been written to file VAR" << endl;
-  population->printVariablesToFile("VAR");
-  cout << "Objectives values have been written to file FUN" << endl;
+  // cout << "Total execution time: " << secs << "s" << endl;
+  // cout << "Variables values have been written to file VAR" << endl;
+  // population->printVariablesToFile("VAR");
+  // cout << "Objectives values have been written to file FUN" << endl;
   population->printObjectivesToFile("FUN");
+  // cout << indicators->getHypervolume(population) << endl;
+  std::ifstream nadirf;
+  nadirf.open (nadir.c_str ());
+  int Z, C, H;
+  nadirf >> Z;
+  nadirf >> C;
+  nadirf >> H;
+  nadirf.close ();
+  std::stringstream ss;
+  ss << "./hv FUN -r ";
+  ss << '"' << Z << " " << C << " " << H <<'"';
+  system (ss.str ().c_str());
+
 
   delete mutation;
   delete crossover;

@@ -3,10 +3,31 @@
 	{
 		"selected_items":
 		[
+			[
+				"poop",
+				"populationSize"
+			],
+			[
+				"Pop",
+				"populationSize"
+			],
+			[
+				"pop",
+				"populationSize"
+			]
 		]
 	},
 	"buffers":
 	[
+		{
+			"file": "src/main/NSGAII_main.cpp",
+			"settings":
+			{
+				"buffer_size": 5365,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		}
 	],
 	"build_system": "",
 	"build_system_choices":
@@ -53,6 +74,36 @@
 	],
 	"file_history":
 	[
+		"/Users/romeritocampos/HD/workspace/cpp/jMetalCpp/src/problems/romerito/mmrp.cpp",
+		"/Users/romeritocampos/HD/workspace/cpp/jMetalCpp/src/problems/romerito/mmrp.h",
+		"/Users/romeritocampos/HD/workspace/cpp/jMetalCpp/src/problems/ProblemFactory.cpp",
+		"/Users/romeritocampos/HD/workspace/cpp/jMetalCpp/src/metaheuristics/nsgaII/NSGAII.cpp",
+		"/Users/romeritocampos/HD/workspace/cpp/jMetalCpp/src/util/PseudoRandom.cpp",
+		"/Users/romeritocampos/HD/workspace/cpp/jMetalCpp/src/core/Problem.cpp",
+		"/Users/romeritocampos/HD/workspace/cpp/jMetalCpp/src/metaheuristics/nsgaII/NSGAII.h",
+		"/Users/romeritocampos/HD/workspace/cpp/jMetalCpp/src/util/RandomGenerator.h",
+		"/Users/romeritocampos/HD/workspace/cpp/jMetalCpp/src/util/RandomGenerator.cpp",
+		"/Users/romeritocampos/HD/workspace/cpp/jMetalCpp/src/util/PseudoRandom.h",
+		"/Users/romeritocampos/HD/workspace/cpp/jMetalCpp/src/operators/mutation/MMRPMutation.cpp",
+		"/Users/romeritocampos/HD/workspace/cpp/jMetalCpp/src/operators/selection/BinaryTournament.h",
+		"/Users/romeritocampos/HD/workspace/cpp/jMetalCpp/src/operators/selection/BinaryTournament.cpp",
+		"/Users/romeritocampos/HD/workspace/cpp/jMetalCpp/src/operators/selection/Selection.h",
+		"/Users/romeritocampos/HD/workspace/cpp/jMetalCpp/src/main/ssNSGAII_main.cpp",
+		"/Users/romeritocampos/HD/workspace/cpp/jMetalCpp/src/qualityIndicator/main/Epsilon_main.cpp",
+		"/Users/romeritocampos/HD/workspace/cpp/jMetalCpp/src/main/SMSEMOA_main.cpp",
+		"/Users/romeritocampos/HD/workspace/cpp/jMetalCpp/src/main/PAES_main.cpp",
+		"/Users/romeritocampos/HD/workspace/cpp/jMetalCpp/src/main/MOEAD_main.cpp",
+		"/Users/romeritocampos/HD/workspace/cpp/jMetalCpp/src/main/GDE3_main.cpp",
+		"/Users/romeritocampos/HD/workspace/cpp/jMetalCpp/src/qualityIndicator/main/Hypervolume_main.cpp",
+		"/Users/romeritocampos/HD/workspace/cpp/jMetalCpp/src/core/SolutionSet.cpp",
+		"/Users/romeritocampos/HD/workspace/cpp/jMetalCpp/src/operators/crossover/MMRPCrossover.cpp",
+		"/Users/romeritocampos/HD/workspace/cpp/jMetalCpp/src/operators/selection/DifferentialEvolutionSelection.cpp",
+		"/Users/romeritocampos/HD/workspace/cpp/jMetalCpp/Makefile",
+		"/Users/romeritocampos/HD/workspace/cpp/jMetalCpp/src/metaheuristics/gde3/GDE3.cpp",
+		"/Users/romeritocampos/HD/workspace/cpp/jMetalCpp/src/main/NSGAII_main.cpp",
+		"/Users/romeritocampos/HD/workspace/cpp/jMetalCpp/src/network/myalgorithm.cpp",
+		"/Users/romeritocampos/HD/workspace/cpp/jMetalCpp/src/metaheuristics/nsgaII/ssNSGAII.cpp",
+		"/Users/romeritocampos/HD/workspace/cpp/jMetalCpp/src/metaheuristics/gde3/GDE3.h",
 		"/Users/romeritocampos/Documents/workspace/Doutorado/projeto/Doutorado.sublime-project",
 		"/Users/romeritocampos/Documents/workspace/Doutorado/texto/qualificacao/Thesis.sublime-project",
 		"/Users/romeritocampos/Documents/workspace/Doutorado/texto/qualificacao/Thesis.sublime-workspace",
@@ -86,7 +137,7 @@
 	],
 	"find":
 	{
-		"height": 29.0
+		"height": 37.0
 	},
 	"find_in_files":
 	{
@@ -138,8 +189,37 @@
 	"groups":
 	[
 		{
+			"selected": 0,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "src/main/NSGAII_main.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5365,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2367,
+								2367
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 2291.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
 			]
 		}
 	],
@@ -191,6 +271,126 @@
 		"last_filter": "",
 		"selected_items":
 		[
+			[
+				"nsga",
+				"src/metaheuristics/nsgaII/NSGAII.cpp"
+			],
+			[
+				"problemfa",
+				"src/problems/ProblemFactory.cpp"
+			],
+			[
+				"mmrp.cpp",
+				"src/problems/romerito/mmrp.cpp"
+			],
+			[
+				"mmrp",
+				"src/problems/romerito/mmrp.h"
+			],
+			[
+				"problem",
+				"src/problems/ProblemFactory.cpp"
+			],
+			[
+				"pseud",
+				"src/util/PseudoRandom.cpp"
+			],
+			[
+				"factor",
+				"src/problems/ProblemFactory.cpp"
+			],
+			[
+				"facto",
+				"src/problems/ProblemFactory.cpp"
+			],
+			[
+				"mmrpmu",
+				"src/operators/mutation/MMRPMutation.cpp"
+			],
+			[
+				"pseudor",
+				"src/util/PseudoRandom.h"
+			],
+			[
+				"selection",
+				"src/operators/selection/Selection.h"
+			],
+			[
+				"binar",
+				"src/operators/selection/BinaryTournament.h"
+			],
+			[
+				"pseudorand",
+				"src/util/PseudoRandom.cpp"
+			],
+			[
+				"binaryto",
+				"src/operators/selection/BinaryTournament.cpp"
+			],
+			[
+				"random",
+				"src/util/RandomGenerator.cpp"
+			],
+			[
+				"eps",
+				"src/qualityIndicator/main/Epsilon_main.cpp"
+			],
+			[
+				"hyper",
+				"src/qualityIndicator/main/Hypervolume_main.cpp"
+			],
+			[
+				"moead",
+				"src/main/MOEAD_main.cpp"
+			],
+			[
+				"paes",
+				"src/main/PAES_main.cpp"
+			],
+			[
+				"smsemoa",
+				"src/main/SMSEMOA_main.cpp"
+			],
+			[
+				"solutionset",
+				"src/core/SolutionSet.cpp"
+			],
+			[
+				"gde3",
+				"src/main/GDE3_main.cpp"
+			],
+			[
+				"mmr",
+				"src/operators/crossover/MMRPCrossover.cpp"
+			],
+			[
+				"mmrpcro",
+				"src/operators/crossover/MMRPCrossover.cpp"
+			],
+			[
+				"makefile",
+				"Makefile"
+			],
+			[
+				"dif",
+				"src/operators/selection/DifferentialEvolutionSelection.cpp"
+			],
+			[
+				"ssns",
+				"src/main/ssNSGAII_main.cpp"
+			],
+			[
+				"smse",
+				"src/main/SMSEMOA_main.cpp"
+			],
+			[
+				"gde",
+				"src/main/GDE3_main.cpp"
+			],
+			[
+				"algorithm",
+				"src/network/myalgorithm.cpp"
+			],
 			[
 				"probl",
 				"multi/problem_info.h"
@@ -250,10 +450,6 @@
 			[
 				"cmake",
 				"CMakeLists.txt"
-			],
-			[
-				"algorithm",
-				"network/algorithm.h"
 			],
 			[
 				"opera",

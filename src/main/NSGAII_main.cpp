@@ -32,6 +32,8 @@
 #include <MMRPCrossover.h>
 #include <MMRPMutation.h>
 
+#include <cstdlib>
+
 
 /**
  * Class implementing the NSGA-II algorithm.
@@ -49,33 +51,56 @@
  *                  5th International Conference, EMO 2009, pp: 183-197.
  *                  April 2009)
  */
+
+
+void help () {
+
+	cout << "Usage:" << endl;
+	cout << "\tNSGA2_main <ProblemName> <Instance> <populationSize> <maxEvaluations> <frontfile> <nadir>\n";
+	cout << "\nOptions:" << endl;
+	cout << "\tProblemName	MMRP(Multisource Multicast Routing Problem)\n";
+	cout << "\tInstance	Brite instance of MMRP\n";
+	cout << "\tPopulationSize	number of individuals of the populations.\n";
+	cout << "\tMaxEvaluations	number of iterations of the algorithms. Need to be > 10.\n";
+	cout << "\tFrontFile	archive with the real pareto front\n";
+	cout << "\tNadir worst point in the search space\n";
+	cout << "\nExamples:" << endl;
+	cout << "\tNSGAII_main MMRP b30_1.brite 10 1000 frontfile.txt nadir.txt" << endl;
+
+
+	exit (0);
+}
+
 int main(int argc, char ** argv) {
 
 	clock_t t_ini, t_fin;
   
-  Problem   * problem   ; // The problem to solve
-  Algorithm * algorithm ; // The algorithm to use
-  Operator  * crossover ; // Crossover operator
-  Operator  * mutation  ; // Mutation operator
-  Operator  * selection ; // Selection operator
+  	Problem   * problem   ; // The problem to solve
+	Algorithm * algorithm ; // The algorithm to use
+	Operator  * crossover ; // Crossover operator
+	Operator  * mutation  ; // Mutation operator
+	Operator  * selection ; // Selection operator
 
-  if (argc>=2) {
-    problem = ProblemFactory::getProblem(argc, argv);
-    cout << "Selected problem: " << problem->getName() << endl;
-  } else {
-    cout << "No problem selected." << endl;
-    cout << "Default problem will be used: Fonseca" << endl;
-    problem = ProblemFactory::getProblem(const_cast<char *>("Fonseca"));
-  }
+	if (argc>=2) {
+		problem = ProblemFactory::getProblem(argc, argv);
+		// cout << "Selected problem: " << problem->getName() << endl;
+	} else {
+		// cout << "No problem selected." << endl;
+		// cout << "Default problem will be used: Fonseca" << endl;
+		help ();
+	}
   
-//  QualityIndicator * indicators ; // Object to get quality indicators
-//	indicators = NULL ;
+ 	QualityIndicator * indicators ; // Object to get quality indicators
+	indicators = NULL ;
 
 	algorithm = new NSGAII(problem);
 
   	// Algorithm parameters
- 	int populationSize = atoi(argv[3]);
- 	int maxEvaluations = atoi(argv[4]);
+ 	int populationSize = atoi(argv[1]);
+ 	int maxEvaluations = atoi(argv[2]);
+	std::string frontarchive = argv[3];
+	std::string nadir = argv[4];
+
  	algorithm->setInputParameter("populationSize",&populationSize);
   	algorithm->setInputParameter("maxEvaluations",&maxEvaluations);
 
@@ -97,8 +122,20 @@ int main(int argc, char ** argv) {
 	algorithm->addOperator("mutation",mutation);
 	algorithm->addOperator("selection",selection);
 
+
+	//creating the qualityindicador
+	indicators = new QualityIndicator(problem, frontarchive);
 	// Add the indicator object to the algorithm
-//	algorithm->setInputParameter("indicators", indicators) ;
+	algorithm->setInputParameter("indicators", indicators) ;
+
+	// MMRP * p = (MMRP*) problem;
+	// Network * n = p->get_network ();
+	// for (auto v : n->get_neighboors (0)) {
+	// 	cout << v << endl;
+	// }
+
+	// exit (1);
+
 
 	// Execute the Algorithm
 	t_ini = clock();
@@ -108,11 +145,12 @@ int main(int argc, char ** argv) {
 	secs = secs / CLOCKS_PER_SEC;
 
 	// Result messages
-	cout << "Total execution time: " << secs << "s" << endl;
-	cout << "Variables values have been written to file VAR" << endl;
-	population->printVariablesToFile("VAR");
-	cout << "Objectives values have been written to file FUN" << endl;
+	// cout << "Total execution time: " << secs << "s" << endl;
+	// cout << "Variables values have been written to file VAR" << endl;
+	// population->printVariablesToFile("VAR");
+	// cout << "Objectives values have been written to file FUN" << endl;
 	population->printObjectivesToFile("FUN");
+	//cout << indicators->getHypervolume(population) << endl;
   
 //  if (indicators != NULL) {
 //    cout << "Quality indicators" << endl;
@@ -125,6 +163,19 @@ int main(int argc, char ** argv) {
 //    int evaluations = *(int *) algorithm->getOutputParameter("evaluations");;
 //    cout << "Speed      : " << evaluations << " evaluations" << endl;
 //  } // if
+
+	std::ifstream nadirf;
+	nadirf.open (nadir.c_str ());
+	int Z, C, H;
+	nadirf >> Z;
+	nadirf >> C;
+	nadirf >> H;
+	nadirf.close ();
+	std::stringstream ss;
+	ss << "./hv FUN -r ";
+	ss << '"' << Z << " " << C << " " << H <<'"';
+	system (ss.str ().c_str());
+	
 
   delete selection;
   delete mutation;

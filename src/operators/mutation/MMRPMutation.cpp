@@ -5,7 +5,6 @@
 MMRPMutation::MMRPMutation (map<string, void *> parameters) 
 : Mutation (parameters)
 {
-	std::cout << "Mutatin 1" << std::endl;	
 }
 
 MMRPMutation::~MMRPMutation() {}

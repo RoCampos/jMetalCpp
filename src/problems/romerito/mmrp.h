@@ -14,8 +14,8 @@
 #include <Solution.h>
 #include <EdgeSolutionType.h>
 #include <network.h>
-#include <Group.h>
-#include <Reader.h>
+#include <group.h>
+#include <reader.h>
 
 class MMRP : public Problem
 {
@@ -23,7 +23,7 @@ class MMRP : public Problem
 public:
 	
 	MMRP(std::string);
-	MMRP(std::string solutionType, std::string instance, std::string conf);
+	MMRP(std::string solutionType, std::string instance);
 	~MMRP();
 	void evaluate (Solution *solution);
 

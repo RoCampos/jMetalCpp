@@ -27,7 +27,7 @@
 #include <Distance.h>
 #include <Ranking.h>
 #include <CrowdingComparator.h>
-//#include <QualityIndicator.h>
+#include <QualityIndicator.h>
 
 /**
   * @class NSGAII

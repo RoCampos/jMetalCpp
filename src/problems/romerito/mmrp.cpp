@@ -8,7 +8,7 @@ MMRP::MMRP(std::string)
 	//default constructor
 }
 
-MMRP::MMRP (std::string solutionType, std::string instance, std::string conf)
+MMRP::MMRP (std::string solutionType, std::string instance)
 {
 	//solution type do not reprensent the variables
 	numberOfVariables_ = 0;
@@ -47,10 +47,11 @@ MMRP::~MMRP()
 void MMRP::evaluate (Solution * solution) 
 {
 
-	EdgeSolutionType * tmp = (EdgeSolutionType*) solution->getType ();
+	// EdgeSolutionType * tmp = (EdgeSolutionType*) solution->getType ();
+	Individual &ind = solution->get_representation ();
 	
-	solution->setObjective (0,tmp->get_representation().objectives.at (0));
-	solution->setObjective (1,tmp->get_representation().objectives.at (1));
-	solution->setObjective (2,tmp->get_representation().objectives.at (2));
+	solution->setObjective (0,ind.objectives.at (0));
+	solution->setObjective (1,ind.objectives.at (1));
+	solution->setObjective (2,ind.objectives.at (2));
 
 }

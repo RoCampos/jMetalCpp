@@ -80,7 +80,7 @@ SolutionSet * GDE3::execute() {
     newSolution = new Solution(problem_);
     problem_->evaluate(newSolution);
     problem_->evaluateConstraints(newSolution);
-    evaluations++;
+    // evaluations++;
     population->add(newSolution);
   } //for
 

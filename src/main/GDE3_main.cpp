@@ -22,13 +22,30 @@
 #include <Algorithm.h>
 #include <Solution.h>
 #include <Operator.h>
-//#include <QualityIndicator.h>
+#include <QualityIndicator.h>
 #include <GDE3.h>
 #include <MMRPCrossover.h>
 #include <DifferentialEvolutionSelection.h>
 #include <ProblemFactory.h>
 #include <iostream>
 #include <time.h>
+
+void help () {
+
+  cout << "Usage:" << endl;
+	cout << "\tGDE3_main <ProblemName> <Instance> <populationSize> <maxEvaluations> <frontfile>\n";
+	cout << "\nOptions:" << endl;
+	cout << "\tProblemName	MMRP(Multisource Multicast Routing Problem)\n";
+	cout << "\tInstance	Brite instance of MMRP\n";
+	cout << "\tPopulationSize	number of individuals of the populations.\n";
+	cout << "\tMaxEvaluations	number of iterations of the algorithms. Need to be > 10.\n";
+	cout << "\tFrontFile	archive with the real pareto front\n";
+	cout << "\nExamples:" << endl;
+	cout << "\tGDE3_main MMRP b30_1.brite 10 1000 frontfile.txt" << endl;
+
+	exit (0);
+
+}
 
 int main(int argc, char ** argv) {
 
@@ -41,22 +58,23 @@ int main(int argc, char ** argv) {
 
   map<string, void *> parameters;
   
-  //TODO: QualityIndicator * indicators;
+  QualityIndicator * indicators;
+  indicators = NULL;
 
   if (argc>=2) {
     problem = ProblemFactory::getProblem(argc, argv);
-    cout << "Selected problem: " << problem->getName() << endl;
+    // cout << "Selected problem: " << problem->getName() << endl;
   } else {
-    cout << "No problem selected." << endl;
-    cout << "Default problem will be used: Fonseca" << endl;
-    problem = ProblemFactory::getProblem(const_cast<char *>("Fonseca"));
+    help ();
   }
 
   algorithm = new GDE3(problem);
 
   // Algorithm parameters
-  int populationSizeValue = atoi(argv[3]);
-  int maxIterationsValue = atoi(argv[4]);
+  int populationSizeValue = atoi(argv[1]);
+  int maxIterationsValue = atoi(argv[2]);
+  std::string frontarchive = argv[3];
+  std::string nadir = argv[4];
   algorithm->setInputParameter("populationSize",&populationSizeValue);
   algorithm->setInputParameter("maxIterations",&maxIterationsValue);
 
@@ -73,8 +91,9 @@ int main(int argc, char ** argv) {
   algorithm->addOperator("crossover",crossover);
   algorithm->addOperator("selection",selection);
 
+  indicators = new QualityIndicator(problem, frontarchive);
   // Add the indicator object to the algorithm
-  //algorithm->setInputParameter("indicators", indicators) ;
+  algorithm->setInputParameter("indicators", indicators) ;
 
   // Execute the Algorithm
   t_ini = clock();
@@ -84,11 +103,24 @@ int main(int argc, char ** argv) {
   secs = secs / CLOCKS_PER_SEC;
 
   // Result messages
-  cout << "Total execution time: " << secs << "s" << endl;
-  cout << "Variables values have been written to file VAR" << endl;
-  population->printVariablesToFile("VAR");
-  cout << "Objectives values have been written to file FUN" << endl;
+  // cout << "Total execution time: " << secs << "s" << endl;
+  // cout << "Variables values have been written to file VAR" << endl;
+  // population->printVariablesToFile("VAR");
+  // cout << "Objectives values have been written to file FUN" << endl;
   population->printObjectivesToFile("FUN");
+  // cout << indicators->getHypervolume(population) << endl;
+
+  std::ifstream nadirf;
+  nadirf.open (nadir.c_str ());
+  int Z, C, H;
+  nadirf >> Z;
+  nadirf >> C;
+  nadirf >> H;
+  nadirf.close ();
+  std::stringstream ss;
+  ss << "./hv FUN -r ";
+  ss << '"' << Z << " " << C << " " << H <<'"';
+  system (ss.str ().c_str());
 
   delete selection;
   delete crossover;

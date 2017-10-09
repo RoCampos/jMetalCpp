@@ -33,14 +33,18 @@ Individual EdgeSolutionType::get_representation ()
 		int pos = rand () % members.size ();
 		src = members.at (pos);
 		members.erase (members.begin ()+pos);
-			
+
 		if (r < 10) {
+			//widest shortest path
 			stp1.execute (src, members, *mmrp->get_network(), dtree.paths, tk);	
 		}
 		else if (r >= 10 && r < 20) {
+			//shortest path tree
 			stp2.execute (src, members, *mmrp->get_network(), dtree.paths);	
 		}
 		else {
+
+			//best first search tree
 			stp3.execute (src, members, *mmrp->get_network(), dtree.paths);	
 		}
 
@@ -48,6 +52,7 @@ Individual EdgeSolutionType::get_representation ()
 		individual.add_tree (i, dtree);			
 	}
 	
+	//restoring the graph after 
 	bool widest = true;
 	if (widest) {
 		std::set<rca::Link> ref = mmrp->get_network() -> getLinks();
@@ -61,6 +66,8 @@ Individual EdgeSolutionType::get_representation ()
 	evaluate (individual, 
 		*mmrp->get_network(), 
 		mmrp->get_groups());
+
+	// individual.str ();
 
 	return individual;
 

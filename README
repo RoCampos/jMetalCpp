@@ -24,7 +24,10 @@ TABLE OF CONTENTS
 0. Updates
 =======================================================================================
 
-Version 1.7.2(No official)
+Version 1.7.3
+  - Algorithm ready to test using hypervolume and nadir point
+
+Version 1.7.2(Not official)
   - ready to test.
 
 Version 1.7.1(Not Official)

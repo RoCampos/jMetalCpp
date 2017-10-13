@@ -549,12 +549,12 @@ rca::Path capacited_shortest_path (int v, int w,
 				if (cg->is_used(l))
 					cap = cg->value (l);
 				else 
-					cap = std::numeric_limits<int>::INT_MIN;
+					cap = std::numeric_limits<int>::min();
 					// cap = INT_MIN;
 				
 				int band = network->getBand (l.getX(), l.getY());
 				//updating the capacity if the link is used
-				if (cap == std::numeric_limits<int>::INT_MIN){		
+				if (cap == std::numeric_limits<int>::min()){		
 					if (band - g.getTrequest() > 0) {
 						cap = 0;
 					}
@@ -753,7 +753,7 @@ double min_bandwidth (rca::Network& network)
 {
 
 	int NODES = network.getNumberNodes ();
-	double min = std::numeric_limits<double>::INT_MAX;
+	double min = std::numeric_limits<double>::max();
 	for (int i = 0; i < NODES; i++) {
 		for (int j = 0; j < i; j++) {
 			

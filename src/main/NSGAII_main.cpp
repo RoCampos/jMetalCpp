@@ -149,7 +149,7 @@ int main(int argc, char ** argv) {
 	// cout << "Variables values have been written to file VAR" << endl;
 	// population->printVariablesToFile("VAR");
 	// cout << "Objectives values have been written to file FUN" << endl;
-	population->printObjectivesToFile("FUN");
+	population->printObjectivesToFile("NSGA", true);
 	//cout << indicators->getHypervolume(population) << endl;
   
 //  if (indicators != NULL) {
@@ -164,17 +164,17 @@ int main(int argc, char ** argv) {
 //    cout << "Speed      : " << evaluations << " evaluations" << endl;
 //  } // if
 
-	std::ifstream nadirf;
-	nadirf.open (nadir.c_str ());
-	int Z, C, H;
-	nadirf >> Z;
-	nadirf >> C;
-	nadirf >> H;
-	nadirf.close ();
-	std::stringstream ss;
-	ss << "./hv FUN -r ";
-	ss << '"' << Z << " " << C << " " << H <<'"';
-	system (ss.str ().c_str());
+	// std::ifstream nadirf;
+	// nadirf.open (nadir.c_str ());
+	// int Z, C, H;
+	// nadirf >> Z;
+	// nadirf >> C;
+	// nadirf >> H;
+	// nadirf.close ();
+	// std::stringstream ss;
+	// ss << "./hv FUN -r ";
+	// ss << '"' << Z << " " << C << " " << H <<'"';
+	// system (ss.str ().c_str());
 	
 
   delete selection;

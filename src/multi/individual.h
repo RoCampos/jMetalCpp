@@ -75,8 +75,24 @@ struct Individual {
 			}
 			id++;
 		}	
+	}
 
-
+	void printToEval (std::fstream & output) {
+		int id = 0;
+		for (auto tree : cromossoma) {
+			std::vector<rca::Link> links;
+			for (auto p : tree.paths) {				
+				for (size_t i = 0; i < p.size ()-1; ++i) {
+					rca::Link e(p[i], p[i+1], 0);
+					auto res = std::find (links.begin (), links.end(), e);
+					if (res == links.end()) {
+						links.push_back (e);
+						output << e.getX()+1<<" - "<<e.getY()+1<<":"<<(id+1)<<";"<<std::endl;
+					}	
+				}
+			}
+			id++;
+		}
 	}
 
 

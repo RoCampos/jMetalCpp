@@ -260,14 +260,37 @@ void SolutionSet::printObjectivesToFile(string file, bool append){
   if (append) {
     std::fstream out(file.c_str(), std::ios::out | std::ios::app);
     cout.setf(ios::fixed);
+
+    int count = 0;
+    
     for (int i = 0; i < solutionsList_.size(); i++) {
       int nObj = solutionsList_[i]->getNumberOfObjectives();
+
+      //only viable solutions
+      if (solutionsList_[i]->getObjective(0) > 0) {
+        continue;
+      }
+
+      stringstream ss;
+      ss << file;
+      ss << (count < 10 ? "0" : "") << count;
+      cout << ss.str () << endl;
+      fstream solout (ss.str ().c_str (),std::ios::out);
+
       for (int obj = 0; obj < nObj; obj++) {
         if (obj == 1)
-          out << -1*solutionsList_[i]->getObjective(obj) << " ";
+          out << solutionsList_[i]->getObjective(obj) << " ";
+        else 
+          out << solutionsList_[i]->getObjective(obj) << " ";
       }
       out << endl;
+      count++;
+      solutionsList_.at (i)->get_representation ().printToEval(solout);
+      solout.close ();
     }
+
+    out << endl;
+
     out.close();
   } else {
     this->printObjectivesToFile(file);

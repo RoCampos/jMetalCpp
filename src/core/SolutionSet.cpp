@@ -274,7 +274,7 @@ void SolutionSet::printObjectivesToFile(string file, bool append){
       stringstream ss;
       ss << file;
       ss << (count < 10 ? "0" : "") << count;
-      cout << ss.str () << endl;
+      
       fstream solout (ss.str ().c_str (),std::ios::out);
 
       for (int obj = 0; obj < nObj; obj++) {

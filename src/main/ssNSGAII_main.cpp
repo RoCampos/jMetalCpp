@@ -127,7 +127,7 @@ int main(int argc, char ** argv) {
 	// cout << "Variables values have been written to file VAR" << endl;
 	// population->printVariablesToFile("VAR");
 	// cout << "Objectives values have been written to file FUN" << endl;
-  population->printObjectivesToFile("ssNSGA", true);
+  population->printObjectivesToFile("ssNSGARES", true);
   // cout << indicators->getHypervolume(population) << endl;
 
   // std::ifstream nadirf;

@@ -33,6 +33,7 @@ void * MMRPCrossover::moead (void * object)
 	Solution ** parent = (Solution **) parameters[1];
 
 	MMRP * mmrp = (MMRP *) current->getProblem();
+	int NODES = mmrp->get_network ()->getNumberNodes ();
 
 	Solution * child = new Solution (current->getNumberOfObjectives ());
 
@@ -49,11 +50,11 @@ void * MMRPCrossover::moead (void * object)
 	double cross = this->generator_.rand ();
 
 	if (cross < 0.25) {
-		crossover_by_hop (ind1, ind2, novo, 30);	
+		crossover_by_hop (ind1, ind2, novo, NODES);	
 	} else if (cross >= 0.25 && cross < 0.5) {
 		crossover_by_tree (ind1, ind2, novo); 
 	} else if (cross >= 0.5 && cross < 0.75) {
-		crossover_by_path (ind1, ind2, novo, 30);
+		crossover_by_path (ind1, ind2, novo, NODES);
 	} else {
 		crossover_by_tcost (ind1, ind2, novo);
 	}

@@ -79,7 +79,7 @@ int main(int argc, char ** argv) {
   algorithm->setInputParameter("maxIterations",&maxIterationsValue);
 
   // Crossover operator
-  std::string name = "ONE";
+  std::string name = "TWO";
   parameters["algorithm"] = &name;
   crossover = new MMRPCrossover(parameters);
 
@@ -107,7 +107,7 @@ int main(int argc, char ** argv) {
   // cout << "Variables values have been written to file VAR" << endl;
   // population->printVariablesToFile("VAR");
   // cout << "Objectives values have been written to file FUN" << endl;
-  population->printObjectivesToFile("GDE3RES",  true);
+  population->printObjectivesToFile("FUN");
   // cout << indicators->getHypervolume(population) << endl;
 
   std::ifstream nadirf;

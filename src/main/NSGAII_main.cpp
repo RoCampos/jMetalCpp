@@ -149,7 +149,7 @@ int main(int argc, char ** argv) {
 	// cout << "Variables values have been written to file VAR" << endl;
 	// population->printVariablesToFile("VAR");
 	// cout << "Objectives values have been written to file FUN" << endl;
-	population->printObjectivesToFile("FUN", true);
+	population->printObjectivesToFile("FUN");
 	// cout << indicators->getHypervolume(population) << endl;
   
 //  if (indicators != NULL) {

@@ -82,6 +82,8 @@ SolutionSet * GDE3::execute() {
     problem_->evaluateConstraints(newSolution);
     // evaluations++;
     population->add(newSolution);
+
+    newSolution->get_representation ().str ();
   } //for
 
   // Generations ...
@@ -111,6 +113,7 @@ SolutionSet * GDE3::execute() {
       problem_->evaluate(child) ;
       problem_->evaluateConstraints(child);
       evaluations++ ;
+      child->get_representation ().str ();
 
       // Dominance test
       int result  ;

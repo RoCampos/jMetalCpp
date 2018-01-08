@@ -75,15 +75,11 @@ int main(int argc, char ** argv) {
   int maxIterationsValue = atoi(argv[2]);
   std::string frontarchive = argv[3];
   std::string nadir = argv[4];
-  cout << populationSizeValue << endl;
-  cout << maxIterationsValue << endl;
-  cout << frontarchive << endl;
-  cout << nadir << endl;
   algorithm->setInputParameter("populationSize",&populationSizeValue);
   algorithm->setInputParameter("maxIterations",&maxIterationsValue);
 
   // Crossover operator
-  std::string name = "ONE";
+  std::string name = "THREE";
   parameters["algorithm"] = &name;
   crossover = new MMRPCrossover(parameters);
 

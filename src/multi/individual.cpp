@@ -10,6 +10,10 @@ void fix_paths (Individual & novo,
 	int TREE) 
 {
 
+	//SIZET - médate do vector de caminhos.
+
+	//Função aplicada ao método
+	//crossover_by_path
 	std::vector<rca::Path> & paths = novo.cromossoma[TREE].paths;
 	for (int i = SIZET/2; i < SIZET; ++i)
 	{
@@ -46,7 +50,7 @@ void crossover_by_tree (Individual const & ind1,
 	Individual const & ind2, 
 	Individual & novo) 
 {
-	int SIZE = ind1.cromossoma.size ();
+	int SIZE = ind1.size();
 	int point = rand () % SIZE;	
 
 	for (int i = 0; i <= point; ++i)
@@ -66,7 +70,7 @@ void crossover_by_tcost (
 	Individual const & ind2, 
 	Individual & novo) 
 {
-	int SIZE = ind1.cromossoma.size ();
+	int SIZE = ind1.size();
 	for (int i = 0; i < SIZE; ++i)
 	{
 		if (ind1.cost.at(i) < ind2.cost.at(i)) {
@@ -77,6 +81,13 @@ void crossover_by_tcost (
 	}
 }
 
+/**
+	
+	Algoritmo utilizado para fazer um crossover
+	de um path.
+	Apenas insere um novo caminho em uma solução.
+
+*/
 void crossover_by_path (
 	Individual const & ind1, 
 	Individual const & ind2, 
@@ -84,44 +95,73 @@ void crossover_by_path (
 	int NODES)
 {
 
-	int TREE =  rand () % ind1.cromossoma.size ();
+	//Escolhe árvore para modificar
+	int TREE =  rand () % ind1.size();
+
+	//obtém número de caminhos
 	int SIZET = ind1.cromossoma[TREE].paths.size ();
+
+	//vetor de anteriores 
 	std::vector<int> prev(NODES, -1);
+
+	//id dos caminhos na árvore TREEE
 	std::vector<int> pathid(NODES, -1);
+
+	//maior caminho (flag)
 	size_t great = 0;
 
+	//Copiando árvores que não serão modificadas
 	for (int i = 0; i < TREE; ++i)
 	{		
 		novo.cromossoma[i] = ind1.cromossoma.at (i);
 	}
-	for (size_t i = TREE+1; i < ind1.cromossoma.size (); i++) {
+	for (size_t i = TREE+1; i < ind1.size(); i++) {
 		novo.cromossoma[i] = ind1.cromossoma.at (i);	
 	}
 
+	//para os caminhos em TREE
 	for (int i = 0; i < SIZET/2; ++i)
 	{
+
+		//copiando caminho para árvore
 		novo.cromossoma[TREE].paths.push_back (ind1.cromossoma[TREE].paths[i]);
+		//Pegar maior caminho até SIZET
+		//Caminho principal da árvore
 		if (novo.cromossoma[TREE].paths.at(i).size () > great) {
 			great = i;
 		}
+
+		//Mapeamento dos anteriores de cada vértices no
+		//CAminho de i=0 até SIZET/2
 		rca::Path path = ind1.cromossoma[TREE].paths.at (i);
 		for (size_t j=0; j < path.size ()-1; j++) {
+			//guarda o anteior de cada vértice
 			prev[path[j]] = path[j+1];
+			//Guarda o id do caminho
 			pathid[path[j]] = i;
 		}
 	}
 
+	//Passa os
 	for (int i = SIZET/2; i < SIZET; ++i)
 	{
+		//copiando caminho de ind2 para novo indivíduo
 		novo.cromossoma[TREE].paths.push_back (ind2.cromossoma[TREE].paths[i]);			
 	}
 
+	//Obtendo maior caminho da árvore
+	//Caminho principal
 	rca::Path path = ind1.cromossoma[TREE].paths.at (great);
 
+	//organizar os caminhos
 	fix_paths (novo, SIZET, prev, pathid, TREE);
 
 }
 
+/**
+	Crossover utilizado para criar um novo indivíduo
+	com os menores caminhos possível
+*/
 void crossover_by_hop (
 	Individual & ind1, 
 	Individual & ind2, 
@@ -129,15 +169,19 @@ void crossover_by_hop (
 	int NODES)
 {
 
+	//vetor de anterioes
 	std::vector<int> prev(NODES, -1);
 
-	int SIZE = ind1.cromossoma.size ();
+	//tamanho dos indivíduos (número de trees)
+	int SIZE = ind1.size();
 
-	//para todas as árvores
 	for (int i = 0; i < SIZE; ++i)
 	{
+		//obtém a i-ésima árvore
 		DTree & tree1 = ind1.cromossoma.at(i);
 		DTree & tree2 = ind2.cromossoma.at(i);
+
+		//árvore vazia.
 		DTree & ntree = novo.cromossoma.at (i);
 
 		int PATHS = tree1.paths.size();
@@ -145,16 +189,27 @@ void crossover_by_hop (
 		{
 			rca::Path p1 = tree1.paths.at (p); 
 			rca::Path p2 = tree2.paths.at (p);
+
+			//menor caminho de ind1 e ind2 na i-ésima
+			//árvore é guardado no novo indivíduo
 			if (p1.size () < p2.size ()) {
 				ntree.paths.push_back (p1);
 			} else { 
 				ntree.paths.push_back (p2);
 			}
 		}
+
+		//vetor de ateriores
 		std::vector<int> prev (NODES, -1);
+
+		//id dos caminhos
 		std::vector<int> pathid (NODES, -1);
+
+		//camihos da i-ésima árvore
 		std::vector<rca::Path> & paths = ntree.paths;
 
+		//calculo os anteriores do caminho
+		//principal
 		rca::Path fpath = paths.at (0);
 		for (size_t i = 0; i < fpath.size()-1; ++i)
 		{
@@ -162,14 +217,23 @@ void crossover_by_hop (
 			pathid[fpath[i] ] = 0;
 		}
 
+		//para todos os caminhos de 'paths'
 		for (size_t i = 1; i < paths.size (); ++i)
 		{
+
+			//adicionar caminho a árvore através
+			//de do caminho 'fpath'
 			std::vector<int> newpath;
+
+			//procurar um vértice comum entre
+			//'currpath' e 'fpath'
 			rca::Path & curpath = paths.at (i);
 			bool change = false;
 			size_t j = 0;
 			for (; j < curpath.size ()-1; ++j)
 			{
+				//se achar um vértice comum para a busca
+				// j é a o caminho (obtido de pathid)
 				if (prev[ curpath[j] ] != -1) {				
 					j = curpath[j];
 					change = true;
@@ -181,8 +245,13 @@ void crossover_by_hop (
 
 			//pegando caminho que conecta curpath a árvore
 			if (change){				
+				//obtém path que contém vértice comum
+				//com 'currpath'
 				rca::Path &tpath = paths[pathid[j]];
+				//obtém a posição de j no tpath
 				size_t rp = tpath.getPosition (j);
+
+				//unir o currpath ao tpath já na árvore
 				for (; rp < tpath.size (); rp++) {
 					newpath.push_back (tpath[rp]);
 				}
@@ -202,7 +271,7 @@ void crossover_by_edge (
 	double l1 = ind1.edges.at (0).getValue ();
 	double l2 = ind2.edges.at (0).getValue ();
 
-	int CROMO = ind1.cromossoma.size ();
+	int CROMO = ind1.size();
 
 	rca::Link l;
 	if (l1 < l2) {
@@ -270,7 +339,7 @@ void mutation (Individual & ind,
 	std::vector<rca::Group> & mgroups)
 {
 
-	int SIZE = ind.cromossoma.size ();
+	int SIZE = ind.size();
 	int NODES= network->getNumberNodes ();
 
 	Container cg;
@@ -354,3 +423,147 @@ void mutation (Individual & ind,
 
 
 }
+
+DTree & choose_diff_ind (
+	Individual & ind1,
+	Individual & ind2,
+	Individual & ind3,
+	int index, int tree)
+{
+	if (index == 1) {
+		return ind1.cromossoma.at (tree);
+	} else if (index == 2) {
+		return ind2.cromossoma.at (tree);
+	} else if (index == 3) {
+		return ind2.cromossoma.at (tree);
+	}
+}
+
+void diff_cross (
+	Individual & ind1,
+	Individual & ind2,
+	Individual & ind3,
+	Individual & novo,
+	int NODES)
+{
+	//A ideia desse procedimento é 
+	//criar um novo indivíduo a partir
+	//de três indivíduos pais
+	//mimetiza a mutação diferencial
+	//mas aqui utiliza componentes diferentes
+
+	int INDSIZE = ind1.size ();
+	std::vector<int> index = {1, 2, 3};
+
+	//o método pode trocar caminhos ou inserir 
+	//uma árvore inteira no novo indivíduo
+	for (int i = 0; i < INDSIZE; ++i)
+	{
+		//ordem dos indivíduos no sorteio
+		std::random_shuffle(index.begin(), index.end());
+		int method = rand () % 2;
+		if (method == 1) {
+			//passa árvore
+			if (index[0] == 1) {
+				novo.cromossoma[i] = (ind1.cromossoma.at (i));
+			} else if (index[0] == 2) {
+				novo.cromossoma[i] = (ind2.cromossoma.at (i));
+			} else if (index[0] == 3) {
+				novo.cromossoma[i] = (ind3.cromossoma.at (i));
+			}
+
+		} else {
+			//passa menor caminho ou menor custo
+			// method = rand () % 2;
+			method = 0;
+			if (method == 0) {
+				DTree & tree1 = choose_diff_ind (ind1, 
+					ind2, ind3, index[1], i);
+				DTree & tree2 = choose_diff_ind (ind1, 
+					ind2, ind3, index[2], i);
+				//árvore vazia.
+				DTree & ntree = novo.cromossoma.at (i);
+
+				int PATHS = tree1.paths.size();
+				for (int p = 0; p < PATHS; ++p)
+				{
+					rca::Path p1 = tree1.paths.at (p); 
+					rca::Path p2 = tree2.paths.at (p);
+
+					//menor caminho de ind1 e ind2 na i-ésima
+					//árvore é guardado no novo indivíduo
+					if (p1.size () < p2.size ()) {
+						ntree.paths.push_back (p1);
+					} else { 
+						ntree.paths.push_back (p2);
+					}
+				}
+
+				//vetor de ateriores
+				std::vector<int> prev (NODES, -1);
+
+				//id dos caminhos
+				std::vector<int> pathid (NODES, -1);
+
+				//camihos da i-ésima árvore
+				std::vector<rca::Path> & paths = ntree.paths;
+
+				//calculo os anteriores do caminho
+				//principal
+				rca::Path fpath = paths.at (0);
+				for (size_t i = 0; i < fpath.size()-1; ++i)
+				{
+					prev[ fpath[i] ] = fpath[i+1];
+					pathid[fpath[i] ] = 0;
+				}
+
+				//para todos os caminhos de 'paths'
+				for (size_t i = 1; i < paths.size (); ++i)
+				{
+
+					//adicionar caminho a árvore através
+					//de do caminho 'fpath'
+					std::vector<int> newpath;
+
+					//procurar um vértice comum entre
+					//'currpath' e 'fpath'
+					rca::Path & curpath = paths.at (i);
+					bool change = false;
+					size_t j = 0;
+					for (; j < curpath.size ()-1; ++j)
+					{
+						//se achar um vértice comum para a busca
+						// j é a o caminho (obtido de pathid)
+						if (prev[ curpath[j] ] != -1) {				
+							j = curpath[j];
+							change = true;
+							break;
+						} else {
+							newpath.push_back (curpath[j]);
+						}
+					}
+
+					//pegando caminho que conecta curpath a árvore
+					if (change){				
+						//obtém path que contém vértice comum
+						//com 'currpath'
+						rca::Path &tpath = paths[pathid[j]];
+						//obtém a posição de j no tpath
+						size_t rp = tpath.getPosition (j);
+
+						//unir o currpath ao tpath já na árvore
+						for (; rp < tpath.size (); rp++) {
+							newpath.push_back (tpath[rp]);
+						}
+						rca::Path np(newpath);				
+						curpath = std::move (np);
+					}
+				}
+			} else {
+				//caminho mais barato
+			}
+		}
+	}
+}
+
+

@@ -18,7 +18,7 @@ Individual EdgeSolutionType::get_representation ()
 	MMRP * mmrp = (MMRP *) problem_;
 
 	//Solution is built here
-	int r = rand () % 30;
+	int r = rand () % 3;
 
 	int GSIZE = mmrp->numberGroups ();
 
@@ -34,11 +34,11 @@ Individual EdgeSolutionType::get_representation ()
 		src = members.at (pos);
 		members.erase (members.begin ()+pos);
 
-		if (r < 10) {
+		if (r == 0) {
 			//widest shortest path
 			stp1.execute (src, members, *mmrp->get_network(), dtree.paths, tk);	
 		}
-		else if (r >= 10 && r < 20) {
+		else if (r == 1) {
 			//shortest path tree
 			stp2.execute (src, members, *mmrp->get_network(), dtree.paths);	
 		}

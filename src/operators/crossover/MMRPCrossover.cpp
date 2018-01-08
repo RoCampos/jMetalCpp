@@ -19,6 +19,9 @@ void * MMRPCrossover::execute (void* object) {
 	} else if (algo.compare ("ONE") == 0) {
 		Solution * child = (Solution *)this->moead (object);
 		return child;
+	} else if (algo.compare ("THREE") == 0) {
+		Solution * child = (Solution *)this->diff (object);
+		return child;
 	} else {
 		std::cout << "You should check if the right crossover operator has been implemented\n";
 		exit (1);
@@ -137,6 +140,36 @@ void* MMRPCrossover::nsga (void * object)
 
 
 	return childs;
+}
+
+
+//TODO: IMPLEMENTATION OF DIFF SIMILAR PROCEDURE
+void* MMRPCrossover::diff(void *object)
+{
+	void ** parameters = (void **) object;
+
+	Solution * current = (Solution*) parameters[0];
+	Solution ** parent = (Solution**) parameters[1];
+
+	MMRP * mmrp = (MMRP *) current->getProblem();
+	int NODES = mmrp->get_network ()->getNumberNodes ();
+
+	Solution * child = new Solution (current->getNumberOfObjectives ());
+
+	Individual & ind1 = parent[0]->get_representation ();
+	Individual & ind2 = parent[1]->get_representation ();
+	Individual & ind3 = parent[2]->get_representation ();
+
+	Individual novo (ind1.size ());
+	diff_cross (ind1, ind2, ind3, novo, NODES);
+	evaluate (novo, *mmrp->get_network (), mmrp->get_groups());
+
+	child->set_representation (novo);
+	child->setType (current->getProblem()->getSolutionType());
+	child->setProblem (current->getProblem());
+
+	return child;
+
 }
 
 int MMRPCrossover::get_crossover ()

@@ -40,8 +40,10 @@ void help () {
 	cout << "\tPopulationSize	number of individuals of the populations.\n";
 	cout << "\tMaxEvaluations	number of iterations of the algorithms. Need to be > 10.\n";
 	cout << "\tFrontFile	archive with the real pareto front\n";
+  cout << "\tNadirFile  archive with the worst Objective vector v;\n";
+  cout << "\tbuilder is the parameter to control the tree contruction\n";
 	cout << "\nExamples:" << endl;
-	cout << "\tGDE3_main MMRP b30_1.brite 10 1000 frontfile.txt" << endl;
+	cout << "\tGDE3_main MMRP b30_1.brite 10 1000 frontfile.txt nadir.txt builder" << endl;
 
 	exit (0);
 
@@ -75,15 +77,13 @@ int main(int argc, char ** argv) {
   int maxIterationsValue = atoi(argv[2]);
   std::string frontarchive = argv[3];
   std::string nadir = argv[4];
-  cout << populationSizeValue << endl;
-  cout << maxIterationsValue << endl;
-  cout << frontarchive << endl;
-  cout << nadir << endl;
+  int builder = atoi (argv[5]);
   algorithm->setInputParameter("populationSize",&populationSizeValue);
   algorithm->setInputParameter("maxIterations",&maxIterationsValue);
+  algorithm->setInputParameter("builder", &builder);
 
   // Crossover operator
-  std::string name = "ONE";
+  std::string name = "THREE";
   parameters["algorithm"] = &name;
   crossover = new MMRPCrossover(parameters);
 

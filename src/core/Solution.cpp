@@ -67,7 +67,7 @@ Solution::Solution (int numberOfObjectives) {
  * @param problem The problem to solve
  * @throws ClassNotFoundException
  */
-Solution::Solution (Problem *problem) {
+Solution::Solution (Problem *problem, int builder) {
   problem_ = problem;
   type_ = problem_->getSolutionType();
   overallConstraintViolation_ = 0.0;
@@ -88,7 +88,8 @@ Solution::Solution (Problem *problem) {
   crowdingDistance_ = 0.0;
   distanceToSolutionSet_ = std::numeric_limits<double>::max();
   variable_ = type_->createVariables();
-  individual_ = type_->get_representation ();
+
+  individual_ = type_->get_representation (builder);
   rank_ = 0;
 } // Solution
 

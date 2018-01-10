@@ -19,6 +19,7 @@ private:
 
 	void * moead (void *);
 	void * nsga (void *);
+	void * diff (void *);
 
 	rca::myrandom<std::mt19937, std::uniform_real_distribution<double>, double> generator_;
 

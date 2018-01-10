@@ -45,6 +45,7 @@ SolutionSet * NSGAII::execute() {
   int populationSize;
   int maxEvaluations;
   int evaluations;
+  int builder;
 
   QualityIndicator * indicators; // QualityIndicator object
   int requiredEvaluations; // Use in the example of use of the
@@ -63,6 +64,7 @@ SolutionSet * NSGAII::execute() {
   //Read the parameters
   populationSize = *(int *) getInputParameter("populationSize");
   maxEvaluations = *(int *) getInputParameter("maxEvaluations");
+  builder = *(int *) getInputParameter("builder");
 
   indicators = (QualityIndicator *) getInputParameter("indicators");
 

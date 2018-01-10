@@ -68,7 +68,8 @@ private:
 public:
   Solution ();
   Solution (int numberOfObjectives);
-  Solution (Problem * problem);
+  //builder = algorithm to build trees
+  Solution (Problem * problem, int builder = 0);
   //getNewsolution (Problem *problem);
   Solution(Problem * problem, Variable ** variables);
   Solution (Solution * solution);

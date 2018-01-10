@@ -49,7 +49,7 @@ public:
   virtual Variable **createVariables() = 0;
   Variable **copyVariables(Variable **vars);
 
-  virtual Individual get_representation ();
+  virtual Individual get_representation (int fixed = 0);
 
 }; // SolutionType
 

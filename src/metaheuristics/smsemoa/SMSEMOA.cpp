@@ -54,6 +54,7 @@ SolutionSet * SMSEMOA::execute() {
   int maxEvaluations;
   int evaluations;
   double offset = 100.0;
+  int builder = 0;
 
   QualityIndicator * indicators; // QualityIndicator object
   int requiredEvaluations; // Use in the example of use of the indicators object (see below)
@@ -70,6 +71,7 @@ SolutionSet * SMSEMOA::execute() {
   populationSize = *(int *) getInputParameter("populationSize");
   maxEvaluations = *(int *) getInputParameter("maxEvaluations");
   offset = *(double *) getInputParameter("offset");
+  builder = *(int *) getInputParameter("builder");
 
   //indicators = (QualityIndicator*) getInputParameter("indicators");
 
@@ -87,7 +89,7 @@ SolutionSet * SMSEMOA::execute() {
   // Create the initial solutionSet
   Solution * newSolution;
   for (int i = 0; i < populationSize; i++) {
-    newSolution = new Solution(problem_);
+    newSolution = new Solution(problem_, builder);
     problem_->evaluate(newSolution);
     problem_->evaluateConstraints(newSolution);
     // evaluations++;

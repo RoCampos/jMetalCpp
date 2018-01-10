@@ -16,7 +16,7 @@ class EdgeSolutionType : public SolutionType
 public:
 	EdgeSolutionType(Problem* problem);
 	Variable ** createVariables ();
-	Individual get_representation ();
+	Individual get_representation (int fixed = 0);
 
 private:
 

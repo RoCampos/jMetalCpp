@@ -40,6 +40,13 @@ struct Individual {
 		return objectives.at (pos);
 	} 
 
+	int size () {
+		return cromossoma.size ();
+	}
+	int size () const {
+		return cromossoma.size ();
+	}
+
 	Individual (){}
 
 	void add_tree (int pos, DTree & tree) {
@@ -124,6 +131,19 @@ void crossover_by_hop (
 	Individual & ind2, 
 	Individual & novo,
 	int NODES);
+
+void diff_cross (
+	Individual & ind1,
+	Individual & ind2,
+	Individual & ind3,
+	Individual & novo,
+	int NODES);
+
+DTree & choose_diff_ind (
+	Individual & ind1,
+	Individual & ind2,
+	Individual & ind3,
+	int index, int tree);
 
 void mutation (Individual & ind, 
 	rca::Network * network, 

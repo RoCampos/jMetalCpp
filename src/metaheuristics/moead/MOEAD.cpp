@@ -236,8 +236,11 @@ void MOEAD::initNeighborhood() {
  * initPopulation
  */
 void MOEAD::initPopulation() {
+
+  int builder = *(int *) getInputParameter ("builer");
+
   for (int i = 0; i < populationSize_; i++) {
-    Solution * newSolution = new Solution(problem_);
+    Solution * newSolution = new Solution(problem_, builder);
 
     problem_->evaluate(newSolution);
     // evaluations_++;

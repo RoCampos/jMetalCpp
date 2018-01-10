@@ -46,6 +46,7 @@ SolutionSet * GDE3::execute() {
   int maxIterations;
   int evaluations;
   int iterations;
+  int builder;
 
   SolutionSet * population;
   SolutionSet * offspringPopulation;
@@ -64,6 +65,7 @@ SolutionSet * GDE3::execute() {
   //Read the parameters
   populationSize = *(int *) getInputParameter("populationSize");
   maxIterations  = *(int *) getInputParameter("maxIterations");
+  builder = *(int *) getInputParameter ("builder");
 
   //Initialize the variables
   population  = new SolutionSet(populationSize);
@@ -77,7 +79,7 @@ SolutionSet * GDE3::execute() {
   // Create the initial solutionSet
   Solution * newSolution;
   for (int i = 0; i < populationSize; i++) {
-    newSolution = new Solution(problem_);
+    newSolution = new Solution(problem_, builder);
     problem_->evaluate(newSolution);
     problem_->evaluateConstraints(newSolution);
     // evaluations++;

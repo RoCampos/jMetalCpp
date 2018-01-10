@@ -40,7 +40,19 @@
  */
 
 void help () {
-
+  cout << "Usage:" << endl;
+  cout << "\tMOEAD_main <ProblemName> <Instance> <populationSize> <maxEvaluations> <frontfile>\n";
+  cout << "\nOptions:" << endl;
+  cout << "\tProblemName  MMRP(Multisource Multicast Routing Problem)\n";
+  cout << "\tInstance Brite instance of MMRP\n";
+  cout << "\tPopulationSize number of individuals of the populations.\n";
+  cout << "\tMaxEvaluations number of iterations of the algorithms. Need to be > 10.\n";
+  cout << "\tFrontFile  archive with the real pareto front\n";
+  cout << "\tNadirFile  archive with the worst Objective vector v;\n";
+  cout << "\tbuilder is the parameter to control the tree contruction\n";
+  cout << "\nExamples:" << endl;
+  cout << "\tMOEAD_main MMRP b30_1.brite 10 1000 frontfile.txt nadir.txt builder" << endl;
+  exit (1);
 }
 
 int main(int argc, char ** argv) {
@@ -73,9 +85,11 @@ int main(int argc, char ** argv) {
   int maxEvaluationsValue = atoi (argv[2]);
   std::string frontarchive = argv[3];
   std::string nadir = argv[4];
+  int builder = atoi (argv[5]);
 
   algorithm->setInputParameter("populationSize",&populationSizeValue);
   algorithm->setInputParameter("maxEvaluations",&maxEvaluationsValue);
+  algorithm->setInputParameter("builer",&builder);
   
   // Directory with the files containing the weight vectors used in 
   // Q. Zhang,  W. Liu,  and H Li, The Performance of a New Version of MOEA/D 

@@ -45,6 +45,7 @@ SolutionSet * ssNSGAII::execute() {
   int populationSize;
   int maxEvaluations;
   int evaluations;
+  int builder = 0;
 
   // TODO: QualityIndicator indicators; // QualityIndicator object
   int requiredEvaluations; // Use in the example of use of the
@@ -65,6 +66,7 @@ SolutionSet * ssNSGAII::execute() {
   populationSize = *(int *) getInputParameter("populationSize");
   maxEvaluations = *(int *) getInputParameter("maxEvaluations");
   indicators = (QualityIndicator *) getInputParameter("indicators");
+  builder = *(int*) getInputParameter("builder");
 
   //Initialize the variables
   population = new SolutionSet(populationSize);

@@ -68,10 +68,12 @@ int main(int argc, char ** argv) {
   double offset = atoi(argv[3]);
   std::string frontarchive = argv[4];
   std::string nadir = argv[5];
+  int builder = atoi (argv[6]);
 
   algorithm->setInputParameter("populationSize",&populationSize);
   algorithm->setInputParameter("maxEvaluations",&maxEvaluations);
   algorithm->setInputParameter("offset",&offset);
+  algorithm->setInputParameter("builder",&builder);
 
   // Mutation
   map<string, void *> parameters; 

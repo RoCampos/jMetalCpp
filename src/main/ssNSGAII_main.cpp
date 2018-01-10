@@ -86,9 +86,11 @@ int main(int argc, char ** argv) {
   int maxEvaluations = atoi(argv[2]);
   std::string frontarchive = argv[3];
   std::string nadir = argv[4];
+  int builder = atoi(argv[5]);
 
   algorithm->setInputParameter("populationSize",&populationSize);
   algorithm->setInputParameter("maxEvaluations",&maxEvaluations);
+  algorithm->setInputParameter("builder",&builder);
 
   std::string name = "TWO";
 

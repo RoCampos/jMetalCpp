@@ -11,14 +11,23 @@ Variable ** EdgeSolutionType::createVariables ()
 	return (NULL);
 }
 
-Individual EdgeSolutionType::get_representation ()
+Individual EdgeSolutionType::get_representation (int fixed)
 {
 
 	//cast to problem network
 	MMRP * mmrp = (MMRP *) problem_;
 
 	//Solution is built here
-	int r = rand () % 3;
+	int r = 0;
+	if (fixed == 0)
+		r = rand () % 3;
+	else if (fixed == 1) {
+		r = fixed;
+	} else if (fixed == 2) {
+		r = fixed;
+	} else if (fixed == 3) {
+		r = fixed;
+	}
 
 	int GSIZE = mmrp->numberGroups ();
 

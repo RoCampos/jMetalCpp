@@ -50,18 +50,20 @@ SolutionSet * Mota::execute () {
 		//builer = 1
 		sol = new Solution (this->problem_, 1);
 		this->problem_->evaluate (sol);
-		sol->get_representation ().str ();
+		// sol->get_representation ().str ();
 		subpop1->add(sol);
 
+		sol = NULL;
 		sol = new Solution (this->problem_, 2);
 		this->problem_->evaluate (sol);
 		subpop2->add(sol);
-		sol->get_representation ().str ();
+		// sol->get_representation ().str ();
 
+		sol = NULL;
 		sol = new Solution (this->problem_, 3);
 		this->problem_->evaluate (sol);
 		subpop3->add(sol);
-		sol->get_representation ().str ();
+		// sol->get_representation ().str ();
 	}
 
 
@@ -72,25 +74,26 @@ SolutionSet * Mota::execute () {
 		offspring3 = new SolutionSet (populationSize/3);
 
 		Solution ** individuals = new Solution*[2];
+		void** objects = new void*[2];
 
 		for (int p = 0; p < 3; p++) {
 			for (int i = 0; i < populationSize/3; ++i)
 			{
 
 				int pop = rand () % 3;
-				int ind = rand () % int(populationSize/3);
 				
-				if (pop == 1)
+				if (pop == 0)
 					individuals = (Solution **) selection->execute (subpop1);
-				else if (pop == 2)
+				else if (pop == 1)
 					individuals = (Solution **) selection->execute (subpop2);
-				else 
+				else if (pop == 2)
 					individuals = (Solution **) selection->execute (subpop3);
 
-				void** objects = new void*[2];
+				
 				objects[0] = individuals[0];
 				objects[1] = &gs;
 				Solution * child = (Solution*) plasmid->execute (objects);
+				problem_->evaluate (child);
 
 				if (p == 0) {
 					offspring1->add (child);
@@ -100,10 +103,10 @@ SolutionSet * Mota::execute () {
 					offspring3->add (child);
 				}
 
-				delete[] objects;
+				// delete[] objects;
 			}
 		}
-
+		delete[] objects;
 		delete[] individuals;
 
 		// here filtering by nondominance
@@ -140,15 +143,26 @@ SolutionSet * Mota::execute () {
 
 	delete distance;
 
-	SolutionSet * pop = subpop1->join(subpop2);
-	SolutionSet * fullPop = pop->join(subpop3);
-	Ranking * rnk = new Ranking (fullPop);
-	SolutionSet * result = new SolutionSet(rnk->getSubfront(0)->size());
+	SolutionSet * finalpop = new SolutionSet (populationSize);
+	for (int i = 0; i < populationSize/3; ++i)
+	{
+		finalpop->add (new Solution(subpop1->get(i)));
+		finalpop->add (new Solution(subpop2->get(i)));
+		finalpop->add (new Solution(subpop3->get(i)));
+	}
+	
+	Ranking * rnk = new Ranking (finalpop);
 
+	SolutionSet * result = new SolutionSet(rnk->getSubfront(0)->size());
 	for (int i=0;i<rnk->getSubfront(0)->size();i++) {
     	result->add(new Solution(rnk->getSubfront(0)->get(i)));
   	}
 
+  	delete subpop1;
+  	delete subpop2;
+  	delete subpop3;
+  	delete rnk;
+  	delete finalpop;
 
 	return result;
 

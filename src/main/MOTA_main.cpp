@@ -62,8 +62,22 @@ int main(int argc, char **argv)
 	double secs = (double) (t_fin - t_ini);
 	secs = secs / CLOCKS_PER_SEC;
 
+	cout << population->size () << endl;
+
+	cout << "Total execution time: " << secs << "s" << endl;
 	population->printObjectivesToFile("FUN");
 
+	std::ifstream nadirf;
+	nadirf.open (nadir.c_str ());
+	int Z, C, H;
+	nadirf >> Z;
+	nadirf >> C;
+	nadirf >> H;
+	nadirf.close ();
+	std::stringstream ss;
+	ss << "./hv FUN -r ";
+	ss << '"' << Z << " " << C << " " << H <<'"';
+	system (ss.str ().c_str());
 
 
 	return 0;

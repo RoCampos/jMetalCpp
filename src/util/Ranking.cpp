@@ -91,7 +91,6 @@ Ranking::Ranking (SolutionSet * solutionSet) {
     // If nobody dominates p, p belongs to the first front
     if (dominateMe[p] == 0) {
       front[0].push_back(p);
-      solutionSet_->get(p)->setRank(0);
     } // if
 
   } // for

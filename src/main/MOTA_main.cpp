@@ -1,0 +1,70 @@
+#include <iostream>
+#include <Algorithm.h>
+#include <Problem.h>
+#include <ProblemFactory.h>
+#include <mota.h>
+#include <Plasmid.h>
+#include <PathPlasmid.h>
+#include <RandomSelection.h>
+#include <SolutionSet.h>
+
+#include <cstdlib>
+
+void help () 
+{
+
+}
+
+int main(int argc, char **argv)
+{
+
+	clock_t t_ini, t_fin;
+	
+	Problem   * problem   ; // The problem to solve
+	Algorithm * algorithm ; // The algorithm to use
+
+	if (argc >= 2) {
+		problem = ProblemFactory::getProblem(argc, argv);
+	} else {
+		help ();
+	}
+
+	// algorithm`s parameters
+	int populationSize = atoi(argv[1]);
+	int maxEvaluations = atoi (argv[2]);
+ 	int hostInformationSize = atoi(argv[3]);
+ 	int elitePopSize = atoi (argv[4]);
+ 	std::string frontarchive = argv[5];
+	std::string nadir = argv[6];
+
+	//instance of the algorthm
+	algorithm = new Mota(problem);
+
+	std::map<std::string, void*> parameters;
+	Operator * plasmid = new PathPlasmid (parameters);
+
+	parameters.clear ();
+  	Operator * selection = new RandomSelection(parameters);
+
+	//setting parameters 
+	algorithm->setInputParameter("populationSize",&populationSize);
+  	algorithm->setInputParameter("hostInformationSize",&hostInformationSize);
+  	algorithm->setInputParameter("elitePopSize",&elitePopSize);
+  	algorithm->setInputParameter("maxEvaluations",&maxEvaluations);
+
+
+  	algorithm->addOperator ("PathPlasmid", plasmid);
+  	algorithm->addOperator ("selection", selection);
+
+	t_ini = clock();
+	SolutionSet * population = algorithm->execute();
+	t_fin = clock();
+	double secs = (double) (t_fin - t_ini);
+	secs = secs / CLOCKS_PER_SEC;
+
+	population->printObjectivesToFile("FUN");
+
+
+
+	return 0;
+}

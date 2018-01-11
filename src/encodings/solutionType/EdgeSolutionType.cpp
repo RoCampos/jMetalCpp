@@ -20,13 +20,13 @@ Individual EdgeSolutionType::get_representation (int fixed)
 	//Solution is built here
 	int r = 0;
 	if (fixed == 0)
-		r = rand () % 3;
+		r = rand () % 3; //random choice
 	else if (fixed == 1) {
-		r = fixed;
+		r = 0;	//widest path algorithm
 	} else if (fixed == 2) {
-		r = fixed;
+		r = 1; //shortest path algorithm
 	} else if (fixed == 3) {
-		r = fixed;
+		r = 2; //best-first search algorithm
 	}
 
 	int GSIZE = mmrp->numberGroups ();
@@ -75,8 +75,6 @@ Individual EdgeSolutionType::get_representation (int fixed)
 	evaluate (individual, 
 		*mmrp->get_network(), 
 		mmrp->get_groups());
-
-	// individual.str ();
 
 	return individual;
 

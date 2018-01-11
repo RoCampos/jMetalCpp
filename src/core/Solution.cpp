@@ -145,7 +145,7 @@ Solution::Solution (Solution *solution) {
   marked_ = solution->isMarked();
   rank_ = solution->getRank();
   location_ = solution->getLocation();
-  individual_ = solution->get_representation ();
+  individual_ = std::move(solution->get_representation ());
     
   // create the variables
   //old fashion of copying variables

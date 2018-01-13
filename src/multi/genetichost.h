@@ -5,6 +5,7 @@
 #include <kspath.h>
 #include <network.h>
 #include <group.h>
+#include <path.h>
 
 //maps a tree
 //each slot of the tree is related to one destination
@@ -23,10 +24,14 @@ class GeneticHost
 
 public:
 	GeneticHost (int K_);
+	GeneticHost (std::vector<rca::Group*>& mgroups);
 	void execute (rca::Network * network, std::vector<rca::Group*>& mgroups);
 	rca::Path getRandomMeme (int tree, int dest);
-	rca::Path getBestMeme (int tree);
+	rca::Path getBestMeme (int tree, int dest);
 	void print ();
+	void add (int tree, int dest, rca::Path const&);
+	void clear ();
+
 
 private:
 	//number of genetic informations: memes

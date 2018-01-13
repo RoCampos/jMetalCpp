@@ -20,6 +20,7 @@ SolutionSet * Mota::execute () {
 
 	Operator * plasmid;
 	Operator * selection;
+	Operator * transpon;
 
 	//for crownding distance
 	Distance * distance = new Distance();
@@ -34,6 +35,7 @@ SolutionSet * Mota::execute () {
 	//creatig hostInformationSize paths for each pair s,d for all D
 	MMRP * mmrp = (MMRP *) problem_;
 	GeneticHost gs (hostInformationSize);
+	GeneticHost elitegs(mmrp->get_groups());
 	gs.execute (mmrp->get_network (), mmrp->get_groups());
 
 	//solutions sets 
@@ -43,6 +45,7 @@ SolutionSet * Mota::execute () {
 
 	plasmid 	= operators_["PathPlasmid"];
 	selection	= operators_["selection"];
+	// transpon	= operators_["Transposon"];
 
 	Solution * sol;
 	for (int i = 0; i < populationSize/3; ++i)
@@ -66,15 +69,25 @@ SolutionSet * Mota::execute () {
 		// sol->get_representation ().str ();
 	}
 
+	elite = new SolutionSet (elitePopSize);
 
 	while (maxEvaluations-- > 0) {
 
-		offspring1 = new SolutionSet (populationSize/3);
-		offspring2 = new SolutionSet (populationSize/3);
-		offspring3 = new SolutionSet (populationSize/3);
+		offspring1 = new SolutionSet ((populationSize/3)+2);
+		offspring2 = new SolutionSet ((populationSize/3)+2);
+		offspring3 = new SolutionSet ((populationSize/3)+2);
 
 		Solution ** individuals = new Solution*[2];
 		void** objects = new void*[2];
+
+		void ** subpop = new void*[3];
+		subpop[0] = subpop1;
+		subpop[1] = subpop2;
+		subpop[2] = subpop3;
+		prepareElite (elite, subpop);
+		elitegs.clear ();
+		eliteGeneticMaterial (elite, elitegs);
+		delete[] subpop;
 
 		for (int p = 0; p < 3; p++) {
 			for (int i = 0; i < populationSize/3; ++i)
@@ -88,10 +101,16 @@ SolutionSet * Mota::execute () {
 					individuals = (Solution **) selection->execute (subpop2);
 				else if (pop == 2)
 					individuals = (Solution **) selection->execute (subpop3);
-
 				
 				objects[0] = individuals[0];
-				objects[1] = &gs;
+
+				int pos = rand () % 2;
+				if (pos == 0){
+					objects[1] = &gs;
+				} else{
+					objects[1] = &elitegs;
+				} 
+					
 				Solution * child = (Solution*) plasmid->execute (objects);
 				problem_->evaluate (child);
 
@@ -116,12 +135,16 @@ SolutionSet * Mota::execute () {
 			Ranking * ranking;
 			SolutionSet * unionSet;
 			if (p == 0) {
+				offspring1->add(new Solution(elite->get(0)));
+				offspring1->add(new Solution(elite->get(1)));
 				unionSet = subpop1->join (offspring1);
 				delete offspring1;
 				ranking = new Ranking (unionSet);
 				this->ns (subpop1, ranking, populationSize, distance);
 
 			} else if (p == 1) {
+				offspring2->add(new Solution(elite->get(2)));
+				offspring2->add(new Solution(elite->get(3)));
 				unionSet = subpop2->join (offspring2);
 				delete offspring2;
 				ranking = new Ranking (unionSet);
@@ -129,6 +152,8 @@ SolutionSet * Mota::execute () {
 				this->ns (subpop2, ranking, populationSize, distance);
 
 			} else {
+				offspring3->add(new Solution(elite->get(4)));
+				offspring3->add(new Solution(elite->get(5)));
 				unionSet = subpop3->join (offspring3);
 				delete offspring3;
 				ranking = new Ranking (unionSet);
@@ -138,6 +163,7 @@ SolutionSet * Mota::execute () {
 			delete ranking;
 			delete unionSet;
 		}
+
 
 	} 
 
@@ -218,5 +244,73 @@ void Mota::ns (
 
       remain = 0;
     } // if
+
+}
+
+void Mota::prepareElite (SolutionSet * elite, void * objects)
+{
+
+	for (int i=0;i<elite->size();i++) {
+      delete elite->get(i);
+    }
+    elite->clear();
+
+	SolutionSet ** subpop = (SolutionSet **) objects;
+	Operator * transpon = operators_["Transposon"];
+	Operator * selection = operators_["selection"];
+
+	Solution ** eliteInd = (Solution **) selection->execute (subpop[0]);
+	
+	Solution * nova = (Solution*) transpon->execute (eliteInd[0]);
+	problem_->evaluate (nova);
+	elite->add (new Solution (nova));
+	nova = (Solution*) transpon->execute (eliteInd[1]);
+	problem_->evaluate (nova);
+	elite->add (new Solution (nova));
+
+	eliteInd = (Solution **) selection->execute (subpop[1]);
+	nova = (Solution*) transpon->execute (eliteInd[0]);
+	problem_->evaluate (nova);
+	elite->add (new Solution (nova));
+	nova = (Solution*)transpon->execute (eliteInd[1]);
+	problem_->evaluate (nova);
+	elite->add (new Solution (nova));
+	
+	eliteInd = (Solution **) selection->execute (subpop[2]);
+	nova = (Solution*) transpon->execute (eliteInd[0]);
+	problem_->evaluate (nova);
+	elite->add (new Solution (nova));
+	nova = (Solution*) transpon->execute (eliteInd[1]);
+	problem_->evaluate (nova);
+	elite->add (new Solution (nova));
+
+}
+
+void Mota::eliteGeneticMaterial (
+	SolutionSet *elite, 
+	GeneticHost & gs)
+{
+
+
+	for (int i = 0; i < elite->size (); ++i)
+	{
+		Individual & repr = elite->get(i)->get_representation ();
+		int CHRMO = repr.cromossoma.size ();
+		for (int j = 0; j < CHRMO; ++j)
+		{
+			DTree & tree = repr.cromossoma.at (j);
+			for (int p = 0; p < tree.paths.size (); ++p)
+			{
+				//tree = j
+				//destination = p
+				rca::Path & path = tree.paths.at (p);
+				gs.add (j, p, path);
+			}
+		}
+	}
+
+	gs.print ();
+
+
 
 }

@@ -6,6 +6,23 @@ GeneticHost::GeneticHost (int K_) : K (K_) {
 
 }
 
+
+//inicializa o banco de memes
+//para cada árvore deverá ser adicionado um meme
+//usado para obter informarção da população de elite
+GeneticHost::GeneticHost (std::vector<rca::Group*>& mgroups)
+{
+	int GROUPS = mgroups.size ();
+	this->memes = std::vector<gTree> (GROUPS);
+	//allocatin memory for the vector
+	for (int i = 0; i < GROUPS; ++i)
+	{
+		std::vector<int> const& members = mgroups[i]->getMembers ();
+		int size = members.size ();
+		this->memes[i].paths = std::vector<std::vector<rca::Path>> (size);
+	}
+}
+
 void GeneticHost::execute (
 	rca::Network * network, 
 	std::vector<rca::Group*>& mgroups) 
@@ -49,8 +66,34 @@ rca::Path GeneticHost::getRandomMeme (int tree, int dest)
 	return paths.at (rpath);
 }
 
-rca::Path GeneticHost::getBestMeme (int tree)
+rca::Path GeneticHost::getBestMeme (int tree, int dest)
 {
+	auto paths = this->memes[tree].paths.at (dest);
+	return paths.at (0);
+}
+
+void GeneticHost::add (int tree, int dest, rca::Path const & p)
+{
+	std::vector<rca::Path> & paths = this->memes[tree].paths.at (dest);
+	paths.push_back (p);
+}
+
+void GeneticHost::clear () {
+
+	//list of tree
+	for (int i = 0; i < this->memes.size (); ++i)
+	{
+		//each tree has a list of list of paths
+		int PATHS = this->memes[i].paths.size ();
+		for (int j = 0; j < PATHS; ++j)
+		{
+			//clearing path list for j-th destinatio node
+			//of the i-th tree
+			std::vector<rca::Path> & paths = this->memes[i].paths.at (j);
+			paths.clear ();
+		}
+		 
+	}
 
 }
 

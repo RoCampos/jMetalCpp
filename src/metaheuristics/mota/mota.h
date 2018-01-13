@@ -24,6 +24,9 @@ private:
 		int populationSize, 
 		Distance * distance);
 
+	void prepareElite (SolutionSet * elite, void *);
+	void eliteGeneticMaterial (SolutionSet *elite, GeneticHost & gs);
+
 
 };
 

@@ -5,6 +5,8 @@
 #include <mota.h>
 #include <Plasmid.h>
 #include <PathPlasmid.h>
+#include <Transposon.h>
+#include <CycleEdgeTransposon.h>
 #include <RandomSelection.h>
 #include <SolutionSet.h>
 
@@ -42,6 +44,8 @@ int main(int argc, char **argv)
 
 	std::map<std::string, void*> parameters;
 	Operator * plasmid = new PathPlasmid (parameters);
+	parameters.clear ();
+	Operator * traspon = new CycleEdgeTransposon (parameters);
 
 	parameters.clear ();
   	Operator * selection = new RandomSelection(parameters);
@@ -55,6 +59,7 @@ int main(int argc, char **argv)
 
   	algorithm->addOperator ("PathPlasmid", plasmid);
   	algorithm->addOperator ("selection", selection);
+  	algorithm->addOperator ("Transposon", traspon);
 
 	t_ini = clock();
 	SolutionSet * population = algorithm->execute();

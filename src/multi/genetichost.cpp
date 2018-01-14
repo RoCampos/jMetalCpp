@@ -1,7 +1,9 @@
 #include <genetichost.h>
 
 
-GeneticHost::GeneticHost (int K_) : K (K_) {
+GeneticHost::GeneticHost (int K_, bool hop_) 
+: K (K_), hop(hop_)
+{
 
 
 }
@@ -42,11 +44,23 @@ void GeneticHost::execute (
 			ks.init (source, members[m]);
 			std::vector<rca::Path> paths;
 			int count = 0;
-			while (ks.hasNext () && count < this->K) {
-				rca::Path p = ks.next ();
-				paths.push_back (p);
-				count++;
-			}
+
+			if (!this->hop)
+				while (ks.hasNext () && count < this->K) {
+					rca::Path p = ks.next ();
+					paths.push_back (p);
+					count++;
+				}
+			else
+				while (ks.hasNext () && count) {
+					rca::Path p = ks.next ();
+					if (p.size ()-1 < this->K){
+						paths.push_back (p);
+						count++;
+					}
+				}
+
+
 			//adding a meme to gTree database
 			this->memes[g].add (paths);
 			ks.clear ();
@@ -62,8 +76,14 @@ rca::Path GeneticHost::getRandomMeme (int tree, int dest)
 	//all paths for destination in pos 'dest'
 	std::vector<rca::Path> & paths = gtree.paths.at (dest);
 
-	int rpath = rand () % paths.size ();
-	return paths.at (rpath);
+	rca::Path path;
+	int rpath = -1;
+	if (paths.size () >= 0) {
+		rpath = rand () % paths.size ();
+		return paths.at (rpath);
+	}else {
+		return path;
+	} 
 }
 
 rca::Path GeneticHost::getBestMeme (int tree, int dest)

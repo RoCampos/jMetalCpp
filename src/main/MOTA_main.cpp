@@ -56,6 +56,20 @@ int main(int argc, char **argv)
   	algorithm->setInputParameter("elitePopSize",&elitePopSize);
   	algorithm->setInputParameter("maxEvaluations",&maxEvaluations);
 
+  	MMRP * mmrp = (MMRP *) problem;
+  	rca::Network copy = *mmrp->get_network ();
+  	for (int i = 0; i < copy.getNumberNodes (); ++i)
+	{
+		for (int j = 0; j < copy.getNumberNodes (); ++j)
+		{	
+			if (copy.getCost (i,j) > 0) {
+				copy.setCost (i,j, 1);
+				copy.setCost (j,i, 1);
+			}
+		}
+	}
+	algorithm->setInputParameter("networkCopy",&copy);
+
 
   	algorithm->addOperator ("PathPlasmid", plasmid);
   	algorithm->addOperator ("selection", selection);

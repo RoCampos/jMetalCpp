@@ -30,13 +30,17 @@ SolutionSet * Mota::execute () {
 	int hostInformationSize = *(int*) getInputParameter("hostInformationSize");
 	int elitePopSize = *(int*) getInputParameter ("elitePopSize");
 	int maxEvaluations = *(int *) getInputParameter("maxEvaluations");
+	rca::Network * copy = (rca::Network *) getInputParameter ("networkCopy");
 
 
 	//creatig hostInformationSize paths for each pair s,d for all D
 	MMRP * mmrp = (MMRP *) problem_;
 	GeneticHost gs (hostInformationSize);
+	GeneticHost gshop (hostInformationSize, false);
 	GeneticHost elitegs(mmrp->get_groups());
+	
 	gs.execute (mmrp->get_network (), mmrp->get_groups());
+	gshop.execute (copy, mmrp->get_groups());
 
 	//solutions sets 
 	subpop1 = new SolutionSet ((int)populationSize/3);
@@ -106,7 +110,11 @@ SolutionSet * Mota::execute () {
 
 				int pos = rand () % 2;
 				if (pos == 0){
-					objects[1] = &gs;
+					pos = rand () % 2;
+					if (pos == 0)
+						objects[1] = &gs;
+					else
+						objects[1] = &gshop;
 				} else{
 					objects[1] = &elitegs;
 				} 
@@ -308,9 +316,5 @@ void Mota::eliteGeneticMaterial (
 			}
 		}
 	}
-
-	gs.print ();
-
-
 
 }

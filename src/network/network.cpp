@@ -166,6 +166,7 @@ void Network::init(unsigned nodes, unsigned edges) {
 	m_edges = edges;
 	m_costMatrix = matrix2d (m_nodes,m_nodes,0.0);
 	m_bandMatrix = matrix2d (m_nodes,m_nodes,0.0);
+	m_edge_id = matrix2d (m_nodes,m_nodes,0.0);
 
 	m_edgesByNodes = std::vector< std::vector<Link> > (m_nodes);
 	

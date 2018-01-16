@@ -67,6 +67,8 @@ void Reader::configNetwork(Network * network) {
 		network->addAdjacentVertex(from, to);
 		network->addAdjacentVertex(to, from);
 
+		network->set_index (link, i);
+
 		getline (file, str);
 	}
 
@@ -220,13 +222,13 @@ void rca::reader::get_problem_informations (std::string const& file,
 	// temp struct for groups
 	std::vector<std::shared_ptr<rca::Group>> _mgroups;
 
-#ifdef MODEL_REAL
+// #ifdef MODEL_REAL
 	reader.configure_real_values (&net,_mgroups);
-#endif 
+// #endif 
 
-#ifdef MODEL_UNIT
-	reader.configure_unit_values (&net,_mgroups);
-#endif
+// #ifdef MODEL_UNIT
+// 	reader.configure_unit_values (&net,_mgroups);
+// #endif
 
 	for (auto && g : _mgroups) {
 		//getting from shared_ptr to Group Instance.

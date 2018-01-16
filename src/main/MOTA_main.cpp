@@ -56,6 +56,20 @@ int main(int argc, char **argv)
   	algorithm->setInputParameter("elitePopSize",&elitePopSize);
   	algorithm->setInputParameter("maxEvaluations",&maxEvaluations);
 
+  	MMRP * mmrp = (MMRP *) problem;
+  	rca::Network copy = *mmrp->get_network ();
+  	for (int i = 0; i < copy.getNumberNodes (); ++i)
+	{
+		for (int j = 0; j < copy.getNumberNodes (); ++j)
+		{	
+			if (copy.getCost (i,j) > 0) {
+				copy.setCost (i,j, 1);
+				copy.setCost (j,i, 1);
+			}
+		}
+	}
+
+	algorithm->setInputParameter("networkCopy",&copy);
 
   	algorithm->addOperator ("PathPlasmid", plasmid);
   	algorithm->addOperator ("selection", selection);
@@ -67,9 +81,9 @@ int main(int argc, char **argv)
 	double secs = (double) (t_fin - t_ini);
 	secs = secs / CLOCKS_PER_SEC;
 
-	cout << population->size () << endl;
+	// cout << population->size () << endl;
 
-	cout << "Total execution time: " << secs << "s" << endl;
+	// cout << "Total execution time: " << secs << "s" << endl;
 	population->printObjectivesToFile("FUN");
 
 	std::ifstream nadirf;

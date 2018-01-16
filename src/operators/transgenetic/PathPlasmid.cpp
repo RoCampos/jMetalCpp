@@ -33,11 +33,12 @@ void * PathPlasmid::execute (void * object)
 
 		rca::Path path = gs->getRandomMeme (i, m);
 		//simple replacement
-		ind1.cromossoma.at (i).paths.at (m) = path;
+		if (path.size () > 0)
+			ind1.cromossoma.at (i).paths.at (m) = path;
 
 	}
 
-	evaluate (ind1, 
+	eval (ind1, 
 		*mmrp->get_network(), 
 		mmrp->get_groups());
 

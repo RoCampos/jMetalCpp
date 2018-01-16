@@ -12,6 +12,7 @@
 #include <algorithm>
 #include <vector>
 #include <set>
+#include <map>
 #include "matrix2d.h"
 #include "disjointset2.h"
 #include "link.h"
@@ -454,12 +455,23 @@ public:
 	
 	std::vector<int> breadth_first_search (int start);
 
+	int get_index (rca::Link link) {
+		return m_edge_id.at(link.getX(), link.getY());
+	}
+
+	void set_index (rca::Link link, double i) {
+		m_edge_id.assign(link.getX(),link.getY(), i);
+		m_edge_id.assign(link.getX(),link.getY(), i);
+	}
+
+
 	
 private:
 	int m_nodes;
 	int m_edges;
 	matrix2d m_costMatrix;
 	matrix2d m_bandMatrix;
+	matrix2d m_edge_id;
 	
 	std::vector<bool> m_vertex;
 

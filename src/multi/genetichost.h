@@ -23,7 +23,7 @@ class GeneticHost
 {
 
 public:
-	GeneticHost (int K_);
+	GeneticHost (int K_, bool hop = false);
 	GeneticHost (std::vector<rca::Group*>& mgroups);
 	void execute (rca::Network * network, std::vector<rca::Group*>& mgroups);
 	rca::Path getRandomMeme (int tree, int dest);
@@ -36,6 +36,9 @@ public:
 private:
 	//number of genetic informations: memes
 	int K;
+
+	//size of the path
+	bool hop;
 	std::vector<gTree> memes;
 
 };

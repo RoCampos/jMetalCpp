@@ -509,7 +509,7 @@ Individual & Solution::get_representation ()
 
 void Solution::set_representation (Individual & ref)
 {
-  this->individual_ = ref;
+  this->individual_ = std::move(ref);
 }
 
 /**

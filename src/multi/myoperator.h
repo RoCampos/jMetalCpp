@@ -110,6 +110,11 @@ void evaluate (Individual & ind,
 	rca::Network & network, 
 	std::vector<rca::Group*> const & mgroups, bool widest = false);
 
+void eval (Individual & ind,
+	rca::Network & network,
+	std::vector<rca::Group*> const &,
+	bool widest = false);
+
 
 bool dominate (
 	std::vector<double> & obj1,

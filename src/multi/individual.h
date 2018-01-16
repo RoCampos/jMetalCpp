@@ -36,6 +36,16 @@ struct Individual {
 		cost = std::vector<int> (csize);
 	}
 
+	Individual (Individual const& ind) {
+		this->cromossoma = std::move(ind.cromossoma);
+		objectives = std::vector<double> (3);
+		cost = std::move(ind.cost);
+		for (int i = 0; i < objectives.size (); ++i)
+		{
+			objectives.at (i) = ind.objectives.at (i);
+		}
+	}
+
 	double get_objective (int pos) {
 		return objectives.at (pos);
 	} 

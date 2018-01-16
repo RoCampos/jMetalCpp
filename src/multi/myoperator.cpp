@@ -14,6 +14,7 @@ void evaluate (Individual & ind,
 	std::vector<rca::Link> residual;
 	
 	int croma = 0;
+
 	for (auto const & tree  : ind.cromossoma) {		
 		int tk = mgroups.at(croma)->getTrequest ();
 		std::vector<rca::Link> curr_tree;
@@ -31,9 +32,10 @@ void evaluate (Individual & ind,
 
 				//if the edge is not in the curr_tree
 				auto res = std::find (curr_tree.begin (), curr_tree.end(), l);
+
 				if (res == curr_tree.end()) {
 					//add the cost
-					curr_tree.push_back (l);
+					bool isres = false;
 					COST += network.getCost (l);
 					curr_cost += network.getCost (l);
 					//update Z if edge l is not in residual
@@ -41,7 +43,8 @@ void evaluate (Individual & ind,
 					if (res == residual.end()) {
 						int band = network.getBand (l.getX(), l.getY()); 
 						l.setValue (band-tk);
-						residual.push_back (l);
+						isres = true;
+						
 						if (widest) {
 							network.setBand (l.getX(), l.getY(), l.getValue ());
 							network.setBand (l.getY(), l.getX(), l.getValue ());
@@ -58,6 +61,8 @@ void evaluate (Individual & ind,
 							Z = res->getValue ();							
 						}
 					}
+					curr_tree.push_back (l);
+					if (isres) residual.push_back (std::move(l));
 				}
 
 			}
@@ -73,6 +78,115 @@ void evaluate (Individual & ind,
 	ind.objectives[0] = Z * (-1);
 	ind.objectives[1] = COST;
 	ind.objectives[2] = HOP;
+
+}
+
+void eval (Individual & ind,
+	rca::Network & network,
+	std::vector<rca::Group*> const & mgroups,
+	bool widest)
+{
+
+	int GROUPS = mgroups.size ();
+
+	int Z = std::numeric_limits<int>::max();
+	int HOP = 0;
+	int COST = 0;
+
+	// std::map<rca::Link, std::vector<int>> mapa;
+	std::vector<int> uso (network.getNumberEdges (),0);
+	std::vector<int> arvore (network.getNumberEdges (), -1);
+	
+	for (int tree_id = 0; tree_id < ind.size (); tree_id++)
+	{
+		int tk = mgroups.at (tree_id)->getTrequest ();
+		DTree const& tree = ind.cromossoma.at (tree_id);
+		//iteration over paths
+		auto curr_path = tree.paths.begin ();
+
+		for (; curr_path != tree.paths.end (); curr_path++) {
+			//test for path
+			if (HOP < curr_path->size ()-1)
+				HOP = curr_path->size ()-1;
+
+			for (int v = 0; v < (curr_path->size ()-1); v++)
+			{
+				int v_ = curr_path->at (v);
+				int w_ = curr_path->at (v+1);
+				int cost = network.getCost (v_,w_);
+				rca::Link l(v_, w_, cost);
+
+				int index = network.get_index (l);
+				//se a aresta nao foi utilizada nesta árvore
+				if (arvore[index] != tree_id) {
+
+					//pode ser uma aresta nova ou 
+					if (arvore[index] == -1) {
+						uso[index] = network.getBand (l.getX(), l.getY()) - tk;
+						arvore[index] = tree_id;
+					} else {
+						//aresta já usada em outra árvore
+						uso[index] -= tk;
+						arvore[index] = tree_id;
+					}
+
+					COST += cost;
+					if (uso[index] < Z) {
+						Z = uso[index];
+					}
+				}
+
+				//inserts the elements
+				// std::map<rca::Link, std::vector<int>>::iterator edge = mapa.find (l);
+				// if (edge == mapa.end ()) {
+				// 	mapa[l] = std::vector<int>(GROUPS+1, 0);
+				// 	std::vector<int> & ref = mapa.at(l);
+				// 	ref.at (tree_id) = 1;
+				// 	int z = network.getBand (l.getX(), l.getY()) - tk;
+				// 	ref.at (GROUPS) = z;
+				// 	COST += cost;
+				// 	if (z < Z) {
+				// 		Z = z;		
+				// 	}
+
+				// } else {
+				// 	//se a aresta não foi usanda na i-ésima árvore ainda adicione-a
+				// 	//remove banda
+				// 	std::vector<int> & ref = edge->second;
+				// 	if (ref.at (tree_id) == 0) {
+				// 		ref.at (tree_id) = 1;
+				// 		ref.at (GROUPS) -= tk;
+				// 		int z = ref.at (GROUPS);
+				// 		COST += cost;
+				// 		if (z < Z) {
+				// 			Z = z;
+				// 		}
+				// 	}
+				// } // enf if mapping edge
+			} //end for over vertex of paths
+		} //end for over paths of the dtree
+	} //end for over cromossoma
+
+	// cout << "Objective vector(eval): ";
+	// cout << Z*-1 << "\t";
+	// cout << COST << "\t";
+	// cout << HOP << endl;
+
+	ind.objectives[0] = Z * (-1);
+	ind.objectives[1] = COST;
+	ind.objectives[2] = HOP;
+
+	// for (auto e: mapa)
+	// {
+	// 	auto ref = e.second;
+	// 	int band = network.getBand (e.first.getX(), e.first.getY());
+	// 	cout << e.first << "("<< band << ":"<< ref[ref.size ()-1] <<" )"<< endl;
+	// 	for(int i=0; i < ref.size ()-1; i++) {
+	// 		cout << "\t" << i << ":" << ref[i] << ":" << mgroups.at (i)->getTrequest ();
+	// 		cout << endl;
+	// 	}
+	// }
+
 }
 
 bool dominate (

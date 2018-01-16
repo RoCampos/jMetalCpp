@@ -72,7 +72,11 @@ Individual EdgeSolutionType::get_representation (int fixed)
 
 	}
 
-	evaluate (individual, 
+	// evaluate (individual, 
+	// 	*mmrp->get_network(), 
+	// 	mmrp->get_groups());
+
+	eval (individual,
 		*mmrp->get_network(), 
 		mmrp->get_groups());
 

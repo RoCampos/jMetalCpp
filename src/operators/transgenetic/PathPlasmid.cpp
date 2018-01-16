@@ -38,7 +38,7 @@ void * PathPlasmid::execute (void * object)
 
 	}
 
-	evaluate (ind1, 
+	eval (ind1, 
 		*mmrp->get_network(), 
 		mmrp->get_groups());
 

@@ -68,8 +68,8 @@ int main(int argc, char **argv)
 			}
 		}
 	}
-	algorithm->setInputParameter("networkCopy",&copy);
 
+	algorithm->setInputParameter("networkCopy",&copy);
 
   	algorithm->addOperator ("PathPlasmid", plasmid);
   	algorithm->addOperator ("selection", selection);
@@ -81,9 +81,9 @@ int main(int argc, char **argv)
 	double secs = (double) (t_fin - t_ini);
 	secs = secs / CLOCKS_PER_SEC;
 
-	cout << population->size () << endl;
+	// cout << population->size () << endl;
 
-	cout << "Total execution time: " << secs << "s" << endl;
+	// cout << "Total execution time: " << secs << "s" << endl;
 	population->printObjectivesToFile("FUN");
 
 	std::ifstream nadirf;

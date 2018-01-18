@@ -108,6 +108,7 @@ int main(int argc, char ** argv) {
 
   // Result messages
   cout << "Total execution time: " << secs << "s" << endl;
+  
   // cout << "Variables values have been written to file VAR" << endl;
   // population->printVariablesToFile("VAR");
   // cout << "Objectives values have been written to file FUN" << endl;

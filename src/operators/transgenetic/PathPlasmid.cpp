@@ -29,7 +29,8 @@ void * PathPlasmid::execute (void * object)
 		std::vector<int> const & members = groups[i]->getMembers ();
 		
 		//destination (position)
-		int m = rand () % members.size ();
+		int m = PseudoRandom::randInt(0, members.size ()-1);
+		// int m = rand () % members.size ();
 
 		rca::Path path = gs->getRandomMeme (i, m);
 		//simple replacement

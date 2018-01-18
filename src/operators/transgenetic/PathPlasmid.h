@@ -8,6 +8,7 @@
 #include <GeneticHost.h>
 #include <group.h>
 #include <mmrp.h>
+#include <PseudoRandom.h>
 
 class PathPlasmid : public Plasmid
 {

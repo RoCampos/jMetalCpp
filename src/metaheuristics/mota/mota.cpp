@@ -97,7 +97,8 @@ SolutionSet * Mota::execute () {
 			for (int i = 0; i < populationSize/3; ++i)
 			{
 
-				int pop = rand () % 3;
+				int pop = PseudoRandom::randInt(0, 2);
+				// int pop = rand () % 3;
 				
 				if (pop == 0)
 					individuals = (Solution **) selection->execute (subpop1);
@@ -108,9 +109,9 @@ SolutionSet * Mota::execute () {
 				
 				objects[0] = individuals[0];
 
-				int pos = rand () % 2;
+				int pos = PseudoRandom::randInt(0, 1);
 				if (pos == 0){
-					pos = rand () % 2;
+					pos = PseudoRandom::randInt(0, 1);
 					if (pos == 0)
 						objects[1] = &gs;
 					else

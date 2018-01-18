@@ -83,7 +83,7 @@ int main(int argc, char **argv)
 
 	// cout << population->size () << endl;
 
-	// cout << "Total execution time: " << secs << "s" << endl;
+	cout << "Total execution time: " << secs << "s" << endl;
 	population->printObjectivesToFile("FUN");
 
 	std::ifstream nadirf;

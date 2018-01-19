@@ -10,6 +10,7 @@
 #include <Ranking.h>
 #include <CrowdingComparator.h>
 #include <PseudoRandom.h>
+#include <MMRPCrossover.h>
 
 class Mota : public Algorithm
 {

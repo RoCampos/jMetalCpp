@@ -36,9 +36,9 @@ int main(int argc, char **argv)
 	int maxEvaluations = atoi (argv[2]);
  	int hostInformationSize = atoi(argv[3]);
  	int elitePopSize = atoi (argv[4]);
- 	std::string frontarchive = argv[5];
-	std::string nadir = argv[6];
-	int usaTransposon = atoi(argv[7]);
+ 	float diff_rate = atof (argv[5]);
+ 	std::string frontarchive = argv[6];
+	std::string nadir = argv[7];
 
 	//instance of the algorthm
 	algorithm = new Mota(problem);
@@ -51,12 +51,18 @@ int main(int argc, char **argv)
 	parameters.clear ();
   	Operator * selection = new RandomSelection(parameters);
 
+  	parameters.clear ();
+  	std::string name = "THREE";
+  	parameters["algorithm"] = &name;
+  	Operator * crossover = new MMRPCrossover (parameters);
+
+
 	//setting parameters 
 	algorithm->setInputParameter("populationSize",&populationSize);
   	algorithm->setInputParameter("hostInformationSize",&hostInformationSize);
   	algorithm->setInputParameter("elitePopSize",&elitePopSize);
   	algorithm->setInputParameter("maxEvaluations",&maxEvaluations);
-  	algorithm->setInputParameter("usaTransposon",&usaTransposon);
+  	algorithm->setInputParameter("diff_rate",&diff_rate);
 
   	MMRP * mmrp = (MMRP *) problem;
   	rca::Network copy = *mmrp->get_network ();
@@ -76,6 +82,7 @@ int main(int argc, char **argv)
   	algorithm->addOperator ("PathPlasmid", plasmid);
   	algorithm->addOperator ("selection", selection);
   	algorithm->addOperator ("Transposon", traspon);
+	algorithm->addOperator ("diff_cross", crossover);
 
 	t_ini = clock();
 	SolutionSet * population = algorithm->execute();

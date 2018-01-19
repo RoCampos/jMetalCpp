@@ -21,6 +21,7 @@ SolutionSet * Mota::execute () {
 	Operator * plasmid;
 	Operator * selection;
 	Operator * transpon;
+	Operator * crossover;
 
 	//for crownding distance
 	Distance * distance = new Distance();
@@ -31,7 +32,6 @@ SolutionSet * Mota::execute () {
 	int elitePopSize = *(int*) getInputParameter ("elitePopSize");
 	int maxEvaluations = *(int *) getInputParameter("maxEvaluations");
 	rca::Network * copy = (rca::Network *) getInputParameter ("networkCopy");
-	int usaTransposon = *(int *) getInputParameter ("usaTransposon"); 
 
 
 	//creatig hostInformationSize paths for each pair s,d for all D
@@ -50,6 +50,8 @@ SolutionSet * Mota::execute () {
 
 	plasmid 	= operators_["PathPlasmid"];
 	selection	= operators_["selection"];
+	crossover 	= operators_["diff_cross"];
+	float diff_rate = *(float*) getInputParameter("diff_rate");
 
 	Solution * sol;
 	for (int i = 0; i < populationSize/3; ++i)
@@ -77,15 +79,12 @@ SolutionSet * Mota::execute () {
 
 	while (maxEvaluations-- > 0) {
 
-		int add = 0;
-		if (usaTransposon == 1){
-			add = 2;
-		}
-		offspring1 = new SolutionSet ((populationSize/3)+add);
-		offspring2 = new SolutionSet ((populationSize/3)+add);
-		offspring3 = new SolutionSet ((populationSize/3)+add);
+		offspring1 = new SolutionSet ((populationSize/3)+2);
+		offspring2 = new SolutionSet ((populationSize/3)+2);
+		offspring3 = new SolutionSet ((populationSize/3)+2);
 
-		Solution ** individuals = new Solution*[2];
+		Solution ** individuals1 = new Solution*[2];
+		Solution ** individuals2 = new Solution*[2];
 		void** objects = new void*[2];
 
 		void ** subpop = new void*[3];
@@ -93,11 +92,9 @@ SolutionSet * Mota::execute () {
 		subpop[1] = subpop2;
 		subpop[2] = subpop3;
 
-		if (usaTransposon == 1) {
-			prepareElite (elite, subpop);
-			elitegs.clear ();
-			eliteGeneticMaterial (elite, elitegs);
-		}
+		prepareElite (elite, subpop);
+		elitegs.clear ();
+		eliteGeneticMaterial (elite, elitegs);
 
 		delete[] subpop;
 
@@ -105,38 +102,55 @@ SolutionSet * Mota::execute () {
 			for (int i = 0; i < populationSize/3; ++i)
 			{
 
+				Solution * child = NULL;
+
 				int pop = PseudoRandom::randInt(0, 2);
-				
-				if (pop == 0)
-					individuals = (Solution **) selection->execute (subpop1);
-				else if (pop == 1)
-					individuals = (Solution **) selection->execute (subpop2);
-				else if (pop == 2)
-					individuals = (Solution **) selection->execute (subpop3);
-				
-				objects[0] = individuals[0];
-
-				int pos = -1; 
-
-				if (usaTransposon == 1) {
-					pos = PseudoRandom::randInt(0, 1);
-				} else {
-					pos = 0;
+				if (pop == 0){
+					individuals1 = (Solution **) selection->execute (subpop1);
+					individuals2 = (Solution **) selection->execute (subpop1);
+				}else if (pop == 1){
+					individuals1 = (Solution **) selection->execute (subpop2);
+					individuals2 = (Solution **) selection->execute (subpop2);
+				}
+				else if (pop == 2){
+					individuals1 = (Solution **) selection->execute (subpop3);
+					individuals2 = (Solution **) selection->execute (subpop3);
 				}
 
-				if (pos == 0){
-					pos = PseudoRandom::randInt(0, 1);
-					if (pos == 0)
-						objects[1] = &gs;
-					else
-						objects[1] = &gshop;
-				} else{
-					objects[1] = &elitegs;
-				} 
+				float rnd = PseudoRandom::randDouble();
+				if (rnd < diff_rate || diff_rate == 0.0) {
 					
-				Solution * child = (Solution*) plasmid->execute (objects);
-				problem_->evaluate (child);
+					objects[0] = individuals1[0];
+					int	pos = PseudoRandom::randInt(0, 1);
 
+					if (pos == 0){
+						pos = PseudoRandom::randInt(0, 1);
+						if (pos == 0)
+							objects[1] = &gs;
+						else
+							objects[1] = &gshop;
+					} else{
+						objects[1] = &elitegs;
+					} 
+						
+					child = (Solution*) plasmid->execute (objects);
+					
+				} //endif if for TA operators
+				else {
+					//mormal crossover
+					Solution **sol  = new Solution*[3];
+					objects[0] = individuals1[0];
+					sol[0] = individuals1[1];
+					sol[1] = individuals2[0];
+					sol[2] = individuals2[1];
+					objects[1] = sol;
+
+					child = (Solution*) crossover->execute (objects);
+
+					delete sol;
+				}
+
+				problem_->evaluate (child);
 				if (p == 0) {
 					offspring1->add (child);
 				} else if (p == 1) {
@@ -145,11 +159,13 @@ SolutionSet * Mota::execute () {
 					offspring3->add (child);
 				}
 
+
 				// delete[] objects;
 			}
 		}
 		delete[] objects;
-		delete[] individuals;
+		delete[] individuals1;
+		delete[] individuals2;
 
 		// here filtering by nondominance
 
@@ -158,31 +174,24 @@ SolutionSet * Mota::execute () {
 			Ranking * ranking;
 			SolutionSet * unionSet;
 			if (p == 0) {
-				if (usaTransposon == 1){
-					offspring1->add(new Solution(elite->get(0)));
-					offspring1->add(new Solution(elite->get(1)));
-				}
+				offspring1->add(new Solution(elite->get(0)));
+				offspring1->add(new Solution(elite->get(1)));
 				unionSet = subpop1->join (offspring1);
 				delete offspring1;
 				ranking = new Ranking (unionSet);
 				this->ns (subpop1, ranking, populationSize, distance);
 
 			} else if (p == 1) {
-				if (usaTransposon == 1){
-					offspring2->add(new Solution(elite->get(2)));
-					offspring2->add(new Solution(elite->get(3)));
-				}
+				offspring2->add(new Solution(elite->get(2)));
+				offspring2->add(new Solution(elite->get(3)));			
 				unionSet = subpop2->join (offspring2);
 				delete offspring2;
 				ranking = new Ranking (unionSet);
-
 				this->ns (subpop2, ranking, populationSize, distance);
 
 			} else {
-				if (usaTransposon == 1){
-					offspring3->add(new Solution(elite->get(4)));
-					offspring3->add(new Solution(elite->get(5)));
-				}
+				offspring3->add(new Solution(elite->get(4)));
+				offspring3->add(new Solution(elite->get(5)));
 				unionSet = subpop3->join (offspring3);
 				delete offspring3;
 				ranking = new Ranking (unionSet);

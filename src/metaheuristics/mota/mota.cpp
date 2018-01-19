@@ -31,6 +31,7 @@ SolutionSet * Mota::execute () {
 	int elitePopSize = *(int*) getInputParameter ("elitePopSize");
 	int maxEvaluations = *(int *) getInputParameter("maxEvaluations");
 	rca::Network * copy = (rca::Network *) getInputParameter ("networkCopy");
+	int usaTransposon = *(int *) getInputParameter ("usaTransposon"); 
 
 
 	//creatig hostInformationSize paths for each pair s,d for all D
@@ -49,7 +50,6 @@ SolutionSet * Mota::execute () {
 
 	plasmid 	= operators_["PathPlasmid"];
 	selection	= operators_["selection"];
-	// transpon	= operators_["Transposon"];
 
 	Solution * sol;
 	for (int i = 0; i < populationSize/3; ++i)
@@ -77,9 +77,13 @@ SolutionSet * Mota::execute () {
 
 	while (maxEvaluations-- > 0) {
 
-		offspring1 = new SolutionSet ((populationSize/3)+2);
-		offspring2 = new SolutionSet ((populationSize/3)+2);
-		offspring3 = new SolutionSet ((populationSize/3)+2);
+		int add = 0;
+		if (usaTransposon == 1){
+			add = 2;
+		}
+		offspring1 = new SolutionSet ((populationSize/3)+add);
+		offspring2 = new SolutionSet ((populationSize/3)+add);
+		offspring3 = new SolutionSet ((populationSize/3)+add);
 
 		Solution ** individuals = new Solution*[2];
 		void** objects = new void*[2];
@@ -88,9 +92,13 @@ SolutionSet * Mota::execute () {
 		subpop[0] = subpop1;
 		subpop[1] = subpop2;
 		subpop[2] = subpop3;
-		prepareElite (elite, subpop);
-		elitegs.clear ();
-		eliteGeneticMaterial (elite, elitegs);
+
+		if (usaTransposon == 1) {
+			prepareElite (elite, subpop);
+			elitegs.clear ();
+			eliteGeneticMaterial (elite, elitegs);
+		}
+
 		delete[] subpop;
 
 		for (int p = 0; p < 3; p++) {
@@ -98,7 +106,6 @@ SolutionSet * Mota::execute () {
 			{
 
 				int pop = PseudoRandom::randInt(0, 2);
-				// int pop = rand () % 3;
 				
 				if (pop == 0)
 					individuals = (Solution **) selection->execute (subpop1);
@@ -109,7 +116,14 @@ SolutionSet * Mota::execute () {
 				
 				objects[0] = individuals[0];
 
-				int pos = PseudoRandom::randInt(0, 1);
+				int pos = -1; 
+
+				if (usaTransposon == 1) {
+					pos = PseudoRandom::randInt(0, 1);
+				} else {
+					pos = 0;
+				}
+
 				if (pos == 0){
 					pos = PseudoRandom::randInt(0, 1);
 					if (pos == 0)
@@ -144,16 +158,20 @@ SolutionSet * Mota::execute () {
 			Ranking * ranking;
 			SolutionSet * unionSet;
 			if (p == 0) {
-				offspring1->add(new Solution(elite->get(0)));
-				offspring1->add(new Solution(elite->get(1)));
+				if (usaTransposon == 1){
+					offspring1->add(new Solution(elite->get(0)));
+					offspring1->add(new Solution(elite->get(1)));
+				}
 				unionSet = subpop1->join (offspring1);
 				delete offspring1;
 				ranking = new Ranking (unionSet);
 				this->ns (subpop1, ranking, populationSize, distance);
 
 			} else if (p == 1) {
-				offspring2->add(new Solution(elite->get(2)));
-				offspring2->add(new Solution(elite->get(3)));
+				if (usaTransposon == 1){
+					offspring2->add(new Solution(elite->get(2)));
+					offspring2->add(new Solution(elite->get(3)));
+				}
 				unionSet = subpop2->join (offspring2);
 				delete offspring2;
 				ranking = new Ranking (unionSet);
@@ -161,8 +179,10 @@ SolutionSet * Mota::execute () {
 				this->ns (subpop2, ranking, populationSize, distance);
 
 			} else {
-				offspring3->add(new Solution(elite->get(4)));
-				offspring3->add(new Solution(elite->get(5)));
+				if (usaTransposon == 1){
+					offspring3->add(new Solution(elite->get(4)));
+					offspring3->add(new Solution(elite->get(5)));
+				}
 				unionSet = subpop3->join (offspring3);
 				delete offspring3;
 				ranking = new Ranking (unionSet);

@@ -38,6 +38,7 @@ int main(int argc, char **argv)
  	int elitePopSize = atoi (argv[4]);
  	std::string frontarchive = argv[5];
 	std::string nadir = argv[6];
+	int usaTransposon = atoi(argv[7]);
 
 	//instance of the algorthm
 	algorithm = new Mota(problem);
@@ -55,6 +56,7 @@ int main(int argc, char **argv)
   	algorithm->setInputParameter("hostInformationSize",&hostInformationSize);
   	algorithm->setInputParameter("elitePopSize",&elitePopSize);
   	algorithm->setInputParameter("maxEvaluations",&maxEvaluations);
+  	algorithm->setInputParameter("usaTransposon",&usaTransposon);
 
   	MMRP * mmrp = (MMRP *) problem;
   	rca::Network copy = *mmrp->get_network ();

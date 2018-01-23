@@ -5,7 +5,7 @@
 #include <string>
 #include <map>
 #include <Solution.h>
-#include <GeneticHost.h>
+#include <genetichost.h>
 #include <group.h>
 #include <mmrp.h>
 #include <PseudoRandom.h>

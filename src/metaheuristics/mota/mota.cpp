@@ -34,6 +34,7 @@ SolutionSet * Mota::execute () {
 	int elitePopSize = *(int*) getInputParameter ("elitePopSize");
 	int maxEvaluations = *(int *) getInputParameter("maxEvaluations");
 	rca::Network * copy = (rca::Network *) getInputParameter ("networkCopy");
+	float plasmid_rate = *(int*) getInputParameter ("plasmid_rate");
 
 
 	//creatig hostInformationSize paths for each pair s,d for all D
@@ -98,7 +99,7 @@ SolutionSet * Mota::execute () {
 
 		Solution ** individuals1 = new Solution*[2];
 		Solution ** individuals2 = new Solution*[2];
-		void** objects = new void*[2];
+		void** objects = new void*[3];
 
 		void ** subpop = new void*[3];
 		subpop[0] = subpop1;
@@ -161,6 +162,7 @@ SolutionSet * Mota::execute () {
 					// child = (Solution*) crossover->execute (objects);
 					objects[0] = individuals2[0];
 					objects[1] = &this->individual;
+					objects[2] = &plasmid_rate;
 					child = (Solution*) treepath->execute (objects);
 
 					// delete sol;

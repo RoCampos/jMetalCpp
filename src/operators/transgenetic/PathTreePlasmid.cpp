@@ -15,6 +15,7 @@ void * PathTreePlasmid::execute (void * objects)
 	Solution * current = (Solution *) parameters[0];
 	Individual ind = current->get_representation ();
 	Individual * best = (Individual *) parameters[1];
+	int rate = *(int*) parameters[2];
 
 	Solution * child = new Solution (current->getNumberOfObjectives ());
 
@@ -24,7 +25,7 @@ void * PathTreePlasmid::execute (void * objects)
 	for (int i=0; i < ind.size (); i++) 
 	{
 		double l = PseudoRandom::randDouble (0, 1.0);
-		if (l < 0.3) {
+		if (l < rate) {
 			ind.cromossoma[i] = best->cromossoma.at (i);
 		}
 	}

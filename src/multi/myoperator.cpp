@@ -104,6 +104,8 @@ void eval (Individual & ind,
 		//iteration over paths
 		auto curr_path = tree.paths.begin ();
 
+		int curr_cost =  0;
+		
 		for (; curr_path != tree.paths.end (); curr_path++) {
 			//test for path
 			if (HOP < curr_path->size ()-1)
@@ -119,6 +121,7 @@ void eval (Individual & ind,
 				int index = network.get_index (l);
 				//se a aresta nao foi utilizada nesta árvore
 				if (arvore[index] != tree_id) {
+					curr_cost += cost;
 
 					//pode ser uma aresta nova ou 
 					if (arvore[index] == -1) {
@@ -136,35 +139,9 @@ void eval (Individual & ind,
 					}
 				}
 
-				//inserts the elements
-				// std::map<rca::Link, std::vector<int>>::iterator edge = mapa.find (l);
-				// if (edge == mapa.end ()) {
-				// 	mapa[l] = std::vector<int>(GROUPS+1, 0);
-				// 	std::vector<int> & ref = mapa.at(l);
-				// 	ref.at (tree_id) = 1;
-				// 	int z = network.getBand (l.getX(), l.getY()) - tk;
-				// 	ref.at (GROUPS) = z;
-				// 	COST += cost;
-				// 	if (z < Z) {
-				// 		Z = z;		
-				// 	}
-
-				// } else {
-				// 	//se a aresta não foi usanda na i-ésima árvore ainda adicione-a
-				// 	//remove banda
-				// 	std::vector<int> & ref = edge->second;
-				// 	if (ref.at (tree_id) == 0) {
-				// 		ref.at (tree_id) = 1;
-				// 		ref.at (GROUPS) -= tk;
-				// 		int z = ref.at (GROUPS);
-				// 		COST += cost;
-				// 		if (z < Z) {
-				// 			Z = z;
-				// 		}
-				// 	}
-				// } // enf if mapping edge
 			} //end for over vertex of paths
 		} //end for over paths of the dtree
+		ind.cost.at (tree_id) = curr_cost;
 	} //end for over cromossoma
 
 	// cout << "Objective vector(eval): ";

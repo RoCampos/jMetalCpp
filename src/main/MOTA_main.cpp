@@ -5,6 +5,7 @@
 #include <mota.h>
 #include <Plasmid.h>
 #include <PathPlasmid.h>
+#include <PathTreePlasmid.h>
 #include <Transposon.h>
 #include <CycleEdgeTransposon.h>
 #include <RandomSelection.h>
@@ -37,8 +38,9 @@ int main(int argc, char **argv)
  	int hostInformationSize = atoi(argv[3]);
  	int elitePopSize = atoi (argv[4]);
  	float diff_rate = atof (argv[5]);
- 	std::string frontarchive = argv[6];
-	std::string nadir = argv[7];
+ 	float plasmid_rate = atof (argv[6]);
+ 	std::string frontarchive = argv[7];
+	std::string nadir = argv[8];
 
 	//instance of the algorthm
 	algorithm = new Mota(problem);
@@ -56,6 +58,9 @@ int main(int argc, char **argv)
   	parameters["algorithm"] = &name;
   	Operator * crossover = new MMRPCrossover (parameters);
 
+  	parameters.clear ();
+  	Operator * treepath = new PathTreePlasmid (parameters);
+
 
 	//setting parameters 
 	algorithm->setInputParameter("populationSize",&populationSize);
@@ -63,6 +68,7 @@ int main(int argc, char **argv)
   	algorithm->setInputParameter("elitePopSize",&elitePopSize);
   	algorithm->setInputParameter("maxEvaluations",&maxEvaluations);
   	algorithm->setInputParameter("diff_rate",&diff_rate);
+  	algorithm->setInputParameter("plasmid_rate", &plasmid);
 
   	MMRP * mmrp = (MMRP *) problem;
   	rca::Network copy = *mmrp->get_network ();
@@ -83,6 +89,7 @@ int main(int argc, char **argv)
   	algorithm->addOperator ("selection", selection);
   	algorithm->addOperator ("Transposon", traspon);
 	algorithm->addOperator ("diff_cross", crossover);
+	algorithm->addOperator ("treepath", treepath);
 
 	t_ini = clock();
 	SolutionSet * population = algorithm->execute();

@@ -28,6 +28,10 @@ private:
 
 	void prepareElite (SolutionSet * elite, void *);
 	void eliteGeneticMaterial (SolutionSet *elite, GeneticHost & gs);
+	void bestSolution (SolutionSet * population);
+
+
+	Individual individual;
 
 
 };

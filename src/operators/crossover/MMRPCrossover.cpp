@@ -162,7 +162,7 @@ void* MMRPCrossover::diff(void *object)
 
 	Individual novo (ind1.size ());
 	diff_cross (ind1, ind2, ind3, novo, NODES);
-	evaluate (novo, *mmrp->get_network (), mmrp->get_groups());
+	eval (novo, *mmrp->get_network (), mmrp->get_groups());
 
 	child->set_representation (novo);
 	child->setType (current->getProblem()->getSolutionType());

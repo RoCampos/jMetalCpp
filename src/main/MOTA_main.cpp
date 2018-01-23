@@ -5,6 +5,7 @@
 #include <mota.h>
 #include <Plasmid.h>
 #include <PathPlasmid.h>
+#include <PathTreePlasmid.h>
 #include <Transposon.h>
 #include <CycleEdgeTransposon.h>
 #include <RandomSelection.h>
@@ -56,6 +57,9 @@ int main(int argc, char **argv)
   	parameters["algorithm"] = &name;
   	Operator * crossover = new MMRPCrossover (parameters);
 
+  	parameters.clear ();
+  	Operator * treepath = new PathTreePlasmid (parameters);
+
 
 	//setting parameters 
 	algorithm->setInputParameter("populationSize",&populationSize);
@@ -83,6 +87,7 @@ int main(int argc, char **argv)
   	algorithm->addOperator ("selection", selection);
   	algorithm->addOperator ("Transposon", traspon);
 	algorithm->addOperator ("diff_cross", crossover);
+	algorithm->addOperator ("treepath", treepath);
 
 	t_ini = clock();
 	SolutionSet * population = algorithm->execute();

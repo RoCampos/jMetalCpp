@@ -26,7 +26,7 @@ void * MMRPMutation::execute (void * object)
 
 	mutation (ind,mmrp->get_network (), tmp);
 
-	evaluate (ind, 
+	eval (ind, 
 		*mmrp->get_network(), 
 		mmrp->get_groups());
 

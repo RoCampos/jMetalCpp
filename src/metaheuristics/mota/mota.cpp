@@ -5,6 +5,7 @@
 Mota::Mota (Problem * problem) : Algorithm(problem)
 {
 
+
 }
 
 SolutionSet * Mota::execute () {
@@ -22,6 +23,7 @@ SolutionSet * Mota::execute () {
 	Operator * selection;
 	Operator * transpon;
 	Operator * crossover;
+	Operator * treepath;
 
 	//for crownding distance
 	Distance * distance = new Distance();
@@ -39,6 +41,12 @@ SolutionSet * Mota::execute () {
 	GeneticHost gs (hostInformationSize);
 	GeneticHost gshop (hostInformationSize, false);
 	GeneticHost elitegs(mmrp->get_groups());
+
+	//init repository of best individual
+	individual = Individual (mmrp->get_groups().size ());
+	for (int i = 0; i < individual.size (); i++) {
+		individual.cost[i] = std::numeric_limits<int>::max();
+	}
 	
 	gs.execute (mmrp->get_network (), mmrp->get_groups());
 	gshop.execute (copy, mmrp->get_groups());
@@ -50,8 +58,10 @@ SolutionSet * Mota::execute () {
 
 	plasmid 	= operators_["PathPlasmid"];
 	selection	= operators_["selection"];
+	treepath	= operators_["treepath"];
 	crossover 	= operators_["diff_cross"];
 	float diff_rate = *(float*) getInputParameter("diff_rate");
+
 
 	Solution * sol;
 	for (int i = 0; i < populationSize/3; ++i)
@@ -74,6 +84,9 @@ SolutionSet * Mota::execute () {
 		subpop3->add(sol);
 		// sol->get_representation ().str ();
 	}
+	bestSolution (subpop1);
+	bestSolution (subpop2);
+	bestSolution (subpop3);
 
 	elite = new SolutionSet (elitePopSize);
 
@@ -138,16 +151,19 @@ SolutionSet * Mota::execute () {
 				} //endif if for TA operators
 				else {
 					//mormal crossover
-					Solution **sol  = new Solution*[3];
-					objects[0] = individuals1[0];
-					sol[0] = individuals1[1];
-					sol[1] = individuals2[0];
-					sol[2] = individuals2[1];
-					objects[1] = sol;
+					// Solution **sol  = new Solution*[3];
+					// objects[0] = individuals1[0];
+					// sol[0] = individuals1[1];
+					// sol[1] = individuals2[0];
+					// sol[2] = individuals2[1];
+					// objects[1] = sol;
 
-					child = (Solution*) crossover->execute (objects);
+					// child = (Solution*) crossover->execute (objects);
+					objects[0] = individuals2[0];
+					objects[1] = &this->individual;
+					child = (Solution*) treepath->execute (objects);
 
-					delete sol;
+					// delete sol;
 				}
 
 				problem_->evaluate (child);
@@ -177,6 +193,8 @@ SolutionSet * Mota::execute () {
 				offspring1->add(new Solution(elite->get(0)));
 				offspring1->add(new Solution(elite->get(1)));
 				unionSet = subpop1->join (offspring1);
+				bestSolution (unionSet);
+
 				delete offspring1;
 				ranking = new Ranking (unionSet);
 				this->ns (subpop1, ranking, populationSize, distance);
@@ -185,6 +203,7 @@ SolutionSet * Mota::execute () {
 				offspring2->add(new Solution(elite->get(2)));
 				offspring2->add(new Solution(elite->get(3)));			
 				unionSet = subpop2->join (offspring2);
+				bestSolution (unionSet);
 				delete offspring2;
 				ranking = new Ranking (unionSet);
 				this->ns (subpop2, ranking, populationSize, distance);
@@ -193,10 +212,13 @@ SolutionSet * Mota::execute () {
 				offspring3->add(new Solution(elite->get(4)));
 				offspring3->add(new Solution(elite->get(5)));
 				unionSet = subpop3->join (offspring3);
+				bestSolution (unionSet);
 				delete offspring3;
 				ranking = new Ranking (unionSet);
 				this->ns (subpop3, ranking, populationSize, distance);
 			}
+
+			
 
 			delete ranking;
 			delete unionSet;
@@ -347,4 +369,18 @@ void Mota::eliteGeneticMaterial (
 		}
 	}
 
+}
+
+void Mota::bestSolution (SolutionSet * population)
+{
+	for (int i = 0; i < population->size (); i++) {
+		Solution * sol = population->get(i);
+		Individual & ind = sol->get_representation ();
+		for (int j=0; j < ind.size (); j++) {	
+			if (ind.cost[j] < this->individual.cost[j]){
+				this->individual.cromossoma[j] = ind.cromossoma[j];
+				this->individual.cost[j] = ind.cost[j];
+			}
+		}
+	}
 }

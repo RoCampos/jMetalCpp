@@ -35,6 +35,9 @@ SolutionSet * Mota::execute () {
 	int maxEvaluations = *(int *) getInputParameter("maxEvaluations");
 	rca::Network * copy = (rca::Network *) getInputParameter ("networkCopy");
 	float plasmid_rate = *(int*) getInputParameter ("plasmid_rate");
+	std::string algo = *(std::string*) getInputParameter ("algo");
+	int builder = *(int*) getInputParameter ("builder");
+
 
 
 	//creatig hostInformationSize paths for each pair s,d for all D
@@ -68,22 +71,43 @@ SolutionSet * Mota::execute () {
 	for (int i = 0; i < populationSize/3; ++i)
 	{
 		//builer = 1
-		sol = new Solution (this->problem_, 1);
-		this->problem_->evaluate (sol);
-		// sol->get_representation ().str ();
-		subpop1->add(sol);
 
-		sol = NULL;
-		sol = new Solution (this->problem_, 2);
-		this->problem_->evaluate (sol);
-		subpop2->add(sol);
-		// sol->get_representation ().str ();
+		if (builder == 0) {
+			sol = new Solution (this->problem_, 1);
+			this->problem_->evaluate (sol);
+			// sol->get_representation ().str ();
+			subpop1->add(sol);
 
-		sol = NULL;
-		sol = new Solution (this->problem_, 3);
-		this->problem_->evaluate (sol);
-		subpop3->add(sol);
-		// sol->get_representation ().str ();
+			sol = NULL;
+			sol = new Solution (this->problem_, 2);
+			this->problem_->evaluate (sol);
+			subpop2->add(sol);
+			// sol->get_representation ().str ();
+
+			sol = NULL;
+			sol = new Solution (this->problem_, 3);
+			this->problem_->evaluate (sol);
+			subpop3->add(sol);
+			// sol->get_representation ().str ();	
+		} else {
+			sol = new Solution (this->problem_, builder);
+			this->problem_->evaluate (sol);
+			// sol->get_representation ().str ();
+			subpop1->add(sol);
+
+			sol = NULL;
+			sol = new Solution (this->problem_, builder);
+			this->problem_->evaluate (sol);
+			subpop2->add(sol);
+			// sol->get_representation ().str ();
+
+			sol = NULL;
+			sol = new Solution (this->problem_, builder);
+			this->problem_->evaluate (sol);
+			subpop3->add(sol);
+			// sol->get_representation ().str ();
+		}
+		
 	}
 	bestSolution (subpop1);
 	bestSolution (subpop2);
@@ -151,21 +175,23 @@ SolutionSet * Mota::execute () {
 					
 				} //endif if for TA operators
 				else {
-					//mormal crossover
-					// Solution **sol  = new Solution*[3];
-					// objects[0] = individuals1[0];
-					// sol[0] = individuals1[1];
-					// sol[1] = individuals2[0];
-					// sol[2] = individuals2[1];
-					// objects[1] = sol;
+					if (algo.compare ("cross") == 0) {
+						//mormal crossover
+						Solution **sol  = new Solution*[3];
+						objects[0] = individuals1[0];
+						sol[0] = individuals1[1];
+						sol[1] = individuals2[0];
+						sol[2] = individuals2[1];
+						objects[1] = sol;
 
-					// child = (Solution*) crossover->execute (objects);
-					objects[0] = individuals2[0];
-					objects[1] = &this->individual;
-					objects[2] = &plasmid_rate;
-					child = (Solution*) treepath->execute (objects);
-
-					// delete sol;
+						child = (Solution*) crossover->execute (objects);
+						delete sol;
+					} else if (algo.compare("plasmid") == 0){
+						objects[0] = individuals2[0];
+						objects[1] = &this->individual;
+						objects[2] = &plasmid_rate;
+						child = (Solution*) treepath->execute (objects);	
+					}
 				}
 
 				problem_->evaluate (child);

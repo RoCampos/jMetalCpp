@@ -23,39 +23,48 @@ int main(int argc, char *argv[])
 		problem = ProblemFactory::getProblem(argc, argv);
 	} 
 
+	MMRP * mmrp = (MMRP *) problem;
+	rca::Network network = *mmrp->get_network ();
+	network.print ();
+
+	for (int i = 0; i < mmrp->get_groups().size (); ++i)
+	{
+		cout << *mmrp->get_groups ().at (i) << endl;
+	}
+
 	SolutionSet * population = new SolutionSet(100);
 	for (int i=0; i < 100; i++) {
-		population->add (new Solution (problem));
+		population->add (new Solution (problem,3));
 	}
 
-	MMRP * mmrp = (MMRP *) problem;
-	Individual individual = Individual (mmrp->get_groups().size ());
-	for (int i = 0; i < individual.size (); i++) {
-		individual.cost[i] = std::numeric_limits<int>::max();
-	}
+	// MMRP * mmrp = (MMRP *) problem;
+	// Individual individual = Individual (mmrp->get_groups().size ());
+	// for (int i = 0; i < individual.size (); i++) {
+	// 	individual.cost[i] = std::numeric_limits<int>::max();
+	// }
 
-	for (int i = 0; i < population->size (); i++) {
-		Solution * sol = population->get(i);
-		Individual & ind = sol->get_representation ();
-		for (int j=0; j < ind.size (); j++) {	
-			if (ind.cost[j] < individual.cost[j]){
-				individual.cromossoma[j] = ind.cromossoma[j];
-				individual.cost[j] = ind.cost[j];
-			}
-		}
-	}
+	// for (int i = 0; i < population->size (); i++) {
+	// 	Solution * sol = population->get(i);
+	// 	Individual & ind = sol->get_representation ();
+	// 	for (int j=0; j < ind.size (); j++) {	
+	// 		if (ind.cost[j] < individual.cost[j]){
+	// 			individual.cromossoma[j] = ind.cromossoma[j];
+	// 			individual.cost[j] = ind.cost[j];
+	// 		}
+	// 	}
+	// }
 
 
-	std::map<std::string, void*> parameters;
-	Operator *op = new PathTreePlasmid (parameters);
+	// std::map<std::string, void*> parameters;
+	// Operator *op = new PathTreePlasmid (parameters);
 
-	void** objects = new void*[2];
-	objects[0] = population->get(0);
-	objects[1] = &individual;
+	// void** objects = new void*[2];
+	// objects[0] = population->get(0);
+	// objects[1] = &individual;
 
-	population->get(0)->get_representation().str ();
-	Solution *sol = (Solution*) op->execute (objects);
-	sol->get_representation ().str ();
+	// population->get(0)->get_representation().str ();
+	// Solution *sol = (Solution*) op->execute (objects);
+	// sol->get_representation ().str ();
 
 
 

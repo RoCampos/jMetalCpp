@@ -113,9 +113,9 @@ int main(int argc, char ** argv) {
 
 
   //creating the qualityindicador
-	indicators = new QualityIndicator(problem, frontarchive);
+	// indicators = new QualityIndicator(problem, frontarchive);
 	// Add the indicator object to the algorithm
-	algorithm->setInputParameter("indicators", indicators) ;
+	// algorithm->setInputParameter("indicators", indicators) ;
 
 	// Execute the Algorithm
 	t_ini = clock();

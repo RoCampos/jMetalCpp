@@ -119,6 +119,13 @@ int main(int argc, char **argv)
 	// ss << '"' << Z << " " << C << " " << H <<'"';
 	// system (ss.str ().c_str());
 
+	delete selection;
+  	delete plasmid;
+  	delete treepath;
+  	delete traspon;
+  	delete crossover;
+  	delete population;
+  	delete algorithm;
 
 	return 0;
 }

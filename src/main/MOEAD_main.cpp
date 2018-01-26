@@ -137,17 +137,17 @@ int main(int argc, char ** argv) {
   // cout << "Objectives values have been written to file FUN" << endl;
   population->printObjectivesToFile("FUN");
   // cout << indicators->getHypervolume(population) << endl;
-  std::ifstream nadirf;
-  nadirf.open (nadir.c_str ());
-  int Z, C, H;
-  nadirf >> Z;
-  nadirf >> C;
-  nadirf >> H;
-  nadirf.close ();
-  std::stringstream ss;
-  ss << "./hv FUN -r ";
-  ss << '"' << Z << " " << C << " " << H <<'"';
-  system (ss.str ().c_str());
+  // std::ifstream nadirf;
+  // nadirf.open (nadir.c_str ());
+  // int Z, C, H;
+  // nadirf >> Z;
+  // nadirf >> C;
+  // nadirf >> H;
+  // nadirf.close ();
+  // std::stringstream ss;
+  // ss << "./hv FUN -r ";
+  // ss << '"' << Z << " " << C << " " << H <<'"';
+  // system (ss.str ().c_str());
 
 
   delete mutation;

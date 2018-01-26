@@ -455,11 +455,11 @@ public:
 	
 	std::vector<int> breadth_first_search (int start);
 
-	int get_index (rca::Link link) {
+	int get_index (rca::Link const& link) {
 		return m_edge_id.at(link.getX(), link.getY());
 	}
 
-	void set_index (rca::Link link, double i) {
+	void set_index (rca::Link const& link, double i) {
 		m_edge_id.assign(link.getX(),link.getY(), i);
 		m_edge_id.assign(link.getX(),link.getY(), i);
 	}

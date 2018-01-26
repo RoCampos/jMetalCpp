@@ -107,17 +107,17 @@ int main(int argc, char **argv)
 	cout << "Total execution time: " << secs << "s" << endl;
 	population->printObjectivesToFile("FUN");
 
-	std::ifstream nadirf;
-	nadirf.open (nadir.c_str ());
-	int Z, C, H;
-	nadirf >> Z;
-	nadirf >> C;
-	nadirf >> H;
-	nadirf.close ();
-	std::stringstream ss;
-	ss << "./hv FUN -r ";
-	ss << '"' << Z << " " << C << " " << H <<'"';
-	system (ss.str ().c_str());
+	// std::ifstream nadirf;
+	// nadirf.open (nadir.c_str ());
+	// int Z, C, H;
+	// nadirf >> Z;
+	// nadirf >> C;
+	// nadirf >> H;
+	// nadirf.close ();
+	// std::stringstream ss;
+	// ss << "./hv FUN -r ";
+	// ss << '"' << Z << " " << C << " " << H <<'"';
+	// system (ss.str ().c_str());
 
 
 	return 0;

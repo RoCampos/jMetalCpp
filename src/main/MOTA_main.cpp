@@ -104,8 +104,12 @@ int main(int argc, char **argv)
 
 	// cout << population->size () << endl;
 
+	std::stringstream ss;
+	ss << algo << builder;
+	std::string saida = ss.str ();
+
 	cout << "Total execution time: " << secs << "s" << endl;
-	population->printObjectivesToFile("FUN");
+	population->printObjectivesToFile(saida);
 
 	// std::ifstream nadirf;
 	// nadirf.open (nadir.c_str ());

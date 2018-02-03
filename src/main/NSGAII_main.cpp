@@ -126,9 +126,9 @@ int main(int argc, char ** argv) {
 
 
 	//creating the qualityindicador
-	indicators = new QualityIndicator(problem, frontarchive);
+	// indicators = new QualityIndicator(problem, frontarchive);
 	// Add the indicator object to the algorithm
-	algorithm->setInputParameter("indicators", indicators) ;
+	// algorithm->setInputParameter("indicators", indicators) ;
 
 	// MMRP * p = (MMRP*) problem;
 	// Network * n = p->get_network ();
@@ -152,7 +152,7 @@ int main(int argc, char ** argv) {
 	// cout << "Variables values have been written to file VAR" << endl;
 	// population->printVariablesToFile("VAR");
 	// cout << "Objectives values have been written to file FUN" << endl;
-	population->printObjectivesToFile("FUN");
+	population->printObjectivesToFile("nsga");
 	// cout << indicators->getHypervolume(population) << endl;
   
 //  if (indicators != NULL) {

@@ -12,10 +12,12 @@
 #include <steiner_tree_observer.h>
 #include <sttree_local_search.h>
 #include <localsearch.h>
+#include <myrandom.h>
 
 
 typedef rca::EdgeContainer<rca::Comparator, rca::HCell> Container;
 typedef rca::sttalgo::SteinerTreeObserver<Container, steiner> Observer;
+
 
 struct DTree {
 	std::vector<rca::Path> paths;

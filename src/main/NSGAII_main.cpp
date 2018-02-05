@@ -73,6 +73,8 @@ void help () {
 
 int main(int argc, char ** argv) {
 
+	srand (time(NULL));
+
 	clock_t t_ini, t_fin;
   
   	Problem   * problem   ; // The problem to solve
